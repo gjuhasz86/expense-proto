@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd "${OPENSHIFT_REPO_DIR}/public"
-npm install
+npm install --dev
 npm run typings -- install
 npm run tsc
+npm prune
