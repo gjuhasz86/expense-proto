@@ -1,0 +1,7 @@
+<h2>List of transactions</h2>
+<ul>
+    <li *ngFor="#tnx of transactions | async">
+        <span>{{tnx.description}}</span>
+        <transaction [tnx]="tnx"></transaction>
+    </li>
+</ul>

@@ -1,0 +1,8 @@
+<h2>Enter new transaction</h2>
+<div>
+    <input [(ngModel)]="tnx.accountId" placeholder="accountId"/>
+    <input [(ngModel)]="tnx.description" placeholder="description"/>
+    <input [(ngModel)]="tnx.amount" placeholder="amount"/>
+    <button (click)="save()">Save</button>
+    <button (click)="reset()">Reset</button>
+</div>
