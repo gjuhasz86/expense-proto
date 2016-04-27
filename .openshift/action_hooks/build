@@ -1,7 +1,13 @@
 #!/bin/bash
 
+OLD_HOME=$HOME
+export HOME=$OPENSHIFT_REPO_DIR
+
 cd "${OPENSHIFT_REPO_DIR}/public"
+
 npm install --dev
 npm run typings -- install
 npm run tsc
 npm prune
+
+export HOME=$OLD_HOME
