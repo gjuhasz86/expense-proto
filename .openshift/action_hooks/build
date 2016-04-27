@@ -4,3 +4,5 @@ echo "$(pwd)"
 ls -la
 cd "${OPENSHIFT_REPO_DIR}/public"
 npm install
+typings install
+tsc

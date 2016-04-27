@@ -2,9 +2,6 @@
   "name": "angular2-quickstart",
   "version": "1.0.0",
   "description": "QuickStart package.json from the documentation, supplemented with testing support",
-  "scripts": {
-    "postinstall": "typings install && tsc"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
