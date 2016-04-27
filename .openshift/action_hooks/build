@@ -1,2 +1,6 @@
 #!/bin/bash
-echo $pwd > jay_build_debug.log
+
+echo "$(pwd)"
+ls -la
+cd "${OPENSHIFT_REPO_DIR}/public"
+npm install
