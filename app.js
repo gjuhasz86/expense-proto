@@ -30,6 +30,12 @@ app.use('/api/transactions', function (req, res, next) {
     next();
 }, dao);
 
+app.use('/api/accounts', function (req, res, next) {
+    console.log('account req');
+    req.collection = 'accounts';
+    next();
+}, dao);
+
 app.get('/debug', function (req, res) {
     console.log("debug");
     console.log(req.query);

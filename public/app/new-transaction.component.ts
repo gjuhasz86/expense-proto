@@ -1,6 +1,7 @@
-import {Component} from "angular2/core";
+import {Component, Inject} from "angular2/core";
 import {ExpenseService} from "./expense.service";
 import {Transaction} from "./transaction";
+import {CrudService, TransactionService} from "./crud.service";
 
 @Component({
     selector: 'new-transaction',
@@ -9,7 +10,7 @@ import {Transaction} from "./transaction";
 export class NewTransactionComponent {
     tnx:Transaction;
 
-    constructor(private _expenseService:ExpenseService) {
+    constructor(@Inject(TransactionService) private _tnxService:CrudService<Transaction>) {
         this.reset()
     }
 
@@ -18,7 +19,7 @@ export class NewTransactionComponent {
     }
 
     save() {
-        this._expenseService.saveTransaction(this.tnx);
+        this._tnxService.saveItem(this.tnx);
         this.reset()
     }
 }

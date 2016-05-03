@@ -1,0 +1,15 @@
+<div>
+    <div *ngIf="!editing">
+        <button (click)="startEdit()">Edit</button>
+        <button (click)="delete(acc)">Delete</button>
+        <span>{{acc.id}}</span><span>&nbsp;</span>
+        <span>{{acc.name}}</span>
+    </div>
+    <div *ngIf="editing">
+        <button (click)="stopEdit()">Cancel</button>
+        <button (click)="delete(newAcc)">Delete</button>
+        <span>{{acc.id}}</span><span>&nbsp;</span>
+        <input [(ngModel)]="newAcc.name" placeholder="name"/>
+        <button (click)="update(newAcc)">Save</button>
+    </div>
+</div>

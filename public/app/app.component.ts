@@ -1,42 +1,36 @@
-import {Component} from 'angular2/core';
-import {HeroService} from './hero.service';
-import {HeroEditComponent} from "./hero-edit.component";
-import {Hero} from "./hero";
-import {Observable} from 'rxjs/Observable';
-import {ExpenseService} from "./expense.service";
+import {Component, provide, Inject, Optional} from 'angular2/core';
 import {NewTransactionComponent} from "./new-transaction.component";
 import {TransactionListComponent} from "./transaction-list.component";
-import {DebugComponent} from "./debug.component";
+import {CrudService, TransactionService, AccountService} from "./crud.service";
+import {Transaction} from "./transaction";
+import {Http} from "angular2/http";
+import {NewAccountComponent} from "./new-account.component";
+import {AccountListComponent} from "./account-list.component";
+import {Account} from "./account";
+
 
 @Component({
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
     directives: [
-        HeroEditComponent,
         NewTransactionComponent,
         TransactionListComponent,
-        DebugComponent],
+        NewAccountComponent,
+        AccountListComponent],
     providers: [
-        // HTTP_PROVIDERS,
-        HeroService,
-        ExpenseService
+        provide(TransactionService, {
+            useFactory: (http:Http) => {
+                return new CrudService<Transaction>("transactions", http);
+            },
+            deps: [Http]
+        }),
+        provide(AccountService, {
+            useFactory: (http:Http) => {
+                return new CrudService<Account>("accounts", http);
+            },
+            deps: [Http]
+        })
     ]
 })
 export class AppComponent {
-    heroes:Observable<Hero[]>;
-    newHero:Hero;
-
-    constructor(private _heroService:HeroService) {
-        this.newHero = new Hero();
-    }
-
-    ngOnInit() {
-        this.getHeroes();
-    }
-
-    getHeroes() {
-        // this._heroService.getHeroes().then(heroes => this.heroes = heroes);
-        this.heroes = this._heroService.getHeroes()
-    }
-
 }
