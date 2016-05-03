@@ -20,8 +20,8 @@ export class TransactionListComponent implements OnInit {
     }
 
     private getTransactions() {
-        // this.transactions = this._expenseService.getTransactions();
         console.log("get tnx");
-        this.transactions = this._expenseService.getTransactionsPage("", "", 2);
+        this.transactions = this._expenseService.getTransactions();
+        // this.transactions = this._expenseService.getTransactionsPage("", "", 2);
     }
 }

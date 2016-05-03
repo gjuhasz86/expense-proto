@@ -17,6 +17,7 @@ import {DebugComponent} from "./debug.component";
         TransactionListComponent,
         DebugComponent],
     providers: [
+        // HTTP_PROVIDERS,
         HeroService,
         ExpenseService
     ]

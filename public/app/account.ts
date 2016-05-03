@@ -1,3 +1,4 @@
 export class Account {
-    name:string
+    id:string;
+    name:string;
 }
