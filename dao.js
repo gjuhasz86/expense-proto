@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var mongodb = require('mongodb');
 var mongo = mongodb.MongoClient;
 
+var env = process.env;
 
 // var url = 'mongodb://localhost:27017/test';
 var url = 'mongodb://' + env.OPENSHIFT_MONGODB_DB_USERNAME + ':' + env.OPENSHIFT_MONGODB_DB_PASSWORD + '@' + env.OPENSHIFT_MONGODB_DB_HOST + ':' + env.OPENSHIFT_MONGODB_DB_PORT + '/expense';
