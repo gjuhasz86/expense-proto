@@ -7,8 +7,17 @@ var mongo = mongodb.MongoClient;
 
 var env = process.env;
 
+var dbConn = {
+    user: env.OPENSHIFT_EXPENSE_USER,
+    pwd: env.OPENSHIFT_EXPENSE_PWD,
+    db: env.OPENSHIFT_EXPENSE_DB,
+    host: env.OPENSHIFT_MONGODB_DB_HOST,
+    port: env.OPENSHIFT_MONGODB_DB_PORT
+};
+
+
 // var url = 'mongodb://localhost:27017/test';
-var url = 'mongodb://' + env.OPENSHIFT_MONGODB_DB_USERNAME + ':' + env.OPENSHIFT_MONGODB_DB_PASSWORD + '@' + env.OPENSHIFT_MONGODB_DB_HOST + ':' + env.OPENSHIFT_MONGODB_DB_PORT + '/expense';
+var url = 'mongodb://' + dbConn.user + ':' + dbConn.pwd + '@' + dbConn.host + ':' + dbConn.port + '/' + dbConn.db;
 
 var myDb;
 
