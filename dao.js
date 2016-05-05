@@ -7,9 +7,14 @@ var mongo = mongodb.MongoClient;
 
 var env = process.env;
 
+var dbUserPass;
+if (env.OPENSHIFT_EXPENSE_USER)
+    dbUserPass = env.OPENSHIFT_EXPENSE_USER + ':' + env.OPENSHIFT_EXPENSE_PWD;
+else
+    dbUserPass = "";
+
 var dbConn = {
-    user: env.OPENSHIFT_EXPENSE_USER,
-    pwd: env.OPENSHIFT_EXPENSE_PWD,
+    userPass: dbUserPass,
     db: env.OPENSHIFT_EXPENSE_DB,
     host: env.OPENSHIFT_MONGODB_DB_HOST,
     port: env.OPENSHIFT_MONGODB_DB_PORT
@@ -17,7 +22,7 @@ var dbConn = {
 
 
 // var url = 'mongodb://localhost:27017/test';
-var url = 'mongodb://' + dbConn.user + ':' + dbConn.pwd + '@' + dbConn.host + ':' + dbConn.port + '/' + dbConn.db;
+var url = 'mongodb://' + dbConn.userPass + '@' + dbConn.host + ':' + dbConn.port + '/' + dbConn.db;
 
 var myDb;
 
@@ -67,8 +72,7 @@ router.post('/save', function (req, res) {
 });
 
 router.get('/list', function (req, res) {
-    console.log("querying " + req.query);
-    console.log(req.query);
+    console.log("querying " + JSON.stringify(req.query));
     var coll = req.collection;
     var db = req.db;
     db.collection(coll).find(req.query).toArray(function (err, docs) {
