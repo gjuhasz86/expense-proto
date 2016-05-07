@@ -3,6 +3,9 @@
 OLD_HOME=$HOME
 export HOME=$OPENSHIFT_REPO_DIR
 
+cd "${OPENSHIFT_REPO_DIR}/server"
+npm install
+
 cd "${OPENSHIFT_REPO_DIR}/public"
 
 npm install --dev
