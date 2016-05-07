@@ -1,65 +1,29 @@
 var express = require('express');
-var router = express.Router();
 var bodyParser = require('body-parser');
-
 var mongodb = require('mongodb');
+
+var dbConf = require('./config/database');
+
+var router = express.Router();
 var mongo = mongodb.MongoClient;
 
-var env = process.env;
-
-var dbUserPass;
-if (env.OPENSHIFT_EXPENSE_USER)
-    dbUserPass = env.OPENSHIFT_EXPENSE_USER + ':' + env.OPENSHIFT_EXPENSE_PWD;
-else
-    dbUserPass = "";
-
-var dbConn = {
-    userPass: dbUserPass,
-    db: env.OPENSHIFT_EXPENSE_DB,
-    host: env.OPENSHIFT_MONGODB_DB_HOST,
-    port: env.OPENSHIFT_MONGODB_DB_PORT
-};
-
-
-// var url = 'mongodb://localhost:27017/test';
-var url = 'mongodb://' + dbConn.userPass + '@' + dbConn.host + ':' + dbConn.port + '/' + dbConn.db;
-
-var myDb;
-
-function connect(callback) {
-    if (myDb === undefined) {
-        mongo.connect(url, function (err, db) {
-            if (err) {
-                return callback(err)
-            }
-            myDb = db;
-            callback(null, db);
-        });
+var myDb = undefined;
+mongo.connect(dbConf.url, function (err, db) {
+    if (err) {
+        console.error("Could not initialize database");
+        return console.error(err);
     } else {
-        callback(null, myDb);
+        console.log("Database has been initialized");
+        myDb = db;
     }
-}
+});
 
 router.use(function (req, res, next) {
-    connect(function (err, db) {
-        if (err) {
-            console.log("Error connecting to database: " + err);
-            res.writeHead(500);
-            res.end();
-        } else {
-            req.db = db;
-            next();
-        }
-    });
+    req.db = myDb;
+    next();
 });
 
 router.use(bodyParser.json());
-
-// define the home page route
-router.get('/', function (req, res) {
-    console.log(req.collection);
-    res.send('Birds home page');
-});
 
 router.post('/save', function (req, res) {
     console.log('saving ' + JSON.stringify(req.body));
@@ -88,10 +52,9 @@ router.post('/delete', function (req, res) {
     var coll = req.collection;
     var db = req.db;
     db.collection(coll).deleteOne({_id: idToDelete}, function (err, docs) {
-        if (err)
+        if (err) {
             console.log(err);
-        else {
-            // console.log(docs);
+        } else {
             console.log(docs.deletedCount);
         }
         res.end();
