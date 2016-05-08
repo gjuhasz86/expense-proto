@@ -1,14 +1,26 @@
 var express = require('express');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
+
 var path = require('path');
 var dao = require('./dao');
+var auth = require('./auth');
 
 var router = express.Router();
 
-
 router.use(express.static(path.join(__dirname, '/../../public')));
 
-router.use("/api", function (res, req, next) {
+router.use(cookieParser());
+router.use(bodyParser.json());
+router.use(session({secret: 'some secret', resave: true, saveUninitialized: true})); // verify session setup
+
+router.use(auth);
+
+router.use("/api", auth.isAuthenticated, function (res, req, next) {
     console.log("foooooooo");
+    console.log(req.user);
     next();
 });
 

@@ -1,8 +1,18 @@
 <h1>My First Angular 2 App2</h1>
 
-<new-account></new-account>
-<account-list></account-list>
+<div *ngIf="!user">
+    <input type="text" [(ngModel)]="loginData.username" placeholder="username"/>
+    <input type="password" [(ngModel)]="loginData.password" placeholder="password"/>
+    <button type="submit" (click)="onSubmit()">Login</button>
+</div>
 
-<new-transaction></new-transaction>
-<transaction-list></transaction-list>
+<div *ngIf="user">
+    <div>Logged in as: {{user.username}}</div>
+
+    <new-account></new-account>
+    <account-list></account-list>
+
+    <new-transaction></new-transaction>
+    <transaction-list></transaction-list>
+</div>
 

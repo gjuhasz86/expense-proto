@@ -1,13 +1,13 @@
-import {Component, provide, Inject, Optional} from 'angular2/core';
+import {Component, provide, Inject, Optional, OnInit, Input} from 'angular2/core';
 import {NewTransactionComponent} from "./new-transaction.component";
 import {TransactionListComponent} from "./transaction-list.component";
 import {CrudService, TransactionService, AccountService} from "./crud.service";
 import {Transaction} from "./transaction";
-import {Http} from "angular2/http";
+import {Http, Headers} from "angular2/http";
 import {NewAccountComponent} from "./new-account.component";
 import {AccountListComponent} from "./account-list.component";
 import {Account} from "./account";
-
+import {UserService} from "./user.service";
 
 @Component({
     selector: 'my-app',
@@ -18,6 +18,7 @@ import {Account} from "./account";
         NewAccountComponent,
         AccountListComponent],
     providers: [
+        UserService,
         provide(TransactionService, {
             useFactory: (http:Http) => {
                 return new CrudService<Transaction>("transactions", http);
@@ -32,5 +33,22 @@ import {Account} from "./account";
         })
     ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+    public user:any = false;
+    public loginData:any = {};
+
+    constructor(private _userService:UserService) {
+    }
+
+    ngOnInit() {
+        this._userService.currentUser()
+            .subscribe(res=> {
+                this.user = res.json()
+            }, err => console.log(err));
+    }
+
+    onSubmit() {
+        this._userService.login(this.loginData)
+            .subscribe(res=> this.user = res.json());
+    }
 }

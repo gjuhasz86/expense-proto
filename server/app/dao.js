@@ -26,6 +26,7 @@ router.use(function (req, res, next) {
 router.use(bodyParser.json());
 
 router.post('/save', function (req, res) {
+    req.body.user = req.user.id;
     console.log('saving ' + JSON.stringify(req.body));
     var coll = req.collection;
     var db = req.db;
@@ -36,6 +37,7 @@ router.post('/save', function (req, res) {
 });
 
 router.get('/list', function (req, res) {
+    req.query.user = req.user.id;
     console.log("querying " + JSON.stringify(req.query));
     var coll = req.collection;
     var db = req.db;
@@ -51,7 +53,7 @@ router.post('/delete', function (req, res) {
     console.log(idToDelete);
     var coll = req.collection;
     var db = req.db;
-    db.collection(coll).deleteOne({_id: idToDelete}, function (err, docs) {
+    db.collection(coll).deleteOne({_id: idToDelete, user: req.user.id}, function (err, docs) {
         if (err) {
             console.log(err);
         } else {
@@ -68,7 +70,7 @@ router.post('/update', function (req, res) {
     req.body._id = idToUpdate;
     var coll = req.collection;
     var db = req.db;
-    db.collection(coll).updateOne({_id: idToUpdate}, req.body, null, function (err, docs) {
+    db.collection(coll).updateOne({_id: idToUpdate, user: req.user.id}, req.body, null, function (err, docs) {
         if (err)
             console.log(err);
         else {
