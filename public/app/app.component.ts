@@ -47,8 +47,13 @@ export class AppComponent implements OnInit {
             }, err => console.log(err));
     }
 
-    onSubmit() {
+    login() {
         this._userService.login(this.loginData)
             .subscribe(res=> this.user = res.json());
+    }
+
+    logout() {
+        this._userService.logout()
+            .subscribe(res=> this.user = undefined);
     }
 }

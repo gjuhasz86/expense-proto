@@ -3,11 +3,13 @@
 <div *ngIf="!user">
     <input type="text" [(ngModel)]="loginData.username" placeholder="username"/>
     <input type="password" [(ngModel)]="loginData.password" placeholder="password"/>
-    <button type="submit" (click)="onSubmit()">Login</button>
+    <button type="submit" (click)="login()">Login</button>
 </div>
 
 <div *ngIf="user">
-    <div>Logged in as: {{user.username}}</div>
+    <div>Logged in as: {{user.username}}
+        <button (click)="logout()">logout</button>
+    </div>
 
     <new-account></new-account>
     <account-list></account-list>

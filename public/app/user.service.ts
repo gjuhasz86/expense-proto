@@ -18,4 +18,8 @@ export class UserService {
     login(loginData:any):Observable<any> {
         return this._http.post('/auth/login', JSON.stringify(loginData), {headers: this._headers})
     }
+
+    logout():Observable<any> {
+        return this._http.get('/auth/logout')
+    }
 }
