@@ -23,7 +23,7 @@ export class TransactionListComponent implements OnInit {
 
     private getTransactions() {
         console.log("get tnx");
-        this.transactions = this._tnxService.getItems();
+        this.transactions = this._tnxService.getAllItems();
         // this.transactions = this._expenseService.getTransactionsPage("", "", 2);
     }
 }

@@ -1,6 +1,7 @@
 import {Input, Component, Inject} from "angular2/core";
 import {Transaction} from "./transaction";
-import {CrudService, TransactionService} from "./crud.service";
+import {CrudService, TransactionService, AccountService} from "./crud.service";
+import {Account} from "./account";
 
 @Component({
     selector: 'transaction',
@@ -12,11 +13,12 @@ export class TransactionComponent {
     newTnx:Transaction;
     editing:boolean = false;
 
-    constructor(@Inject(TransactionService) private _tnxService:CrudService<Transaction>) {
+    constructor(@Inject(TransactionService) private _tnxService:CrudService<Transaction>,
+                @Inject(AccountService) private _accService:CrudService<Account>) {
     }
 
     startEdit():void {
-        this.newTnx = JSON.parse(JSON.stringify(this.tnx))
+        this.newTnx = JSON.parse(JSON.stringify(this.tnx));
         this.editing = true;
     }
 
@@ -24,9 +26,9 @@ export class TransactionComponent {
         this.editing = false;
     }
 
-    // save(tnx:Transaction):void {
-    //     this._expenseService.saveTransaction(tnx)
-    // }
+// save(tnx:Transaction):void {
+//     this._expenseService.saveTransaction(tnx)
+// }
 
     update(tnx:Transaction):void {
         console.log("updating");

@@ -20,6 +20,6 @@ export class AccountListComponent implements OnInit {
     }
 
     private getAccounts() {
-        this.accounts = this._accService.getItems();
+        this.accounts = this._accService.getAllItems();
     }
 }

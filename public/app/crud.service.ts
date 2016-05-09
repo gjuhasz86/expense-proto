@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Http, Headers} from 'angular2/http';
+import {Http, Headers, Response} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {Transaction} from "./transaction";
@@ -13,34 +13,30 @@ export class AccountService {
 
 @Injectable()
 export class CrudService<T> {
-    private items:Subject<T[]>;
+    private events:Subject<boolean> = new Subject<boolean>();
     private _headers:Headers;
 
     constructor(private collection:String, private _http:Http) {
         console.log("crudservice constructor");
         this._headers = new Headers();
         this._headers.append('Content-Type', 'application/json');
-        this.items = new Subject<T[]>();
     }
 
-
-    getItems():Observable<T[]> {
-        console.log("CrudService#getTransactions");
-        this._http
-            .get(`/api/${this.collection}/list`)
-            .map(res => res.json())
-            .subscribe(res => this.items.next(res));
-
-        return this.items;
+    refresh():void {
+        this.events.next(true);
     }
 
-    // getTransactionsPage(startAt:string, endAt:string, limit:number):Observable<Transaction[]> {
-    //     console.log("get tnx page");
-    //     let q = this._ref.child('/transactions').orderByKey().startAt(startAt).limitToFirst(3);
-    //     console.log(q.once('value', x=>console.log(x.val())));
-    //     let r = q.ref();
-    //     return FirebaseListFactory(r)
-    // }
+    getAllItems():Observable<T[]> {
+        return this.events.map(x=>`/api/${this.collection}/list`)
+            .flatMap((url:string) => this._http.get(url))
+            .map((res:Response) => res.json());
+    }
+
+    getFilteredItems(filter:any) {
+        return this.events.map(x=>`/api/${this.collection}/list`)
+            .flatMap((url:string) => this._http.get(url))
+            .map((res:Response) => res.json());
+    }
 
     saveItem(tnx:T):void {
         console.log(`calling ${this.collection} save`);
@@ -51,7 +47,7 @@ export class CrudService<T> {
             .subscribe(res => {
                 console.log("Response came!!!");
                 console.log(res);
-                this.getItems();
+                this.refresh();
             }, error => {
                 console.log("ERROR came!!!");
                 console.log(error);
@@ -66,7 +62,7 @@ export class CrudService<T> {
             .subscribe(res => {
                 console.log("UPDATE Response came!!!");
                 console.log(res);
-                this.getItems();
+                this.refresh();
             }, error => {
                 console.log("UPDATE ERROR came!!!");
                 console.log(error);
@@ -82,7 +78,7 @@ export class CrudService<T> {
             .subscribe(res => {
                 console.log("DELETE Response came!!!");
                 console.log(res);
-                this.getItems();
+                this.refresh();
             }, error => {
                 console.log("DELETE ERROR came!!!");
                 console.log(error);
