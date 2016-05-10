@@ -13,17 +13,22 @@ import {Account} from "./account";
 })
 export class TransactionListComponent implements OnInit {
     transactions:Observable<Transaction[]>;
+    transactions2:Observable<Transaction[]>;
 
     constructor(@Inject(TransactionService) private _tnxService:CrudService<Transaction>) {
+        this.transactions = this._tnxService.getAllItems();
+        this.transactions2 = this._tnxService
+            .getFilteredItems({accountId: "572fae7d0bb7f3e81c468b44"});
     }
 
     ngOnInit() {
-        this.getTransactions();
+        this.refresh();
     }
 
-    private getTransactions() {
-        console.log("get tnx");
-        this.transactions = this._tnxService.getAllItems();
-        // this.transactions = this._expenseService.getTransactionsPage("", "", 2);
+    debug() {
+    }
+
+    refresh() {
+        this._tnxService.refresh();
     }
 }

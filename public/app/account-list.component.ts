@@ -13,13 +13,14 @@ export class AccountListComponent implements OnInit {
     accounts:Observable<Account[]>;
 
     constructor(@Inject(AccountService) private _accService:CrudService<Account>) {
+        this.accounts = this._accService.getAllItems();
     }
 
     ngOnInit() {
-        this.getAccounts();
+        this.refresh();
     }
 
-    private getAccounts() {
-        this.accounts = this._accService.getAllItems();
+    refresh() {
+        this._accService.refresh();
     }
 }

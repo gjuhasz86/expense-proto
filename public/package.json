@@ -5,9 +5,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "scripts" : {
-    "tsc"  : "tsc",
-    "typings" : "typings"
+  "scripts": {
+    "tsc": "tsc",
+    "typings": "typings"
   },
   "dependencies": {
     "a2-in-memory-web-api": "^0.1.15",

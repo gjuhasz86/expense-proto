@@ -1,7 +1,8 @@
 export class Account {
-    id():string {
-        return (<any>this)._id
+    public id():string {
+        return (<any>this)._id;
     }
 
-    name:string;
+    constructor(public name:string, public _id:string) {
+    }
 }

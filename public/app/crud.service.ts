@@ -5,7 +5,6 @@ import {Subject} from 'rxjs/Subject';
 import {Transaction} from "./transaction";
 import 'rxjs/Rx';
 
-
 export class TransactionService {
 }
 export class AccountService {
@@ -28,13 +27,13 @@ export class CrudService<T> {
 
     getAllItems():Observable<T[]> {
         return this.events.map(x=>`/api/${this.collection}/list`)
-            .flatMap((url:string) => this._http.get(url))
+            .flatMap((url:string) => this._http.post(url, "{}", {headers: this._headers}))
             .map((res:Response) => res.json());
     }
 
-    getFilteredItems(filter:any) {
+    getFilteredItems(filter:any):Observable<T[]> {
         return this.events.map(x=>`/api/${this.collection}/list`)
-            .flatMap((url:string) => this._http.get(url))
+            .flatMap((url:string) => this._http.post(url, JSON.stringify(filter), {headers: this._headers}))
             .map((res:Response) => res.json());
     }
 
