@@ -10,7 +10,7 @@
     <div *ngIf="editing">
         <button (click)="stopEdit()">Cancel</button>
         <button (click)="delete(newTnx)">Delete</button>
-        <input [(ngModel)]="newTnx.accountId" placeholder="accountId"/>
+        <span>{{newTnx.accountId}}</span><span>&nbsp;</span>
         <select [(ngModel)]="newTnx.accountId">
             <option *ngFor="#a of (accounts | async)" [value]="a._id">{{a.name}}</option>
         </select>

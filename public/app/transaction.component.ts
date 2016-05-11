@@ -24,7 +24,7 @@ export class TransactionComponent implements OnInit {
 
     ngOnInit() {
         this.accountName = this.getAccountName(this.tnx.accountId);
-        this.accounts = this.getAccounts();
+        this.accounts = this._accService.getAllItems()
     }
 
     startEdit():void {
@@ -36,26 +36,14 @@ export class TransactionComponent implements OnInit {
         this.editing = false;
     }
 
-    private undefToEmpty<T>(t:T):string {
-        if (t === undefined)
-            return "";
-        else
-            return t.toString();
-    };
-
     getAccountName(id:string):Observable<String> {
         return this._accService.getAllItems()
             .map(accs => {
                     let r = accs.filter(acc => (<any>acc)._id == id)
-                        .map(acc => acc.name)
-                        .map(this.undefToEmpty)[0];
+                        .map(acc => acc.name)[0];
                     return r;
                 }
             );
-    }
-
-    getAccounts():Observable<Account[]> {
-        return this._accService.getAllItems()
     }
 
     update(tnx:Transaction):void {
