@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {Transaction} from "./transaction";
 import 'rxjs/Rx';
+import {BehaviorSubject} from "rxjs/Rx";
 
 export class TransactionService {
 }
@@ -12,7 +13,7 @@ export class AccountService {
 
 @Injectable()
 export class CrudService<T> {
-    private events:Subject<boolean> = new Subject<boolean>();
+    private events:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(undefined);
     private _headers:Headers;
 
     constructor(private collection:String, private _http:Http) {
