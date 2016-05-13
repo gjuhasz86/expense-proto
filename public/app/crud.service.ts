@@ -23,6 +23,7 @@ export class CrudService<T> {
         this._headers = new Headers();
         this._headers.append('Content-Type', 'application/json');
         this.getAllItems().subscribe(res=> this.allItems.next(res));
+        this.refresh();
     }
 
     refresh():void {

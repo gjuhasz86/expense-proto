@@ -19,7 +19,6 @@ export class TransactionListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.refresh();
         this.transactions = this._tnxService.getAllItemsCached();
         this.transactions2 = this._tnxService
             .getFilteredItems({accountId: "572fae7d0bb7f3e81c468b44"});
