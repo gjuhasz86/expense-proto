@@ -19,8 +19,8 @@ router.use(session({secret: 'some secret', resave: true, saveUninitialized: true
 router.use(auth);
 
 router.use("/api", auth.isAuthenticated, function (res, req, next) {
-    console.log("foooooooo");
-    console.log(req.user);
+    // console.log("foooooooo");
+    // console.log(req.user);
     next();
 });
 

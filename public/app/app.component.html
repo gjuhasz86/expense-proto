@@ -1,9 +1,11 @@
 <h1>My First Angular 2 App2</h1>
 
 <div *ngIf="!user">
-    <input type="text" [(ngModel)]="loginData.username" placeholder="username"/>
-    <input type="password" [(ngModel)]="loginData.password" placeholder="password"/>
-    <button type="submit" (click)="login()">Login</button>
+    <form>
+        <input type="text" [(ngModel)]="loginData.username" placeholder="username"/>
+        <input type="password" [(ngModel)]="loginData.password" placeholder="password"/>
+        <button type="submit" (click)="login()">Login</button>
+    </form>
 </div>
 
 <div *ngIf="user">

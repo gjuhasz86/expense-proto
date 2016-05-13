@@ -5,6 +5,7 @@ import {Subject} from 'rxjs/Subject';
 import {Transaction} from "./transaction";
 import 'rxjs/Rx';
 import {BehaviorSubject} from "rxjs/Rx";
+import {ReplaySubject} from "rxjs/ReplaySubject";
 
 export class TransactionService {
 }
@@ -13,17 +14,23 @@ export class AccountService {
 
 @Injectable()
 export class CrudService<T> {
-    private events:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(undefined);
+    private events:Subject<boolean> = new Subject<boolean>();
     private _headers:Headers;
+    private allItems:ReplaySubject<T[]> = new ReplaySubject<T[]>(1);
 
     constructor(private collection:String, private _http:Http) {
         console.log("crudservice constructor");
         this._headers = new Headers();
         this._headers.append('Content-Type', 'application/json');
+        this.getAllItems().subscribe(res=> this.allItems.next(res));
     }
 
     refresh():void {
         this.events.next(true);
+    }
+
+    getAllItemsCached():Observable<T[]> {
+        return this.allItems;
     }
 
     getAllItems():Observable<T[]> {

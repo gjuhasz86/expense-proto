@@ -27,7 +27,7 @@ router.use(bodyParser.json());
 
 router.post('/save', function (req, res) {
     req.body.owner = req.user.id;
-    console.log('saving ' + JSON.stringify(req.body));
+    console.log('saving ' + coll + " " + JSON.stringify(req.body));
     var coll = req.collection;
     var db = req.db;
     db.collection(coll).insertOne(req.body, function (err, result) {
@@ -38,8 +38,8 @@ router.post('/save', function (req, res) {
 
 router.post('/list', function (req, res) {
     req.body.owner = req.user.id;
-    console.log("querying " + JSON.stringify(req.body));
     var coll = req.collection;
+    console.log("querying " + coll + " " + JSON.stringify(req.body));
     var db = req.db;
     db.collection(coll).find(req.body).toArray(function (err, docs) {
         console.log(JSON.stringify(req.body) + ' found:' + docs.length);
@@ -48,7 +48,7 @@ router.post('/list', function (req, res) {
 });
 
 router.post('/delete', function (req, res) {
-    console.log("deleting " + JSON.stringify(req.body));
+    console.log("deleting " + coll + " " + JSON.stringify(req.body));
     var idToDelete = new mongodb.ObjectID(req.body._id);
     console.log(idToDelete);
     var coll = req.collection;
@@ -64,7 +64,7 @@ router.post('/delete', function (req, res) {
 });
 
 router.post('/update', function (req, res) {
-    console.log("updating " + JSON.stringify(req.body));
+    console.log("updating " + coll + " " + JSON.stringify(req.body));
     var idToUpdate = new mongodb.ObjectID(req.body._id);
     console.log(idToUpdate);
     req.body._id = idToUpdate;

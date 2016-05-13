@@ -19,7 +19,7 @@ export class NewTransactionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.accounts = this._accService.getAllItems()
+        this.accounts = this._accService.getAllItemsCached()
     }
 
     reset() {

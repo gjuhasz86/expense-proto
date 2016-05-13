@@ -23,8 +23,8 @@ export class TransactionComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.accounts = this._accService.getAllItemsCached();
         this.accountName = this.getAccountName(this.tnx.accountId);
-        this.accounts = this._accService.getAllItems()
     }
 
     startEdit():void {
@@ -36,8 +36,8 @@ export class TransactionComponent implements OnInit {
         this.editing = false;
     }
 
-    getAccountName(id:string):Observable<String> {
-        return this._accService.getAllItems()
+    getAccountName(id:string):Observable<string> {
+        return this._accService.getAllItemsCached()
             .map(accs => {
                     let r = accs.filter(acc => (<any>acc)._id == id)
                         .map(acc => acc.name)[0];
@@ -55,4 +55,5 @@ export class TransactionComponent implements OnInit {
     delete(tnx:Transaction):void {
         this._tnxService.deleteItem(tnx);
     }
+
 }
