@@ -14,7 +14,7 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 export class TransactionListComponent implements OnInit {
     transactions:Observable<Transaction[]>;
     page:ReplaySubject<number> = new ReplaySubject<number>(1);
-    limit:number = 20;
+    limit:number = 5;
     pages:Observable<number[]>;
 
     constructor(private _tnxService:TransactionService) {

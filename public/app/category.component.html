@@ -1,0 +1,17 @@
+<div>
+    <div *ngIf="!editing">
+        <button (click)="startEdit()">Edit</button>
+        <button (click)="delete(cat)">Delete</button>
+        <span>{{cat._id}}</span><span>&nbsp;</span>
+        <span>{{cat.shortName}}</span><span>&nbsp;</span>
+        <span>parent:{{cat.parentId}}</span><span>&nbsp;</span>
+        <span>children:{{cat.childrenIds}}</span>
+    </div>
+    <div *ngIf="editing">
+        <button (click)="stopEdit()">Cancel</button>
+        <button (click)="delete(newCat)">Delete</button>
+        <span>{{cat._id}}</span><span>&nbsp;</span>
+        <input [(ngModel)]="newCat.shortName" placeholder="name"/>
+        <button (click)="update(newCat)">Save</button>
+    </div>
+</div>

@@ -21,14 +21,13 @@ router.use(session({secret: 'some secret', resave: true, saveUninitialized: true
 router.use(auth);
 
 router.use("/api", auth.isAuthenticated, function (res, req, next) {
-    // console.log("foooooooo");
-    // console.log(req.user);
     next();
 });
 
 // DB access routes
 router.use('/api/transactions', coll('transactions'), db, transactions, crud);
 router.use('/api/accounts', coll('accounts'), db, crud);
+router.use('/api/categories', coll('categories'), db, crud);
 
 router.get('/debug', function (req, res) {
     console.log("debug");

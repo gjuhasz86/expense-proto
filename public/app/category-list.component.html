@@ -1,0 +1,7 @@
+<button (click)="refresh()">Refresh</button>
+<ul>
+    <li *ngFor="#cat of categories | async">
+        <span>{{cat.shortName}}</span>
+        <category [cat]="cat"></category>
+    </li>
+</ul>

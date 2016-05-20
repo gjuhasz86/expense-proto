@@ -1,13 +1,12 @@
-import {Component, provide, Inject, Optional, OnInit, Input} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {NewTransactionComponent} from "./new-transaction.component";
 import {TransactionListComponent} from "./transaction-list.component";
-import {CrudService, TransactionService, AccountService} from "./crud.service";
-import {Transaction} from "./transaction";
-import {Http, Headers} from "angular2/http";
+import {TransactionService, AccountService, CategoryService} from "./crud.service";
 import {NewAccountComponent} from "./new-account.component";
 import {AccountListComponent} from "./account-list.component";
-import {Account} from "./account";
 import {UserService} from "./user.service";
+import {CategoryListComponent} from "./category-list.component";
+import {NewCategoryComponent} from "./new-category.component";
 
 @Component({
     selector: 'my-app',
@@ -16,11 +15,14 @@ import {UserService} from "./user.service";
         NewTransactionComponent,
         TransactionListComponent,
         NewAccountComponent,
-        AccountListComponent],
+        AccountListComponent,
+        NewCategoryComponent,
+        CategoryListComponent],
     providers: [
         UserService,
         TransactionService,
-        AccountService
+        AccountService,
+        CategoryService
     ]
 })
 export class AppComponent implements OnInit {
