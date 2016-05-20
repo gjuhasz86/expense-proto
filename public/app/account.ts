@@ -4,7 +4,7 @@ export class Account {
     }
 
     public name:string;
-    public initialAmount:number;
+    public initialBalance:number;
     public currency:string;
     public precision:number;
 }

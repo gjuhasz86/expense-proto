@@ -1,5 +1,4 @@
 import {Component, Inject, OnInit} from "angular2/core";
-import {ExpenseService} from "./expense.service";
 import {Transaction} from "./transaction";
 import {CrudService, TransactionService, AccountService} from "./crud.service";
 import {Observable} from "rxjs/Observable";
@@ -13,8 +12,8 @@ export class NewTransactionComponent implements OnInit {
     tnx:Transaction;
     accounts:Observable<Account[]>;
 
-    constructor(@Inject(TransactionService) private _tnxService:CrudService<Transaction>,
-                @Inject(AccountService) private _accService:CrudService<Account>) {
+    constructor(private _tnxService:TransactionService,
+                private _accService:AccountService) {
         this.reset()
     }
 

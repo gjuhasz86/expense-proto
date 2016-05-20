@@ -1,6 +1,6 @@
 import {Component, OnInit, Inject} from "angular2/core";
 import {Observable} from "rxjs/Observable";
-import {CrudService, AccountService} from "./crud.service";
+import {AccountService} from "./crud.service";
 import {Account} from "./account";
 import {AccountComponent} from "./account.component";
 
@@ -12,7 +12,7 @@ import {AccountComponent} from "./account.component";
 export class AccountListComponent implements OnInit {
     accounts:Observable<Account[]>;
 
-    constructor(@Inject(AccountService) private _accService:CrudService<Account>) {
+    constructor(private _accService:AccountService) {
     }
 
     ngOnInit() {

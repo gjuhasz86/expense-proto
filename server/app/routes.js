@@ -5,8 +5,10 @@ var session = require('express-session');
 var passport = require('passport');
 
 var path = require('path');
-var dao = require('./dao');
+var crud = require('./crud');
+var db = require('./db');
 var auth = require('./auth');
+var transactions = require('./transactions');
 
 var router = express.Router();
 
@@ -25,8 +27,8 @@ router.use("/api", auth.isAuthenticated, function (res, req, next) {
 });
 
 // DB access routes
-router.use('/api/transactions', coll('transactions'), dao);
-router.use('/api/accounts', coll('accounts'), dao);
+router.use('/api/transactions', coll('transactions'), db, transactions, crud);
+router.use('/api/accounts', coll('accounts'), db, crud);
 
 router.get('/debug', function (req, res) {
     console.log("debug");

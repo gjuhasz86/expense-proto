@@ -14,6 +14,7 @@
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
     <script src="node_modules/angular2/bundles/http.dev.js"></script>
+    <script src="node_modules/underscore/underscore.js"></script>
     <!-- 2. Configure SystemJS -->
     <script>
         System.config({
@@ -26,6 +27,9 @@
                     format: 'register',
                     defaultExtension: 'js'
                 }
+            },
+            map: {
+                underscore: './node_modules/underscore/underscore.js'
             }
         });
         System.import('js/main')

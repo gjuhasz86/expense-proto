@@ -18,8 +18,8 @@ export class TransactionComponent implements OnInit {
     accountName:Observable<string>;
     accounts:Observable<Account[]>;
 
-    constructor(@Inject(TransactionService) private _tnxService:CrudService<Transaction>,
-                @Inject(AccountService) private _accService:CrudService<Account>) {
+    constructor(private _tnxService:TransactionService,
+                private _accService:AccountService) {
     }
 
     ngOnInit() {

@@ -1,5 +1,6 @@
 <h2>Enter new transaction</h2>
 <div>
+    <input [(ngModel)]="tnx.date" placeholder="date"/>
     <span>{{tnx.accountId}}</span><span>&nbsp;</span>
     <select [(ngModel)]="tnx.accountId">
         <option *ngFor="#a of (accounts | async)" [value]="a._id">{{a.name}}</option>

@@ -2,6 +2,7 @@
     <div *ngIf="!editing">
         <button (click)="startEdit()">Edit</button>
         <button (click)="delete(tnx)">Delete</button>
+        <span>{{tnx.date}}</span><span>&nbsp;</span>
         <span>{{tnx.accountId}}</span><span>&nbsp;</span>
         <span>{{accountName | async}}</span><span>&nbsp;</span>
         <span>{{tnx.description}}</span><span>&nbsp;</span>
@@ -10,6 +11,7 @@
     <div *ngIf="editing">
         <button (click)="stopEdit()">Cancel</button>
         <button (click)="delete(newTnx)">Delete</button>
+        <input [(ngModel)]="newTnx.date" placeholder="date"/>
         <span>{{newTnx.accountId}}</span><span>&nbsp;</span>
         <select [(ngModel)]="newTnx.accountId">
             <option *ngFor="#a of (accounts | async)" [value]="a._id">{{a.name}}</option>

@@ -3,7 +3,10 @@
         <button (click)="startEdit()">Edit</button>
         <button (click)="delete(acc)">Delete</button>
         <span>{{acc._id}}</span><span>&nbsp;</span>
-        <span>{{acc.name}}</span>
+        <span>{{acc.name}}</span><span>&nbsp;</span>
+        <span>Initial balance:{{acc.initialBalance}}</span><span>&nbsp;</span>
+        <span>{{acc.currency}}</span><span>&nbsp;</span>
+        <span>Decimal places: {{acc.precision}}</span>
     </div>
     <div *ngIf="editing">
         <button (click)="stopEdit()">Cancel</button>

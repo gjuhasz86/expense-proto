@@ -2,26 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongodb = require('mongodb');
 
-var dbConf = require('./config/database');
-
 var router = express.Router();
-var mongo = mongodb.MongoClient;
-
-var myDb = undefined;
-mongo.connect(dbConf.url, function (err, db) {
-    if (err) {
-        console.error("Could not initialize database");
-        return console.error(err);
-    } else {
-        console.log("Database has been initialized");
-        myDb = db;
-    }
-});
-
-router.use(function (req, res, next) {
-    req.db = myDb;
-    next();
-});
 
 router.use(bodyParser.json());
 
@@ -31,6 +12,19 @@ router.post('/save', function (req, res) {
     var coll = req.collection;
     var db = req.db;
     db.collection(coll).insertOne(req.body, function (err, result) {
+        console.log(result.ops[0]);
+        res.send(result.ops[0]);
+    });
+});
+
+router.post('/savemany', function (req, res) {
+    req.body.forEach(function (item) {
+        item.owner = req.user.id;
+    });
+    console.log('saving ' + coll + " " + JSON.stringify(req.body));
+    var coll = req.collection;
+    var db = req.db;
+    db.collection(coll).insertMany(req.body, function (err, result) {
         console.log(result.ops[0]);
         res.send(result.ops[0]);
     });

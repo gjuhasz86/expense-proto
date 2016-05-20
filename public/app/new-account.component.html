@@ -1,6 +1,9 @@
 <h2>Enter new account</h2>
 <div>
     <input [(ngModel)]="acc.name" placeholder="description"/>
+    <input [(ngModel)]="acc.initialBalance" placeholder="initial balance"/>
+    <input [(ngModel)]="acc.currency" placeholder="currency"/>
+    <input [(ngModel)]="acc.precision" placeholder="number of decimal places"/>
     <button (click)="save()">Save</button>
     <button (click)="reset()">Reset</button>
 </div>

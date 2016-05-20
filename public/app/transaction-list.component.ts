@@ -1,10 +1,10 @@
 import {Component, OnInit, Inject} from "angular2/core";
-import {ExpenseService} from "./expense.service";
 import {TransactionComponent} from "./transaction.component";
 import {Observable} from "rxjs/Observable";
 import {Transaction} from "./transaction";
-import {CrudService, TransactionService, AccountService} from "./crud.service";
-import {Account} from "./account";
+import {TransactionService} from "./crud.service";
+import * as _ from 'underscore';
+import {ReplaySubject} from "rxjs/ReplaySubject";
 
 @Component({
     selector: 'transaction-list',
@@ -13,18 +13,32 @@ import {Account} from "./account";
 })
 export class TransactionListComponent implements OnInit {
     transactions:Observable<Transaction[]>;
-    transactions2:Observable<Transaction[]>;
+    page:ReplaySubject<number> = new ReplaySubject<number>(1);
+    limit:number = 20;
+    pages:Observable<number[]>;
 
-    constructor(@Inject(TransactionService) private _tnxService:CrudService<Transaction>) {
+    constructor(private _tnxService:TransactionService) {
     }
 
     ngOnInit() {
-        this.transactions = this._tnxService.getAllItemsCached();
-        this.transactions2 = this._tnxService
-            .getFilteredItems({accountId: "572fae7d0bb7f3e81c468b44"});
+        this.transactions = this._tnxService.getPage(this.page, this.limit, "date", "desc");
+        this.page.next(1);
+        this.pages = this.genPages();
     }
 
     refresh() {
         this._tnxService.refresh();
+    }
+
+    genPages():Observable < number[] > {
+        return this.page.map(p=> {
+            let first = Math.max(1, p - 2);
+            let last = first + 5;
+            return _.range(first, last)
+        })
+    }
+
+    setPage(p:number) {
+        this.page.next(p);
     }
 }

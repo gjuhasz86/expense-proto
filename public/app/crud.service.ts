@@ -4,13 +4,9 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {Transaction} from "./transaction";
 import 'rxjs/Rx';
-import {BehaviorSubject} from "rxjs/Rx";
 import {ReplaySubject} from "rxjs/ReplaySubject";
-
-export class TransactionService {
-}
-export class AccountService {
-}
+import {Account} from "./account";
+import {Category} from "./category";
 
 @Injectable()
 export class CrudService<T> {
@@ -18,7 +14,7 @@ export class CrudService<T> {
     private _headers:Headers;
     private allItems:ReplaySubject<T[]> = new ReplaySubject<T[]>(1);
 
-    constructor(private collection:String, private _http:Http) {
+    constructor(private collection:String, protected _http:Http) {
         console.log("crudservice constructor");
         this._headers = new Headers();
         this._headers.append('Content-Type', 'application/json');
@@ -43,6 +39,17 @@ export class CrudService<T> {
     getFilteredItems(filter:any):Observable<T[]> {
         return this.events.map(x=>`/api/${this.collection}/list`)
             .flatMap((url:string) => this._http.post(url, JSON.stringify(filter), {headers: this._headers}))
+            .map((res:Response) => res.json());
+    }
+
+    getPage(page:Observable<number>, limit:number, sortBy:string, order:string):Observable<T[]> {
+        let source = Observable.combineLatest(page, this.events.startWith(true));
+        return source.map(ev=> {
+            let page = ev[0];
+            let skip = limit * (page - 1);
+            return `/api/${this.collection}/search?skip=${skip}&limit=${limit}&sort=${sortBy}&order=${order}`
+        })
+            .flatMap((url:string) => this._http.get(url))
             .map((res:Response) => res.json());
     }
 
@@ -93,3 +100,25 @@ export class CrudService<T> {
             });
     }
 }
+
+@Injectable()
+export class TransactionService extends CrudService<Transaction> {
+    constructor(protected _http:Http) {
+        super("transactions", _http);
+    }
+}
+
+@Injectable()
+export class AccountService extends CrudService<Account> {
+    constructor(protected _http:Http) {
+        super("accounts", _http);
+    }
+}
+
+@Injectable()
+export class CategoryService extends CrudService<Category> {
+    constructor(protected _http:Http) {
+        super("categories", _http);
+    }
+}
+

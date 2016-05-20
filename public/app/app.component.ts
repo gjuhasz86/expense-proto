@@ -19,18 +19,8 @@ import {UserService} from "./user.service";
         AccountListComponent],
     providers: [
         UserService,
-        provide(TransactionService, {
-            useFactory: (http:Http) => {
-                return new CrudService<Transaction>("transactions", http);
-            },
-            deps: [Http]
-        }),
-        provide(AccountService, {
-            useFactory: (http:Http) => {
-                return new CrudService<Account>("accounts", http);
-            },
-            deps: [Http]
-        })
+        TransactionService,
+        AccountService
     ]
 })
 export class AppComponent implements OnInit {

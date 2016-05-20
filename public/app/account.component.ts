@@ -12,7 +12,7 @@ export class AccountComponent {
     newAcc:Account;
     editing:boolean = false;
 
-    constructor(@Inject(AccountService) private _accService:CrudService<Account>) {
+    constructor(private _accService:AccountService) {
     }
 
     startEdit():void {

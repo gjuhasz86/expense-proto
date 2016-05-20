@@ -1,5 +1,5 @@
-import {Component, Inject, OnInit} from "angular2/core";
-import {CrudService, AccountService} from "./crud.service";
+import {Component} from "angular2/core";
+import {AccountService} from "./crud.service";
 import {Account} from "./account";
 
 @Component({
@@ -9,7 +9,7 @@ import {Account} from "./account";
 export class NewAccountComponent {
     acc:Account;
 
-    constructor(@Inject(AccountService) private _accService:CrudService<Account>) {
+    constructor(private _accService:AccountService) {
         this.reset()
     }
 
