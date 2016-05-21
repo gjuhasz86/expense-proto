@@ -16,7 +16,7 @@ export class CategoryListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.categories = this._catService.getAllItemsCached();
+        this.categories = this._catService.getAllInflatedCategories();
     }
 
     refresh() {

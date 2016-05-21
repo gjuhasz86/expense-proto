@@ -120,5 +120,66 @@ export class CategoryService extends CrudService<Category> {
     constructor(protected _http:Http) {
         super("categories", _http);
     }
+
+    getAllInflatedCategories():Observable<Category[]> {
+        return this.getAllItemsCached().map(cats=> {
+            console.log("inflating3");
+            console.log(cats);
+            let catMap:{[id:string]:Category;} = this.idMap(cats);
+            return cats
+                .map(cat=> {
+                    cat.children = [];
+                    return cat;
+                })
+                .map(cat=>this.inflateOne(cat, catMap))
+                .map((cat:Category)=> {
+                    console.log("genname01");
+                    return this.genName(cat);
+                });
+        });
+    }
+
+    private idMap(categories:Category[]):{[id:string]:Category;} {
+        let res:{[id:string]:Category;} = {};
+        categories.forEach(cat => res[cat._id] = cat);
+        return res;
+    }
+
+    private inflateOne(cat:Category, categories:{[id:string]:Category;}):Category {
+        let parent:Category = categories[cat.parentId];
+        cat.parent = parent;
+        if (parent != undefined) {
+            console.log('inflating parent');
+            console.log(parent);
+            parent.children.push(cat);
+        }
+        return cat;
+    }
+
+    public genName(cat:Category):Category {
+        if (!cat.name) {
+            let parentName = "";
+            if (cat.parent) {
+                this.genName(cat.parent);
+                cat.name = `${cat.parent.name} > ${cat.shortName}`;
+            } else {
+                cat.name = cat.shortName;
+            }
+        }
+        return cat;
+    }
+
+    saveItem(cat:Category):void {
+        delete cat.parent;
+        delete cat.children;
+        super.saveItem(cat);
+    }
+
+    updateItem(cat:Category):void {
+        delete cat.parent;
+        delete cat.children;
+        
+        super.updateItem(cat);
+    }
 }
 

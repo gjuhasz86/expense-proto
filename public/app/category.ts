@@ -2,7 +2,7 @@ export class Category {
     _id:string;
     shortName:string;
     parentId:string;
-    childrenIds:string[];
-    parents:Category[];
+    parent:Category;
     children:Category[];
+    name:string;
 }

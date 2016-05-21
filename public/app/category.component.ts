@@ -17,7 +17,11 @@ export class CategoryComponent {
     }
 
     startEdit():void {
-        this.newCat = JSON.parse(JSON.stringify(this.cat));
+        this.newCat = <Category>{
+            _id: this.cat._id,
+            shortName: this.cat.shortName,
+            parentId: this.cat.parentId
+        };
         this.editing = true;
     }
 
