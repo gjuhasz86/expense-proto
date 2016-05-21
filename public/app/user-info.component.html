@@ -6,7 +6,7 @@
     </form>
 </div>
 <div *ngIf="user | async">
-    <div>Logged in as: {{user.username}}
+    <div>Logged in as: {{(user | async).username}}
         <button (click)="logout()">logout</button>
     </div>
 </div>
