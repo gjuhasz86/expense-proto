@@ -1,3 +1,5 @@
+<h3>Transaction</h3>
+<new-transaction></new-transaction>
 <button (click)="refresh()">Refresh</button>
 <span *ngFor="#p of pages | async">
     <span *ngIf="p==(page |async)">{{p}}</span>

@@ -1,15 +1,18 @@
-import {Component, OnInit, Inject} from "angular2/core";
+import {Component, OnInit, Inject} from "@angular/core";
 import {TransactionComponent} from "./transaction.component";
 import {Observable} from "rxjs/Observable";
 import {Transaction} from "./transaction";
 import {TransactionService} from "./crud.service";
 import * as _ from 'underscore';
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {NewTransactionComponent} from "./new-transaction.component";
 
 @Component({
     selector: 'transaction-list',
     templateUrl: 'app/transaction-list.component.html',
-    directives: [TransactionComponent]
+    directives: [
+        NewTransactionComponent,
+        TransactionComponent]
 })
 export class TransactionListComponent implements OnInit {
     transactions:Observable<Transaction[]>;

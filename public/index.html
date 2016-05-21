@@ -4,17 +4,15 @@
     <title>Angular 2 QuickStart</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- 1. Load libraries -->
-    <!-- IE required polyfills, in this exact order -->
+    <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
 
-    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
-    <script src="node_modules/angular2/bundles/http.dev.js"></script>
     <script src="node_modules/underscore/underscore.js"></script>
+
     <!-- 2. Configure SystemJS -->
     <script>
         System.config({
@@ -26,10 +24,24 @@
                 js: {
                     format: 'register',
                     defaultExtension: 'js'
-                }
+                },
+                "@angular/common": {main: 'common.umd.js', defaultExtension: 'js'},
+                "@angular/compiler": {main: 'compiler.umd.js', defaultExtension: 'js'},
+                "@angular/core": {main: 'core.umd.js', defaultExtension: 'js'},
+                "@angular/http": {main: 'http.umd.js', defaultExtension: 'js'},
+                "@angular/platform-browser": {main: 'platform-browser.umd.js', defaultExtension: 'js'},
+                "@angular/platform-browser-dynamic": {main: 'platform-browser-dynamic.umd.js', defaultExtension: 'js'},
+                "@angular/router": {main: 'router.umd.js', defaultExtension: 'js'}
             },
             map: {
-                underscore: './node_modules/underscore/underscore.js'
+                underscore: './node_modules/underscore/underscore.js',
+                "@angular/common": './node_modules/@angular/common',
+                "@angular/compiler": './node_modules/@angular/compiler',
+                "@angular/core": './node_modules/@angular/core',
+                "@angular/http": './node_modules/@angular/http',
+                "@angular/platform-browser": './node_modules/@angular/platform-browser',
+                "@angular/platform-browser-dynamic": './node_modules/@angular/platform-browser-dynamic',
+                "@angular/router": './node_modules/@angular/router'
             }
         });
         System.import('js/main')

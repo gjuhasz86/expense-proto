@@ -1,0 +1,12 @@
+<div *ngIf="!(user | async)">
+    <form>
+        <input type="text" [(ngModel)]="loginData.username" placeholder="username"/>
+        <input type="password" [(ngModel)]="loginData.password" placeholder="password"/>
+        <button type="submit" (click)="login()">Login</button>
+    </form>
+</div>
+<div *ngIf="user | async">
+    <div>Logged in as: {{user.username}}
+        <button (click)="logout()">logout</button>
+    </div>
+</div>

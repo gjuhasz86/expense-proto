@@ -1,4 +1,4 @@
-import {Input, Component, Inject} from "angular2/core";
+import {Input, Component, Inject} from "@angular/core";
 import {CrudService, AccountService, CategoryService} from "./crud.service";
 import {Account} from "./account";
 import {Category} from "./category";
