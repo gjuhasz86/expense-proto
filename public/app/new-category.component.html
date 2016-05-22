@@ -1,6 +1,6 @@
-<div>
-    <input [(ngModel)]="cat.shortName" placeholder="name"/>
-    <input [(ngModel)]="cat.parentId" placeholder="parentId"/>
-    <button (click)="save()">Save</button>
-    <button (click)="reset()">Reset</button>
-</div>
+<form class="form-inline">
+    <input class="form-control" [(ngModel)]="cat.shortName" placeholder="name"/>
+    <input class="form-control" [(ngModel)]="cat.parentId" placeholder="parentId"/>
+    <button class="form-control btn-primary" (click)="save()">Save</button>
+    <button class="form-control btn-danger" (click)="reset()">Reset</button>
+</form>

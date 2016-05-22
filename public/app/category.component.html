@@ -1,18 +1,20 @@
-<div>
-    <div *ngIf="!editing">
-        <button (click)="startEdit()">Edit</button>
-        <button (click)="delete(cat)">Delete</button>
-        <span>{{cat._id}}</span><span>&nbsp;</span>
-        <span>{{cat.name}}</span><span>&nbsp;</span>
-        <span>children: </span>
-        <span *ngFor="#c of cat.children">{{c.shortName}}</span>
-    </div>
-    <div *ngIf="editing">
-        <button (click)="stopEdit()">Cancel</button>
-        <button (click)="delete(newCat)">Delete</button>
-        <span>{{cat._id}}</span><span>&nbsp;</span>
-        <input [(ngModel)]="newCat.shortName" placeholder="name"/>
-        <input [(ngModel)]="newCat.parentId" placeholder="parentId"/>
-        <button (click)="update(newCat)">Save</button>
-    </div>
-</div>
+<template [ngIf]="!editing">
+    <td>{{cat._id}}</td>
+    <td>{{cat.name}}</td>
+    <td>
+        <div class="inline" *ngFor="#c of cat.children">{{c.shortName}}</div>
+    </td>
+    <td class="text-nowrap">
+        <button class="btn btn-xs btn-default" (click)="startEdit()">Edit</button>
+    </td>
+</template>
+<template [ngIf]="editing">
+    <td>{{cat._id}}</td>
+    <td><input class="form-control" [(ngModel)]="newCat.shortName" placeholder="name"/></td>
+    <td><input class="form-control" [(ngModel)]="newCat.parentId" placeholder="parentId"/></td>
+    <td class="text-nowrap">
+        <button class="btn btn-danger" (click)="delete(newCat)">Delete</button>
+        <button class="btn btn-primary" (click)="update(newCat)">Save</button>
+        <button class="btn btn-default" (click)="stopEdit()">Cancel</button>
+    </td>
+</template>

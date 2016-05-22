@@ -3,7 +3,7 @@ import {CrudService, AccountService} from "./crud.service";
 import {Account} from "./account";
 
 @Component({
-    selector: 'account',
+    selector: '[account]',
     templateUrl: 'app/account.component.html',
 })
 export class AccountComponent {

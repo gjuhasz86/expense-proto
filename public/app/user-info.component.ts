@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {UserService} from "./user.service";
 import {Observable} from "rxjs/Observable";
-import {Router} from '@angular/router';
+import {Router} from '@angular/router-deprecated';
 
 @Component({
     selector: 'user-info',
@@ -18,7 +18,6 @@ export class UserInfoComponent implements OnInit {
     ngOnInit() {
         console.log("user-info component");
         this.user = this._userService.currentUser()
-            .startWith(undefined)
             .map(
                 res => {
                     if (res) {
@@ -27,14 +26,14 @@ export class UserInfoComponent implements OnInit {
                     }
                     else {
                         console.log("user-info: not logged in, navigating to login");
-                        this.router.navigate(['/login']);
+                        this.router.navigate(['Login']);
                         return undefined;
                     }
                 },
                 err => {
                     console.log("user-info: err response");
                     console.log(err);
-                    this.router.navigate(['/login']);
+                    this.router.navigate(['Login']);
                     return undefined;
                 });
     }

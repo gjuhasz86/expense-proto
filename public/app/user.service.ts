@@ -7,6 +7,7 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 export class UserService {
     private _headers:Headers;
     private user:ReplaySubject<any> = new ReplaySubject<any>(1);
+    private loggedIn:boolean = false;
 
     constructor(private _http:Http) {
         this._headers = new Headers();
@@ -21,11 +22,20 @@ export class UserService {
                 });
         this.user.subscribe(res=> {
             console.log("user change: " + res);
+            if (res) {
+                this.loggedIn = true;
+            } else {
+                this.loggedIn = false;
+            }
         })
     }
 
     currentUser():Observable<any> {
         return this.user;
+    }
+
+    isLoggedIn():boolean {
+        return this.loggedIn;
     }
 
     login(loginData:any):void {

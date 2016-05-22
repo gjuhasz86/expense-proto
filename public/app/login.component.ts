@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {UserService} from "./user.service";
-import {Router} from '@angular/router';
+import {Router} from '@angular/router-deprecated';
 import {Observable} from "rxjs/Observable";
 
 @Component({
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
         this.user = this._userService.currentUser();
         this.user.subscribe(res => {
             if (res) {
-                this.router.navigate(['/transactions'])
+                this.router.navigate(['Transactions'])
             }
         })
     }

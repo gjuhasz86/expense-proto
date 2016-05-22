@@ -4,7 +4,7 @@ import {Account} from "./account";
 import {Category} from "./category";
 
 @Component({
-    selector: 'category',
+    selector: '[category]',
     templateUrl: 'app/category.component.html',
 })
 export class CategoryComponent {

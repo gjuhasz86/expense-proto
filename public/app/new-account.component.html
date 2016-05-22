@@ -1,8 +1,10 @@
-<div>
-    <input [(ngModel)]="acc.name" placeholder="description"/>
-    <input [(ngModel)]="acc.initialBalance" placeholder="initial balance"/>
-    <input [(ngModel)]="acc.currency" placeholder="currency"/>
-    <input [(ngModel)]="acc.precision" placeholder="number of decimal places"/>
-    <button (click)="save()">Save</button>
-    <button (click)="reset()">Reset</button>
-</div>
+<form class="form-inline">
+    <input class="form-control col-sm-1" [(ngModel)]="acc.name" placeholder="name"/>
+    <input class="form-control col-sm-1" [(ngModel)]="acc.initialBalance" placeholder="initial balance"/>
+    <input class="form-control col-sm-1" [(ngModel)]="acc.currency" placeholder="currency"/>
+    <input class="form-control col-sm-1" [(ngModel)]="acc.precision" placeholder="number of decimal places"/>
+    <div class="form-group col-sm-1 text-nowrap">
+        <button class="form-control btn-primary" (click)="save()">Save</button>
+        <button class="form-control btn-danger" (click)="reset()">Reset</button>
+    </div>
+</form>

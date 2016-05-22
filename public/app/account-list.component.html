@@ -1,9 +1,29 @@
-<h3>Account</h3>
-<new-account></new-account>
-<button (click)="refresh()">Refresh</button>
-<ul>
-    <li *ngFor="#acc of accounts | async">
-        <span>{{acc.name}}</span>
-        <account [acc]="acc"></account>
-    </li>
-</ul>
+<div class="content">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Accounts
+            </div>
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <new-account></new-account>
+                    </div>
+                </div>
+                <table class="table table-condensed table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-nowrap col-sm-2">Id</th>
+                        <th class="text-nowrap col-sm-4">Name</th>
+                        <th class="text-nowrap col-sm-2">Initial balance</th>
+                        <th class="text-nowrap col-sm-2">Currency</th>
+                        <th class="text-nowrap col-sm-2">Decimal places</th>
+                        <th class="text-nowrap"></th>
+                    </tr>
+                    </thead>
+                    <tr account *ngFor="#acc of accounts | async" [acc]="acc"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

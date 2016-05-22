@@ -1,18 +1,22 @@
-<div>
-    <div *ngIf="!editing">
-        <button (click)="startEdit()">Edit</button>
-        <button (click)="delete(acc)">Delete</button>
-        <span>{{acc._id}}</span><span>&nbsp;</span>
-        <span>{{acc.name}}</span><span>&nbsp;</span>
-        <span>Initial balance:{{acc.initialBalance}}</span><span>&nbsp;</span>
-        <span>{{acc.currency}}</span><span>&nbsp;</span>
-        <span>Decimal places: {{acc.precision}}</span>
-    </div>
-    <div *ngIf="editing">
-        <button (click)="stopEdit()">Cancel</button>
-        <button (click)="delete(newAcc)">Delete</button>
-        <span>{{acc._id}}</span><span>&nbsp;</span>
-        <input [(ngModel)]="newAcc.name" placeholder="name"/>
-        <button (click)="update(newAcc)">Save</button>
-    </div>
-</div>
+<template [ngIf]="!editing">
+    <td>{{acc._id}}</td>
+    <td class="text-nowrap">{{acc.name}}</td>
+    <td>{{acc.initialBalance}}</td>
+    <td>{{acc.currency}}</td>
+    <td>{{acc.precision}}</td>
+    <td class="text-nowrap">
+        <button class="btn btn-xs btn-default" (click)="startEdit()">Edit</button>
+    </td>
+</template>
+<template [ngIf]="editing">
+    <td>{{acc._id}}</td>
+    <td><input class="form-control" [(ngModel)]="newAcc.name" placeholder="name"/></td>
+    <td><input class="form-control" [(ngModel)]="newAcc.initialBalance" placeholder="Initial balance"/></td>
+    <td><input class="form-control" [(ngModel)]="newAcc.currency" placeholder="currency"/></td>
+    <td><input class="form-control" [(ngModel)]="newAcc.precision" placeholder="Decimal places"/></td>
+    <td class="text-nowrap">
+        <button class="btn btn-danger" (click)="delete(newAcc)">Delete</button>
+        <button class="btn btn-primary" (click)="update(newAcc)">Save</button>
+        <button class="btn btn-default" (click)="stopEdit()">Cancel</button>
+    </td>
+</template>

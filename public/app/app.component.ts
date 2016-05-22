@@ -1,15 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {NewTransactionComponent} from "./new-transaction.component";
+import {Component, OnInit} from "@angular/core";
 import {TransactionListComponent} from "./transaction-list.component";
 import {TransactionService, AccountService, CategoryService} from "./crud.service";
-import {NewAccountComponent} from "./new-account.component";
 import {AccountListComponent} from "./account-list.component";
 import {UserService} from "./user.service";
 import {CategoryListComponent} from "./category-list.component";
-import {NewCategoryComponent} from "./new-category.component";
-import {Router, Routes, ROUTER_DIRECTIVES} from '@angular/router';
+import {Router, RouteConfig, ROUTER_DIRECTIVES, RouterOutlet} from "@angular/router-deprecated";
 import {LoginComponent} from "./login.component";
 import {UserInfoComponent} from "./user-info.component";
+import {LoggedInRouterOutletDirective} from "./logged-in-router-outlet.directive";
 
 @Component({
     selector: 'my-app',
@@ -20,7 +18,9 @@ import {UserInfoComponent} from "./user-info.component";
         TransactionListComponent,
         AccountListComponent,
         CategoryListComponent,
-        ROUTER_DIRECTIVES],
+        ROUTER_DIRECTIVES.filter(d=>d != RouterOutlet),
+        LoggedInRouterOutletDirective,
+    ],
     providers: [
         UserService,
         TransactionService,
@@ -28,11 +28,12 @@ import {UserInfoComponent} from "./user-info.component";
         CategoryService
     ]
 })
-@Routes([
-    {path: '/login', component: LoginComponent},
-    {path: '/accounts', component: AccountListComponent},
-    {path: '/categories', component: CategoryListComponent},
-    {path: '/transactions', component: TransactionListComponent}
+@RouteConfig([
+    {path: '/login', name: 'Login', component: LoginComponent},
+    {path: '/accounts', name: 'Accounts', component: AccountListComponent},
+    {path: '/categories', name: 'Categories', component: CategoryListComponent},
+    {path: '/transactions', name: 'Transactions', component: TransactionListComponent},
+    {path: '', component: TransactionListComponent}
 ])
 export class AppComponent implements OnInit {
 
@@ -41,14 +42,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this._userService.currentUser()
-        //     .subscribe(res=> {
-        // this.router.navigate(['/transactions']);
-        // }, err => {
-        //     console.log(err);
-        //     this.router.navigate(['/login']);
-        // });
-
     }
 
 }

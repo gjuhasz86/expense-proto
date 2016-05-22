@@ -21,7 +21,7 @@ export class TransactionListComponent implements OnInit {
     transactions:Observable<Transaction[]>;
     page:number;
     pageSubj:ReplaySubject<number> = new ReplaySubject<number>(1);
-    limit:number = 5;
+    limit:number = 20;
     pages:Observable<number[]>;
 
     constructor(private _tnxService:TransactionService) {

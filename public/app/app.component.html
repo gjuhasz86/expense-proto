@@ -1,11 +1,24 @@
-<h1>My First Angular 2 App2</h1>
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>Expense manager</h1>
+    </div>
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <user-info></user-info>
+                </li>
+                <li><a [routerLink]="['Accounts']">Accounts</a></li>
+                <li><a [routerLink]="['Categories']">Categories</a></li>
+                <li><a [routerLink]="['Transactions']">Transactions</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-8">
 
-<nav>
-    <a [routerLink]="['/accounts']">Accounts</a>
-    <a [routerLink]="['/categories']">Categories</a>
-    <a [routerLink]="['/transactions']">Transactions</a>
-</nav>
+            <router-outlet protected></router-outlet>
+        </div>
+    </div>
+</div>
 
-<user-info></user-info>
-<router-outlet></router-outlet>
+
 
