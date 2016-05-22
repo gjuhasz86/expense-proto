@@ -6,17 +6,21 @@ import {TransactionService} from "./crud.service";
 import * as _ from 'underscore';
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {NewTransactionComponent} from "./new-transaction.component";
+import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap'
 
 @Component({
     selector: 'transaction-list',
     templateUrl: 'app/transaction-list.component.html',
     directives: [
         NewTransactionComponent,
-        TransactionComponent]
+        TransactionComponent,
+        PAGINATION_DIRECTIVES
+    ]
 })
 export class TransactionListComponent implements OnInit {
     transactions:Observable<Transaction[]>;
-    page:ReplaySubject<number> = new ReplaySubject<number>(1);
+    page:number;
+    pageSubj:ReplaySubject<number> = new ReplaySubject<number>(1);
     limit:number = 5;
     pages:Observable<number[]>;
 
@@ -24,8 +28,8 @@ export class TransactionListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.transactions = this._tnxService.getPage(this.page, this.limit, "date", "desc");
-        this.page.next(1);
+        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc");
+        this.pageSubj.next(1);
         this.pages = this.genPages();
     }
 
@@ -34,14 +38,14 @@ export class TransactionListComponent implements OnInit {
     }
 
     genPages():Observable < number[] > {
-        return this.page.map(p=> {
+        return this.pageSubj.map(p=> {
             let first = Math.max(1, p - 2);
             let last = first + 5;
             return _.range(first, last)
         })
     }
 
-    setPage(p:number) {
-        this.page.next(p);
+    setPage(p:any) {
+        this.pageSubj.next(p.page);
     }
 }

@@ -31,7 +31,7 @@ import {UserInfoComponent} from "./user-info.component";
 @Routes([
     {path: '/login', component: LoginComponent},
     {path: '/accounts', component: AccountListComponent},
-    {path: '/category', component: CategoryListComponent},
+    {path: '/categories', component: CategoryListComponent},
     {path: '/transactions', component: TransactionListComponent}
 ])
 export class AppComponent implements OnInit {

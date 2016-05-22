@@ -1,5 +1,11 @@
 <h1>My First Angular 2 App2</h1>
 
+<nav>
+    <a [routerLink]="['/accounts']">Accounts</a>
+    <a [routerLink]="['/categories']">Categories</a>
+    <a [routerLink]="['/transactions']">Transactions</a>
+</nav>
+
 <user-info></user-info>
 <router-outlet></router-outlet>
 

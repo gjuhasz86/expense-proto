@@ -13,6 +13,7 @@
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
     <script src="node_modules/underscore/underscore.js"></script>
+    <script src="node_modules/ng2-bootstrap/bundles/ng2-bootstrap.js"></script>
 
     <!-- 2. Configure SystemJS -->
     <script>
@@ -35,14 +36,16 @@
                 "@angular/router": {main: 'router.umd.js', defaultExtension: 'js'}
             },
             map: {
-                underscore: './node_modules/underscore/underscore.js',
                 "@angular/common": './node_modules/@angular/common',
                 "@angular/compiler": './node_modules/@angular/compiler',
                 "@angular/core": './node_modules/@angular/core',
                 "@angular/http": './node_modules/@angular/http',
                 "@angular/platform-browser": './node_modules/@angular/platform-browser',
                 "@angular/platform-browser-dynamic": './node_modules/@angular/platform-browser-dynamic',
-                "@angular/router": './node_modules/@angular/router'
+                "@angular/router": './node_modules/@angular/router',
+                moment: './node_modules/moment/moment.js',
+                "@angular/core/src/facade/lang": "./node_modules/@angular/core/src/facade/lang.js",
+                underscore: './node_modules/underscore/underscore.js'
             }
         });
         System.import('js/main')

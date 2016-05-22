@@ -1,12 +1,13 @@
 <h3>Transaction</h3>
 <new-transaction></new-transaction>
 <button (click)="refresh()">Refresh</button>
-<span *ngFor="#p of pages | async">
-    <span *ngIf="p==(page |async)">{{p}}</span>
-    <span *ngIf="p!=(page |async)">
-     <button (click)="setPage(p)">{{p}}</button>
-    </span>
-</span>
+<pagination
+        [maxSize]="5"
+        [itemsPerPage]="limit"
+        [totalItems]="500"
+        [boundaryLinks]="true"
+        [(ngModel)]="page"
+        (pageChanged)="setPage($event)"></pagination>
 <table class="table">
     <thead>
     <tr>
