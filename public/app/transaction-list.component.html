@@ -7,9 +7,16 @@
      <button (click)="setPage(p)">{{p}}</button>
     </span>
 </span>
-<ul>
-    <li *ngFor="#tnx of transactions | async">
-        <span>{{tnx.description}}</span>
-        <transaction [tnx]="tnx"></transaction>
-    </li>
-</ul>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Account</th>
+        <th>AccountId</th>
+        <th>Amount</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tr transaction *ngFor="#tnx of transactions | async" [tnx]="tnx"></tr>
+</table>

@@ -5,7 +5,7 @@ import {Account} from "./account";
 import {Observable} from "rxjs/Observable";
 
 @Component({
-    selector: 'transaction',
+    selector: '[transaction]',
     templateUrl: 'app/transaction.component.html',
 })
 export class TransactionComponent implements OnInit {
