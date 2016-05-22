@@ -1,8 +1,8 @@
 <template [ngIf]="!editing">
     <td class="text-nowrap">{{tnx.date}}</td>
     <td>{{tnx.description}}</td>
-    <td>{{accountName | async}}</td>
-    <td>{{tnx.amount}}</td>
+    <td class="text-nowrap">{{accountName | async}}</td>
+    <td class="text-nowrap">{{tnx.amount}}</td>
     <td class="text-nowrap">
         <button class="btn btn-xs btn-default" (click)="startEdit()">Edit</button>
     </td>

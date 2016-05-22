@@ -23,6 +23,7 @@ export class TransactionListComponent implements OnInit {
     pageSubj:ReplaySubject<number> = new ReplaySubject<number>(1);
     limit:number = 20;
     pages:Observable<number[]>;
+    numOfTnxs:Observable<number>;
 
     constructor(private _tnxService:TransactionService) {
     }
@@ -31,6 +32,7 @@ export class TransactionListComponent implements OnInit {
         this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc");
         this.pageSubj.next(1);
         this.pages = this.genPages();
+        this.numOfTnxs = this._tnxService.getCount();
     }
 
     refresh() {

@@ -3,6 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 Transactions
+                <div class="badge">{{numOfTnxs|async}}</div>
             </div>
             <div class="panel-body">
                 <div class="panel panel-default">
@@ -14,7 +15,7 @@
                     <pagination class="pagination-sm"
                                 [maxSize]="10"
                                 [itemsPerPage]="limit"
-                                [totalItems]="500"
+                                [totalItems]="numOfTnxs|async"
                                 [boundaryLinks]="true"
                                 [(ngModel)]="page"
                                 (pageChanged)="setPage($event)"></pagination>
@@ -35,7 +36,7 @@
                     <pagination class="pagination-lg"
                                 [maxSize]="10"
                                 [itemsPerPage]="limit"
-                                [totalItems]="500"
+                                [totalItems]="numOfTnxs|async"
                                 [boundaryLinks]="true"
                                 [(ngModel)]="page"
                                 (pageChanged)="setPage($event)"></pagination>

@@ -10,7 +10,7 @@ import {Category} from "./category";
 
 @Injectable()
 export class CrudService<T> {
-    private events:Subject<boolean> = new Subject<boolean>();
+    private events:ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     private _headers:Headers;
     private allItems:ReplaySubject<T[]> = new ReplaySubject<T[]>(1);
 
@@ -28,6 +28,17 @@ export class CrudService<T> {
 
     getAllItemsCached():Observable<T[]> {
         return this.allItems;
+    }
+
+    getCount():Observable<number> {
+        return this.events.map(x=>`/api/${this.collection}/size`)
+            .flatMap((url:string) => this._http.get(url))
+            .map((res:Response) => res.json())
+            .map(res=> {
+                console.log("count returned");
+                console.log(res);
+                return res.count
+            })
     }
 
     getAllItems():Observable<T[]> {
@@ -178,7 +189,7 @@ export class CategoryService extends CrudService<Category> {
     updateItem(cat:Category):void {
         delete cat.parent;
         delete cat.children;
-        
+
         super.updateItem(cat);
     }
 }

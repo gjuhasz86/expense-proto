@@ -80,4 +80,17 @@ router.get('/search', function (req, res) {
         });
 });
 
+router.get('/size', function (req, res) {
+    var q = req.query;
+    defaultQuery(q);
+    q.filter.owner = req.user.id;
+    var coll = req.collection;
+    console.log("counting " + coll + " " + JSON.stringify(req.query));
+    req.db.collection(coll).find(q.filter).sort(q.sort)
+        .count(false, {}, function (err, docs) {
+            console.log(JSON.stringify(req.query) + ' found:' + docs);
+            res.send({count: docs});
+        });
+});
+
 module.exports = router;
