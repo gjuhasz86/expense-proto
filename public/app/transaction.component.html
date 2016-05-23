@@ -1,5 +1,5 @@
 <template [ngIf]="!editing">
-    <td class="text-nowrap">{{tnx.date}}</td>
+    <td class="text-nowrap">{{tnx.date | date:'yyyy-MM-dd HH:mm'}}</td>
     <td>{{tnx.description}}</td>
     <td class="text-nowrap">{{accountName | async}}</td>
     <td class="text-nowrap">{{tnx.amount}}</td>

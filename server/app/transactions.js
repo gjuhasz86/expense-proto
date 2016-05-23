@@ -9,7 +9,7 @@ function validSort(sortField) {
     return !(['date', 'amount', '_id'].indexOf(sortField) == -1);
 }
 
-function defaultQuery(q) {
+function defaultSearchQuery(q) {
     var order = 1;
     if (q.order == 'asc') {
         order = 1;
@@ -69,7 +69,7 @@ function defaultQuery(q) {
 
 router.get('/search', function (req, res) {
     var q = req.query;
-    defaultQuery(q);
+    defaultSearchQuery(q);
     q.filter.owner = req.user.id;
     var coll = req.collection;
     console.log("querying " + coll + " " + JSON.stringify(req.query));
@@ -82,12 +82,23 @@ router.get('/search', function (req, res) {
 
 router.get('/size', function (req, res) {
     var q = req.query;
-    defaultQuery(q);
+    defaultSearchQuery(q);
     q.filter.owner = req.user.id;
     var coll = req.collection;
     console.log("counting " + coll + " " + JSON.stringify(req.query));
     req.db.collection(coll).find(q.filter).sort(q.sort)
         .count(false, {}, function (err, docs) {
+            console.log(JSON.stringify(req.query) + ' found:' + docs);
+            res.send({count: docs});
+        });
+});
+
+router.get('/stats/daily', function (req, res) {
+    var q = req.query;
+    q.filter.owner = req.user.id;
+    var coll = req.collection;
+    req.db.collection(coll).aggregate({$group: {_id: "date", sum: {$sum: "$amount"}}})
+        .toArray(false, {}, function (err, docs) {
             console.log(JSON.stringify(req.query) + ' found:' + docs);
             res.send({count: docs});
         });

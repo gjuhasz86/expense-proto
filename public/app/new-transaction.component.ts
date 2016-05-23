@@ -9,7 +9,7 @@ import {Account} from "./account";
     templateUrl: 'app/new-transaction.component.html'
 })
 export class NewTransactionComponent implements OnInit {
-    tnx:Transaction;
+    tnx:any;
     accounts:Observable<Account[]>;
 
     constructor(private _tnxService:TransactionService,
@@ -22,11 +22,15 @@ export class NewTransactionComponent implements OnInit {
     }
 
     reset() {
-        this.tnx = new Transaction();
+        this.tnx = {};
     }
 
     save() {
-        this._tnxService.saveItem(this.tnx);
+        this._tnxService.saveItem(Transaction.parse(this.tnx));
         this.reset()
+    }
+
+    debug() {
+        console.log(JSON.stringify(this.tnx));
     }
 }

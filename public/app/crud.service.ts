@@ -9,7 +9,7 @@ import {Account} from "./account";
 import {Category} from "./category";
 
 @Injectable()
-export class CrudService<T> {
+abstract class CrudService<T> {
     private events:ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     private _headers:Headers;
     private allItems:ReplaySubject<T[]> = new ReplaySubject<T[]>(1);
@@ -22,8 +22,16 @@ export class CrudService<T> {
         this.refresh();
     }
 
+    abstract parse(json:any):T[];
+
     refresh():void {
         this.events.next(true);
+    }
+
+    getAllItems():Observable<T[]> {
+        return this.events.map(x=>`/api/${this.collection}/list`)
+            .flatMap((url:string) => this._http.post(url, "{}", {headers: this._headers}))
+            .map((res:Response) => this.parse(res.json()));
     }
 
     getAllItemsCached():Observable<T[]> {
@@ -41,17 +49,12 @@ export class CrudService<T> {
             })
     }
 
-    getAllItems():Observable<T[]> {
-        return this.events.map(x=>`/api/${this.collection}/list`)
-            .flatMap((url:string) => this._http.post(url, "{}", {headers: this._headers}))
-            .map((res:Response) => res.json());
-    }
 
-    getFilteredItems(filter:any):Observable<T[]> {
-        return this.events.map(x=>`/api/${this.collection}/list`)
-            .flatMap((url:string) => this._http.post(url, JSON.stringify(filter), {headers: this._headers}))
-            .map((res:Response) => res.json());
-    }
+    // getFilteredItems(filter:any):Observable<T[]> {
+    //     return this.events.map(x=>`/api/${this.collection}/list`)
+    //         .flatMap((url:string) => this._http.post(url, JSON.stringify(filter), {headers: this._headers}))
+    //         .map((res:Response) => res.json());
+    // }
 
     getPage(page:Observable<number>, limit:number, sortBy:string, order:string):Observable<T[]> {
         let source = Observable.combineLatest(page, this.events.startWith(true));
@@ -61,7 +64,7 @@ export class CrudService<T> {
             return `/api/${this.collection}/search?skip=${skip}&limit=${limit}&sort=${sortBy}&order=${order}`
         })
             .flatMap((url:string) => this._http.get(url))
-            .map((res:Response) => res.json());
+            .map((res:Response) => this.parse(res.json()));
     }
 
     saveItem(tnx:T):void {
@@ -117,6 +120,10 @@ export class TransactionService extends CrudService<Transaction> {
     constructor(protected _http:Http) {
         super("transactions", _http);
     }
+
+    parse(json:any[]):Transaction[] {
+        return json.map(t => Transaction.parse(t));
+    }
 }
 
 @Injectable()
@@ -124,12 +131,20 @@ export class AccountService extends CrudService<Account> {
     constructor(protected _http:Http) {
         super("accounts", _http);
     }
+
+    parse(json:any[]):Account[] {
+        return json.map(t => Account.parse(t));
+    }
 }
 
 @Injectable()
 export class CategoryService extends CrudService<Category> {
     constructor(protected _http:Http) {
         super("categories", _http);
+    }
+
+    parse(json:any[]):Category[] {
+        return json.map(t => Category.parse(t));
     }
 
     getAllInflatedCategories():Observable<Category[]> {

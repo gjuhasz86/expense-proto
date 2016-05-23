@@ -29,7 +29,7 @@ export class TransactionListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc");
+        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc")
         this.pageSubj.next(1);
         this.pages = this.genPages();
         this.numOfTnxs = this._tnxService.getCount();
