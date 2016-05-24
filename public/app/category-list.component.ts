@@ -20,6 +20,7 @@ export class CategoryListComponent implements OnInit {
 
     ngOnInit() {
         this.categories = this._catService.getAllInflatedCategories();
+        this.refresh();
     }
 
     refresh() {

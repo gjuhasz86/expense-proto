@@ -33,6 +33,7 @@ export class TransactionListComponent implements OnInit {
         this.pageSubj.next(1);
         this.pages = this.genPages();
         this.numOfTnxs = this._tnxService.getCount();
+        this.refresh();
     }
 
     refresh() {

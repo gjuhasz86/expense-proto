@@ -6,7 +6,7 @@ export class Transaction {
     public date:Date;
 
     id():string {
-        return _id;
+        return this._id;
     }
 
     static parse(json:any):Transaction {

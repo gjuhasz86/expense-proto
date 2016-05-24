@@ -20,6 +20,7 @@ export class AccountListComponent implements OnInit {
 
     ngOnInit() {
         this.accounts = this._accService.getAllItemsCached();
+        this.refresh();
     }
 
     refresh() {

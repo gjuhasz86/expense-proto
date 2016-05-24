@@ -8,6 +8,8 @@ import {Router, RouteConfig, ROUTER_DIRECTIVES, RouterOutlet} from "@angular/rou
 import {LoginComponent} from "./login.component";
 import {UserInfoComponent} from "./user-info.component";
 import {LoggedInRouterOutletDirective} from "./logged-in-router-outlet.directive";
+import {ReportsComponent} from "./reports.component";
+import {ReportsService} from "./reports.service";
 
 @Component({
     selector: 'my-app',
@@ -25,7 +27,8 @@ import {LoggedInRouterOutletDirective} from "./logged-in-router-outlet.directive
         UserService,
         TransactionService,
         AccountService,
-        CategoryService
+        CategoryService,
+        ReportsService
     ]
 })
 @RouteConfig([
@@ -33,7 +36,8 @@ import {LoggedInRouterOutletDirective} from "./logged-in-router-outlet.directive
     {path: '/accounts', name: 'Accounts', component: AccountListComponent},
     {path: '/categories', name: 'Categories', component: CategoryListComponent},
     {path: '/transactions', name: 'Transactions', component: TransactionListComponent},
-    {path: '', component: TransactionListComponent}
+    {path: '/reports', name: 'Reports', component: ReportsComponent},
+    {path: '/', name: 'Home', component: ReportsComponent}
 ])
 export class AppComponent implements OnInit {
 

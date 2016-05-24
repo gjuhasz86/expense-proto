@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
         this.user = this._userService.currentUser();
         this.user.subscribe(res => {
             if (res) {
-                this.router.navigate(['Transactions'])
+                this.router.navigate(['Home'])
             }
         })
     }

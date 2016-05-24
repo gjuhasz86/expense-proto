@@ -1,6 +1,5 @@
-import {Input, Component, Inject} from "@angular/core";
-import {CrudService, AccountService, CategoryService} from "./crud.service";
-import {Account} from "./account";
+import {Input, Component} from "@angular/core";
+import {CategoryService} from "./crud.service";
 import {Category} from "./category";
 
 @Component({

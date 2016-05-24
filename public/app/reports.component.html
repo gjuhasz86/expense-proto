@@ -1,0 +1,14 @@
+<div class="content">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Reports
+                <div class="badge">{{numOfTnxs|async}}</div>
+            </div>
+            <div class="panel-body">
+                <chart [options]="options"></chart>
+                <pre>{{daily|async}}</pre>
+            </div>
+        </div>
+    </div>
+</div>

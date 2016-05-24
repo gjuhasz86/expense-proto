@@ -4,9 +4,11 @@ var mongodb = require('mongodb');
 
 var router = express.Router();
 
-router.use(bodyParser.json());
+// router.use(bodyParser.json());
 
 router.post('/save', function (req, res) {
+    console.log("reading debug");
+    console.log(req.debug);
     req.body.owner = req.user.id;
     console.log('saving ' + coll + " " + JSON.stringify(req.body));
     var coll = req.collection;

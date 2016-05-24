@@ -7,6 +7,7 @@ import 'rxjs/Rx';
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {Account} from "./account";
 import {Category} from "./category";
+import 'rxjs/add/operator/debounceTime';
 
 @Injectable()
 abstract class CrudService<T> {
@@ -15,11 +16,9 @@ abstract class CrudService<T> {
     private allItems:ReplaySubject<T[]> = new ReplaySubject<T[]>(1);
 
     constructor(private collection:String, protected _http:Http) {
-        console.log("crudservice constructor");
         this._headers = new Headers();
         this._headers.append('Content-Type', 'application/json');
         this.getAllItems().subscribe(res=> this.allItems.next(res));
-        this.refresh();
     }
 
     abstract parse(json:any):T[];
@@ -29,9 +28,14 @@ abstract class CrudService<T> {
     }
 
     getAllItems():Observable<T[]> {
-        return this.events.map(x=>`/api/${this.collection}/list`)
+        return this.events
+            .debounceTime(100)
+            .map(x=>`/api/${this.collection}/list`)
             .flatMap((url:string) => this._http.post(url, "{}", {headers: this._headers}))
-            .map((res:Response) => this.parse(res.json()));
+            .map((res:Response) => {
+                console.log(`Populating ${this.collection}`);
+                return this.parse(res.json())
+            });
     }
 
     getAllItemsCached():Observable<T[]> {
@@ -43,18 +47,10 @@ abstract class CrudService<T> {
             .flatMap((url:string) => this._http.get(url))
             .map((res:Response) => res.json())
             .map(res=> {
-                console.log("count returned");
-                console.log(res);
                 return res.count
             })
     }
 
-
-    // getFilteredItems(filter:any):Observable<T[]> {
-    //     return this.events.map(x=>`/api/${this.collection}/list`)
-    //         .flatMap((url:string) => this._http.post(url, JSON.stringify(filter), {headers: this._headers}))
-    //         .map((res:Response) => res.json());
-    // }
 
     getPage(page:Observable<number>, limit:number, sortBy:string, order:string):Observable<T[]> {
         let source = Observable.combineLatest(page, this.events.startWith(true));

@@ -1,6 +1,6 @@
-import {Component, Inject, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Transaction} from "./transaction";
-import {CrudService, TransactionService, AccountService} from "./crud.service";
+import {TransactionService, AccountService} from "./crud.service";
 import {Observable} from "rxjs/Observable";
 import {Account} from "./account";
 

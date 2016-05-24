@@ -1,5 +1,5 @@
 import {Input, Component, Inject} from "@angular/core";
-import {CrudService, AccountService} from "./crud.service";
+import {AccountService} from "./crud.service";
 import {Account} from "./account";
 
 @Component({

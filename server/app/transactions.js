@@ -93,15 +93,32 @@ router.get('/size', function (req, res) {
         });
 });
 
-router.get('/stats/daily', function (req, res) {
+router.get('/stats/monthly', function (req, res) {
     var q = req.query;
-    q.filter.owner = req.user.id;
     var coll = req.collection;
-    req.db.collection(coll).aggregate({$group: {_id: "date", sum: {$sum: "$amount"}}})
-        .toArray(false, {}, function (err, docs) {
+    req.db.collection(coll)
+        .aggregate([
+            {$match: {owner: req.user.id}},
+            {$project: {year: {$year: "$date"}, month: {$month: "$date"}, accountId: "$accountId", amount: "$amount"}},
+            {$group: {_id: {accountId: "$accountId", year: "$year", month: "$month"}, sum: {$sum: "$amount"}}}
+        ], function (err, docs) {
             console.log(JSON.stringify(req.query) + ' found:' + docs);
-            res.send({count: docs});
+            res.send(docs);
         });
+});
+
+
+router.post('/save', function (req, res, next) {
+    req.body.date = new Date(req.body.date);
+    return next();
+});
+
+router.post('/savemany', function (req, res, next) {
+    console.log("switching date many");
+    req.body.forEach(function (item) {
+        item.date = new Date(item.date);
+    });
+    return next();
 });
 
 module.exports = router;
