@@ -93,6 +93,19 @@ router.get('/size', function (req, res) {
         });
 });
 
+router.post('/save', function (req, res, next) {
+    req.body.date = new Date(req.body.date);
+    return next();
+});
+
+router.post('/savemany', function (req, res, next) {
+    console.log("switching date many");
+    req.body.forEach(function (item) {
+        item.date = new Date(item.date);
+    });
+    return next();
+});
+
 router.get('/stats/monthly', function (req, res) {
     var q = req.query;
     var coll = req.collection;
@@ -128,18 +141,40 @@ router.get('/stats/monthly', function (req, res) {
         });
 });
 
-
-router.post('/save', function (req, res, next) {
-    req.body.date = new Date(req.body.date);
-    return next();
-});
-
-router.post('/savemany', function (req, res, next) {
-    console.log("switching date many");
-    req.body.forEach(function (item) {
-        item.date = new Date(item.date);
-    });
-    return next();
+router.get('/stats/total', function (req, res) {
+    var q = req.query;
+    var coll = req.collection;
+    req.db.collection(coll)
+        .aggregate([
+            // {$match: {owner: req.user.id, date: {$gt: new Date("2016-01-01")}}},
+            {$match: {owner: req.user.id}},
+            {
+                $project: {
+                    year: {$year: "$date"},
+                    month: {$month: "$date"},
+                    day: {$dayOfMonth: "$date"},
+                    // day: 1,
+                    // accountId: "$accountId",
+                    amount: "$amount"
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        // accountId: "$accountId",
+                        // accountId: "57428e502325366c136bbb96",
+                        year: "$year",
+                        month: "$month",
+                        day: "$day"
+                    },
+                    sum: {$sum: "$amount"}
+                }
+            }
+        ], function (err, docs) {
+            console.log(err);
+            console.log(JSON.stringify(req.query) + ' found:' + docs);
+            res.send(docs);
+        });
 });
 
 module.exports = router;

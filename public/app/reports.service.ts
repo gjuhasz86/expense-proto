@@ -31,4 +31,13 @@ export class ReportsService {
                 return res.json()
             });
     }
+
+    getTotal():Observable<any> {
+        return this.events
+            .map(x=>`/api/transactions/stats/total`)
+            .flatMap((url:string) => this._http.get(url))
+            .map((res:Response) => {
+                return res.json()
+            });
+    }
 }
