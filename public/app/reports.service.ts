@@ -28,8 +28,6 @@ export class ReportsService {
             .map(x=>`/api/transactions/stats/monthly`)
             .flatMap((url:string) => this._http.get(url))
             .map((res:Response) => {
-                console.log("report received");
-                console.log(res);
                 return res.json()
             });
     }

@@ -18,7 +18,8 @@ abstract class CrudService<T> {
     constructor(private collection:String, protected _http:Http) {
         this._headers = new Headers();
         this._headers.append('Content-Type', 'application/json');
-        this.getAllItems().subscribe(res=> this.allItems.next(res));
+        this.getAllItems().subscribe(res=> this.allItems.next(res)
+        );
     }
 
     abstract parse(json:any):T[];
@@ -124,8 +125,19 @@ export class TransactionService extends CrudService<Transaction> {
 
 @Injectable()
 export class AccountService extends CrudService<Account> {
+    accountList:Account[];
+
     constructor(protected _http:Http) {
         super("accounts", _http);
+        this.getAllItemsCached().subscribe(res=> {
+            this.accountList = res
+        });
+        this.refresh();
+    }
+
+    getAccounts():Account[] {
+        console.log("returing accounts " + JSON.stringify(this.accountList));
+        return this.accountList;
     }
 
     parse(json:any[]):Account[] {

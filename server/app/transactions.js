@@ -98,10 +98,31 @@ router.get('/stats/monthly', function (req, res) {
     var coll = req.collection;
     req.db.collection(coll)
         .aggregate([
+            // {$match: {owner: req.user.id, date: {$gt: new Date("2016-01-01")}}},
             {$match: {owner: req.user.id}},
-            {$project: {year: {$year: "$date"}, month: {$month: "$date"}, accountId: "$accountId", amount: "$amount"}},
-            {$group: {_id: {accountId: "$accountId", year: "$year", month: "$month"}, sum: {$sum: "$amount"}}}
+            {
+                $project: {
+                    year: {$year: "$date"},
+                    month: {$month: "$date"},
+                    day: {$dayOfMonth: "$date"},
+                    accountId: "$accountId",
+                    amount: "$amount"
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        accountId: "$accountId",
+                        // accountId: "57428e502325366c136bbb96",
+                        year: "$year",
+                        month: "$month",
+                        day: "$day"
+                    },
+                    sum: {$sum: "$amount"}
+                }
+            }
         ], function (err, docs) {
+            console.log(err);
             console.log(JSON.stringify(req.query) + ' found:' + docs);
             res.send(docs);
         });
