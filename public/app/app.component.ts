@@ -10,6 +10,7 @@ import {UserInfoComponent} from "./user-info.component";
 import {LoggedInRouterOutletDirective} from "./logged-in-router-outlet.directive";
 import {ReportsComponent} from "./reports.component";
 import {ReportsService} from "./reports.service";
+import {DebugComponent} from "./debug.component";
 
 @Component({
     selector: 'my-app',
@@ -37,7 +38,8 @@ import {ReportsService} from "./reports.service";
     {path: '/categories', name: 'Categories', component: CategoryListComponent},
     {path: '/transactions', name: 'Transactions', component: TransactionListComponent},
     {path: '/reports', name: 'Reports', component: ReportsComponent},
-    {path: '/', name: 'Home', component: ReportsComponent}
+    {path: '/debugger', name: 'Debug', component: DebugComponent},
+    {path: '/', name: 'Home', component: TransactionListComponent}
 ])
 export class AppComponent implements OnInit {
 

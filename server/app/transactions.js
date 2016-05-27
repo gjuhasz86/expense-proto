@@ -65,6 +65,10 @@ function defaultSearchQuery(q) {
         q.filter.description = descriptionFilter;
     }
 
+    if (q.account != undefined) {
+        q.filter.accountId = q.account;
+    }
+
 }
 
 router.get('/search', function (req, res) {
@@ -72,7 +76,8 @@ router.get('/search', function (req, res) {
     defaultSearchQuery(q);
     q.filter.owner = req.user.id;
     var coll = req.collection;
-    console.log("querying " + coll + " " + JSON.stringify(req.query));
+    console.log("searching " + coll + " " + JSON.stringify(req.query));
+    console.log("searching " + coll + " with filter: " + JSON.stringify(q.filter));
     req.db.collection(coll).find(q.filter).sort(q.sort).skip(q.skip).limit(q.limit)
         .toArray(function (err, docs) {
             console.log(JSON.stringify(req.query) + ' found:' + docs.length);

@@ -8,7 +8,15 @@
             <div class="panel-body">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <new-transaction></new-transaction>
+                        <new-transaction [defaultAccount]="defaultAccount"></new-transaction>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <transaction-filter
+                                [account]="defaultAccount"
+                                (accountChange)="onAccountChanged($event)">
+                        </transaction-filter>
                     </div>
                 </div>
                 <div class="text-center">

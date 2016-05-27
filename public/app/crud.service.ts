@@ -15,11 +15,13 @@ abstract class CrudService<T> {
     private _headers:Headers;
     private allItems:ReplaySubject<T[]> = new ReplaySubject<T[]>(1);
 
-    constructor(private collection:String, protected _http:Http) {
+    constructor(private collection:String, private autoInit:boolean, protected _http:Http) {
         this._headers = new Headers();
         this._headers.append('Content-Type', 'application/json');
-        this.getAllItems().subscribe(res=> this.allItems.next(res)
-        );
+        this.getAllItems().subscribe(res=> this.allItems.next(res));
+        if (autoInit) {
+            this.refresh();
+        }
     }
 
     abstract parse(json:any):T[];
@@ -53,12 +55,12 @@ abstract class CrudService<T> {
     }
 
 
-    getPage(page:Observable<number>, limit:number, sortBy:string, order:string):Observable<T[]> {
+    getPage(page:Observable<number>, limit:number, sortBy:string, order:string, account:string):Observable<T[]> {
         let source = Observable.combineLatest(page, this.events.startWith(true));
         return source.map(ev=> {
             let page = ev[0];
             let skip = limit * (page - 1);
-            return `/api/${this.collection}/search?skip=${skip}&limit=${limit}&sort=${sortBy}&order=${order}`
+            return `/api/${this.collection}/search?skip=${skip}&limit=${limit}&sort=${sortBy}&order=${order}&account=${account}`
         })
             .flatMap((url:string) => this._http.get(url))
             .map((res:Response) => this.parse(res.json()));
@@ -115,7 +117,7 @@ abstract class CrudService<T> {
 @Injectable()
 export class TransactionService extends CrudService<Transaction> {
     constructor(protected _http:Http) {
-        super("transactions", _http);
+        super("transactions", false, _http);
     }
 
     parse(json:any[]):Transaction[] {
@@ -128,7 +130,7 @@ export class AccountService extends CrudService<Account> {
     accountList:Account[];
 
     constructor(protected _http:Http) {
-        super("accounts", _http);
+        super("accounts", true, _http);
         this.getAllItemsCached().subscribe(res=> {
             this.accountList = res
         });
@@ -148,7 +150,7 @@ export class AccountService extends CrudService<Account> {
 @Injectable()
 export class CategoryService extends CrudService<Category> {
     constructor(protected _http:Http) {
-        super("categories", _http);
+        super("categories", true, _http);
     }
 
     parse(json:any[]):Category[] {
@@ -168,6 +170,7 @@ export class CategoryService extends CrudService<Category> {
                 .map(cat=>this.inflateOne(cat, catMap))
                 .map((cat:Category)=> {
                     console.log("genname01");
+                    console.log(cat);
                     return this.genName(cat);
                 });
         });

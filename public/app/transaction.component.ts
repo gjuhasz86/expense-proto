@@ -24,7 +24,7 @@ export class TransactionComponent implements OnInit {
     ngOnInit() {
         this.accounts = this._accService.getAllItemsCached();
         this.accountName = this.getAccountName(this.tnx.accountId);
-        this._accService.refresh();
+        // this._accService.refresh();
     }
 
     startEdit():void {

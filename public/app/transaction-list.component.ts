@@ -7,6 +7,8 @@ import * as _ from 'underscore';
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {NewTransactionComponent} from "./new-transaction.component";
 import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap'
+import {TransactionFilterComponent} from "./transaction-filter.component";
+import {Debug2Component} from "./debug2.component";
 
 @Component({
     selector: 'transaction-list',
@@ -14,6 +16,8 @@ import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap'
     directives: [
         NewTransactionComponent,
         TransactionComponent,
+        TransactionFilterComponent,
+        Debug2Component,
         PAGINATION_DIRECTIVES
     ]
 })
@@ -24,13 +28,13 @@ export class TransactionListComponent implements OnInit {
     limit:number = 20;
     pages:Observable<number[]>;
     numOfTnxs:Observable<number>;
+    defaultAccount:string;//= "574218a2fa58b0b820f5b936";
 
     constructor(private _tnxService:TransactionService) {
     }
 
     ngOnInit() {
-        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc")
-        this.pageSubj.next(1);
+        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount)
         this.pages = this.genPages();
         this.numOfTnxs = this._tnxService.getCount();
         this.refresh();
@@ -38,6 +42,13 @@ export class TransactionListComponent implements OnInit {
 
     refresh() {
         this._tnxService.refresh();
+        this.pageSubj.next(1);
+    }
+
+    onAccountChanged(accId):void {
+        this.defaultAccount = accId;
+        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount);
+        this.refresh();
     }
 
     genPages():Observable < number[] > {
