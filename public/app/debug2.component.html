@@ -1,0 +1,12 @@
+<div class="form-inline">
+    <div class="form-group">
+        <select class="form-control" [ngModel]="accountId | async" (ngModelChange)="onChange($event)">
+            <option *ngFor="#acc of (accounts | async)" [value]="acc._id">{{acc.name}}</option>
+            <!--<option value="foobar" [attr.selected]="selected()">foobar</option>-->
+        </select>
+        <div>{{accountId | async}}</div>
+        <div>{{accountIdStr}}</div>
+    </div>
+    <button class="form-control btn-primary" (click)="reset()">Reset</button>
+    <button class="form-control btn-default" (click)="debug()">Debug</button>
+</div>

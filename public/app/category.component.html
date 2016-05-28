@@ -1,0 +1,20 @@
+<template [ngIf]="!editing">
+    <td>{{cat._id}}</td>
+    <td>{{cat.name}}</td>
+    <td>
+        <div class="inline" *ngFor="#c of cat.children">{{c.shortName}}</div>
+    </td>
+    <td class="text-nowrap">
+        <button class="btn btn-xs btn-default" (click)="startEdit()">Edit</button>
+    </td>
+</template>
+<template [ngIf]="editing">
+    <td>{{cat._id}}</td>
+    <td><input class="form-control" [(ngModel)]="newCat.shortName" placeholder="name"/></td>
+    <td><input class="form-control" [(ngModel)]="newCat.parentId" placeholder="parentId"/></td>
+    <td class="text-nowrap">
+        <button class="btn btn-danger" (click)="delete(newCat)">Delete</button>
+        <button class="btn btn-primary" (click)="update(newCat)">Save</button>
+        <button class="btn btn-default" (click)="stopEdit()">Cancel</button>
+    </td>
+</template>

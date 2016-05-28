@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>Expense manager</h1>
+    </div>
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <user-info></user-info>
+                </li>
+                <li><a [routerLink]="['Accounts']">Accounts</a></li>
+                <li><a [routerLink]="['Categories']">Categories</a></li>
+                <li><a [routerLink]="['Transactions']">Transactions</a></li>
+                <li><a [routerLink]="['Reports']">Reports</a></li>
+                <li><a [routerLink]="['Debug']">Debug</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-8">
+
+            <router-outlet protected></router-outlet>
+        </div>
+    </div>
+</div>
+
+
+

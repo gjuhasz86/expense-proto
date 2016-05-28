@@ -1,0 +1,27 @@
+<div class="content">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Categories
+            </div>
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <new-category></new-category>
+                    </div>
+                </div>
+                <table class="table table-condensed table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-nowrap col-sm-2">Id</th>
+                        <th class="text-nowrap col-sm-8">Name</th>
+                        <th class="text-nowrap col-sm-2">Children</th>
+                        <th class="text-nowrap"></th>
+                    </tr>
+                    </thead>
+                    <tr category *ngFor="#cat of categories | async" [cat]="cat"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<form class="form-inline">
+    <div class="form-group">
+        <select class="form-control" [(ngModel)]="tnx.accountId">
+            <option *ngFor="#a of (accounts | async)" [value]="a._id">{{a.name}}</option>
+        </select>
+    </div>
+    <input class="form-control" [(ngModel)]="tnx.date" placeholder="date"/>
+    <input class="form-control" [(ngModel)]="tnx.description" placeholder="description"/>
+    <input class="form-control" [(ngModel)]="tnx.amount" placeholder="amount"/>
+    <button class="form-control btn-primary" (click)="save()" type="submit">Save</button>
+    <button class="form-control btn-danger" (click)="reset()">Reset</button>
+</form>

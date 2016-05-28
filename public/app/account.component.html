@@ -1,0 +1,22 @@
+<template [ngIf]="!editing">
+    <td>{{acc._id}}</td>
+    <td class="text-nowrap">{{acc.name}}</td>
+    <td>{{acc.initialBalance}}</td>
+    <td>{{acc.currency}}</td>
+    <td>{{acc.precision}}</td>
+    <td class="text-nowrap">
+        <button class="btn btn-xs btn-default" (click)="startEdit()">Edit</button>
+    </td>
+</template>
+<template [ngIf]="editing">
+    <td>{{acc._id}}</td>
+    <td><input class="form-control" [(ngModel)]="newAcc.name" placeholder="name"/></td>
+    <td><input class="form-control" [(ngModel)]="newAcc.initialBalance" placeholder="Initial balance"/></td>
+    <td><input class="form-control" [(ngModel)]="newAcc.currency" placeholder="currency"/></td>
+    <td><input class="form-control" [(ngModel)]="newAcc.precision" placeholder="Decimal places"/></td>
+    <td class="text-nowrap">
+        <button class="btn btn-danger" (click)="delete(newAcc)">Delete</button>
+        <button class="btn btn-primary" (click)="update(newAcc)">Save</button>
+        <button class="btn btn-default" (click)="stopEdit()">Cancel</button>
+    </td>
+</template>
