@@ -72,7 +72,6 @@ router.post('/update', function (req, res) {
         if (err)
             console.log(err);
         else {
-            // console.log(docs);
             console.log(docs.modifiedCount);
         }
         res.end();

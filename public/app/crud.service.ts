@@ -24,7 +24,7 @@ abstract class CrudService<T> {
         }
     }
 
-    abstract parse(json:any):T[];
+    abstract parse(json:any):T;
 
     refresh():void {
         this.events.next(true);
@@ -37,7 +37,7 @@ abstract class CrudService<T> {
             .flatMap((url:string) => this._http.post(url, "{}", {headers: this._headers}))
             .map((res:Response) => {
                 console.log(`Populating ${this.collection}`);
-                return this.parse(res.json())
+                return res.json().map(this.parse);
             });
     }
 
@@ -63,30 +63,29 @@ abstract class CrudService<T> {
             return `/api/${this.collection}/search?skip=${skip}&limit=${limit}&sort=${sortBy}&order=${order}&account=${account}`
         })
             .flatMap((url:string) => this._http.get(url))
-            .map((res:Response) => this.parse(res.json()));
+            .map((res:Response) => res.json().map(this.parse));
     }
 
-    saveItem(tnx:T):void {
+    saveItem(json:T):void {
         console.log(`calling ${this.collection} save`);
 
+        let item = this.parse(json);
         this._http
-            .post(`/api/${this.collection}/save`, JSON.stringify(tnx), {headers: this._headers})
+            .post(`/api/${this.collection}/save`, JSON.stringify(item), {headers: this._headers})
             .map(res =>res.json())
             .subscribe(res => {
-                console.log("Response came!!!");
-                console.log(res);
                 this.refresh();
             }, error => {
-                console.log("ERROR came!!!");
                 console.log(error);
             });
     }
 
-    updateItem(tnx:T):void {
-        console.log(`calling ${this.collection} update ` + (<any>tnx)._id);
+    updateItem(json:T):void {
+        let item = this.parse(json);
+        console.log(`calling ${this.collection} update ` + (<any>item)._id);
 
         this._http
-            .post(`/api/${this.collection}/update`, JSON.stringify(tnx), {headers: this._headers})
+            .post(`/api/${this.collection}/update`, JSON.stringify(item), {headers: this._headers})
             .subscribe(res => {
                 console.log("UPDATE Response came!!!");
                 console.log(res);
@@ -97,10 +96,10 @@ abstract class CrudService<T> {
             });
     }
 
-    deleteItem(tnx:T):void {
-        console.log(`calling ${this.collection} delete ` + (<any>tnx)._id);
+    deleteItem(json:T):void {
+        console.log(`calling ${this.collection} delete ` + (<any>json)._id);
 
-        let obj = {_id: (<any>tnx)._id};
+        let obj = {_id: (<any>json)._id};
         this._http
             .post(`/api/${this.collection}/delete`, JSON.stringify(obj), {headers: this._headers})
             .subscribe(res => {
@@ -120,8 +119,8 @@ export class TransactionService extends CrudService<Transaction> {
         super("transactions", false, _http);
     }
 
-    parse(json:any[]):Transaction[] {
-        return json.map(t => Transaction.parse(t));
+    parse(json:any):Transaction {
+        return Transaction.parse(json);
     }
 }
 
@@ -142,8 +141,8 @@ export class AccountService extends CrudService<Account> {
         return this.accountList;
     }
 
-    parse(json:any[]):Account[] {
-        return json.map(t => Account.parse(t));
+    parse(json:any):Account {
+        return Account.parse(json);
     }
 }
 
@@ -153,8 +152,8 @@ export class CategoryService extends CrudService<Category> {
         super("categories", true, _http);
     }
 
-    parse(json:any[]):Category[] {
-        return json.map(t => Category.parse(t));
+    parse(json:any):Category {
+        return Category.parse(json);
     }
 
     getAllInflatedCategories():Observable<Category[]> {
