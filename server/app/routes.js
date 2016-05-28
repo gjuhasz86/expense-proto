@@ -11,12 +11,20 @@ var auth = require('./auth');
 var transactions = require('./transactions');
 
 var router = express.Router();
+const MongoStore = require('connect-mongo')(session);
 
 router.use(express.static(path.join(__dirname, '/../../public')));
 
 router.use(cookieParser());
 router.use(bodyParser.json());
-router.use(session({secret: 'some secret', resave: true, saveUninitialized: true})); // verify session setup
+router.use(db, function (req, res, next) {
+    session({
+        secret: 'some secret',
+        resave: true,
+        saveUninitialized: true,
+        store: new MongoStore({db: req.db})
+    })(req, res, next);
+});
 
 router.use(auth);
 
