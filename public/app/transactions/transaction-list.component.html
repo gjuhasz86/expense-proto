@@ -38,7 +38,7 @@
                         <th class="text-nowrap"></th>
                     </tr>
                     </thead>
-                    <tr transaction *ngFor="#tnx of transactions | async" [tnx]="tnx"></tr>
+                    <tr transaction *ngFor="let tnx of transactions | async" [tnx]="tnx"></tr>
                 </table>
                 <div class="text-center">
                     <pagination class="pagination-lg"

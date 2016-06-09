@@ -12,7 +12,7 @@
     <td><input class="form-control" [(ngModel)]="newTnx.description" placeholder="description"/></td>
     <td class="col-sm-2">
         <select class="form-control" [(ngModel)]="newTnx.accountId">
-            <option *ngFor="#a of (accounts | async)" [value]="a._id">{{a.name}}</option>
+            <option *ngFor="let a of (accounts | async)" [value]="a._id">{{a.name}}</option>
         </select>
     </td>
     <td><input class="form-control" [(ngModel)]="newTnx.amount" placeholder="amount"/></td>

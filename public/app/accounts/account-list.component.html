@@ -21,7 +21,7 @@
                         <th class="text-nowrap"></th>
                     </tr>
                     </thead>
-                    <tr account *ngFor="#acc of accounts | async" [acc]="acc"></tr>
+                    <tr account *ngFor="let acc of accounts | async" [acc]="acc"></tr>
                 </table>
             </div>
         </div>

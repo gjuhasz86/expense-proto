@@ -19,7 +19,7 @@
                         <th class="text-nowrap"></th>
                     </tr>
                     </thead>
-                    <tr category *ngFor="#cat of categories | async" [cat]="cat"></tr>
+                    <tr category *ngFor="let cat of categories | async" [cat]="cat"></tr>
                 </table>
             </div>
         </div>
