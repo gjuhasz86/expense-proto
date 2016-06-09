@@ -11,7 +11,7 @@ import {LoggedInRouterOutletDirective} from "./login/logged-in-router-outlet.dir
 import {ReportsComponent} from "./reports/reports.component";
 import {ReportsService} from "./reports/reports.service";
 import {DebugComponent} from "./debug.component";
-import {CitiLoaderComponent} from "./banklink/citi-loader.component";
+import {BankLinkComponent} from "./banklink/banklink.component";
 
 @Component({
     selector: 'my-app',
@@ -39,7 +39,7 @@ import {CitiLoaderComponent} from "./banklink/citi-loader.component";
     {path: '/accounts', name: 'Accounts', component: AccountListComponent},
     {path: '/categories', name: 'Categories', component: CategoryListComponent},
     {path: '/transactions', name: 'Transactions', component: TransactionListComponent},
-    {path: '/citibank', name: 'Citibank', component: CitiLoaderComponent},
+    {path: '/banklink', name: 'BankLink', component: BankLinkComponent},
     {path: '/reports', name: 'Reports', component: ReportsComponent},
     {path: '/debugger', name: 'Debug', component: DebugComponent},
     {path: '/', name: 'Home', component: TransactionListComponent}
