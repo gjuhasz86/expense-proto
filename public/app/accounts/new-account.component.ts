@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
-import {AccountService} from "./crud.service";
+import {AccountService} from "../crud.service";
 import {Account} from "./account";
 
 @Component({
     selector: 'new-account',
-    templateUrl: 'app/new-account.component.html'
+    templateUrl: 'app/accounts/new-account.component.html'
 })
 export class NewAccountComponent {
     acc:Account;

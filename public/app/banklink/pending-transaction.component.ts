@@ -1,12 +1,12 @@
 import {Input, Component, Inject, OnInit} from "@angular/core";
-import {Transaction} from "./transaction";
-import {TransactionService, AccountService, PendingTransactionService} from "./crud.service";
-import {Account} from "./account";
+import {Transaction} from "../transactions/transaction";
+import {TransactionService, AccountService, PendingTransactionService} from "../crud.service";
+import {Account} from "../accounts/account";
 import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: '[pending-transaction]',
-    templateUrl: 'app/pending-transaction.component.html',
+    templateUrl: 'app/banklink/pending-transaction.component.html',
 })
 export class PendingTransactionComponent implements OnInit {
     @Input()

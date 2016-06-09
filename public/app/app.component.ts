@@ -1,17 +1,17 @@
 import {Component, OnInit} from "@angular/core";
-import {TransactionListComponent} from "./transaction-list.component";
+import {TransactionListComponent} from "./transactions/transaction-list.component";
 import {TransactionService, AccountService, CategoryService, PendingTransactionService} from "./crud.service";
-import {AccountListComponent} from "./account-list.component";
-import {UserService} from "./user.service";
-import {CategoryListComponent} from "./category-list.component";
+import {AccountListComponent} from "./accounts/account-list.component";
+import {UserService} from "./login/user.service";
+import {CategoryListComponent} from "./categories/category-list.component";
 import {Router, RouteConfig, ROUTER_DIRECTIVES, RouterOutlet} from "@angular/router-deprecated";
-import {LoginComponent} from "./login.component";
-import {UserInfoComponent} from "./user-info.component";
-import {LoggedInRouterOutletDirective} from "./logged-in-router-outlet.directive";
-import {ReportsComponent} from "./reports.component";
-import {ReportsService} from "./reports.service";
+import {LoginComponent} from "./login/login.component";
+import {UserInfoComponent} from "./login/user-info.component";
+import {LoggedInRouterOutletDirective} from "./login/logged-in-router-outlet.directive";
+import {ReportsComponent} from "./reports/reports.component";
+import {ReportsService} from "./reports/reports.service";
 import {DebugComponent} from "./debug.component";
-import {CitiLoaderComponent} from "./citi-loader.component";
+import {CitiLoaderComponent} from "./banklink/citi-loader.component";
 
 @Component({
     selector: 'my-app',

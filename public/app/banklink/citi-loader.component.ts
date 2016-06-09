@@ -1,16 +1,16 @@
 import {Component, OnInit} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {PendingTransactionService} from "./crud.service";
+import {PendingTransactionService} from "../crud.service";
 import {Response, Http, Headers} from "@angular/http";
-import {Transaction} from "./transaction";
+import {Transaction} from "../transactions/transaction";
 import {ReplaySubject} from "rxjs/Rx";
 import {PAGINATION_DIRECTIVES} from "ng2-bootstrap/ng2-bootstrap";
-import {TransactionComponent} from "./transaction.component";
+import {TransactionComponent} from "../transactions/transaction.component";
 import {PendingTransactionComponent} from "./pending-transaction.component";
 
 @Component({
     selector: 'citi-loader',
-    templateUrl: 'app/citi-loader.component.html',
+    templateUrl: 'app/banklink/citi-loader.component.html',
     directives: [
         PendingTransactionComponent,
         PAGINATION_DIRECTIVES]

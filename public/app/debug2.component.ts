@@ -1,4 +1,4 @@
-import {Account} from "./account";
+import {Account} from "./accounts/account";
 import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {AccountService, TransactionService} from "./crud.service";

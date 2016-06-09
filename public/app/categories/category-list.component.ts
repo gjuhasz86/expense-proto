@@ -1,13 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {CategoryService} from "./crud.service";
+import {CategoryService} from "../crud.service";
 import {Category} from "./category";
 import {CategoryComponent} from "./category.component";
 import {NewCategoryComponent} from "./new-category.component";
 
 @Component({
     selector: 'category-list',
-    templateUrl: 'app/category-list.component.html',
+    templateUrl: 'app/categories/category-list.component.html',
     directives: [
         NewCategoryComponent,
         CategoryComponent]

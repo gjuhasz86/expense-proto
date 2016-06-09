@@ -1,12 +1,12 @@
 import {Input, Component, Inject, OnInit} from "@angular/core";
 import {Transaction} from "./transaction";
-import {TransactionService, AccountService} from "./crud.service";
-import {Account} from "./account";
+import {TransactionService, AccountService} from "../crud.service";
+import {Account} from "../accounts/account";
 import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: '[transaction]',
-    templateUrl: 'app/transaction.component.html',
+    templateUrl: 'app/transactions/transaction.component.html',
 })
 export class TransactionComponent implements OnInit {
     @Input()

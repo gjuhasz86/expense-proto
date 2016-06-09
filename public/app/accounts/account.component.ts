@@ -1,10 +1,10 @@
 import {Input, Component, Inject} from "@angular/core";
-import {AccountService} from "./crud.service";
+import {AccountService} from "../crud.service";
 import {Account} from "./account";
 
 @Component({
     selector: '[account]',
-    templateUrl: 'app/account.component.html',
+    templateUrl: 'app/accounts/account.component.html',
 })
 export class AccountComponent {
     @Input()

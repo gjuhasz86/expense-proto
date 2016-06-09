@@ -1,14 +1,14 @@
 import {Component, OnInit} from "@angular/core";
-import {TransactionService, AccountService} from "./crud.service";
+import {TransactionService, AccountService} from "../crud.service";
 import {CHART_DIRECTIVES} from 'angular2-highcharts';
 import {ReportsService} from "./reports.service";
 import {Observable} from "rxjs/Observable";
 import * as _ from "underscore"
-import {Account} from "./account";
+import {Account} from "../accounts/account";
 
 @Component({
     selector: 'reports',
-    templateUrl: 'app/reports.component.html',
+    templateUrl: 'app/reports/reports.component.html',
     directives: [CHART_DIRECTIVES]
 })
 export class ReportsComponent implements OnInit {

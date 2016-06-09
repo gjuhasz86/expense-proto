@@ -1,10 +1,10 @@
 import {Input, Component} from "@angular/core";
-import {CategoryService} from "./crud.service";
+import {CategoryService} from "../crud.service";
 import {Category} from "./category";
 
 @Component({
     selector: '[category]',
-    templateUrl: 'app/category.component.html',
+    templateUrl: 'app/categories/category.component.html',
 })
 export class CategoryComponent {
     @Input()
