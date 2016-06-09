@@ -66,6 +66,17 @@ abstract class CrudService<T> {
             .map((res:Response) => res.json().map(this.parse));
     }
 
+    getPage2(page:Observable<number>, limit:number, sortBy:string, order:string):Observable<T[]> {
+        let source = Observable.combineLatest(page, this.events.startWith(true));
+        return source.map(ev=> {
+            let page = ev[0];
+            let skip = limit * (page - 1);
+            return `/api/${this.collection}/search?skip=${skip}&limit=${limit}&sort=${sortBy}&order=${order}`
+        })
+            .flatMap((url:string) => this._http.get(url))
+            .map((res:Response) => res.json().map(this.parse));
+    }
+
     saveItem(json:T):void {
         console.log(`calling ${this.collection} save`);
 
@@ -117,6 +128,17 @@ abstract class CrudService<T> {
 export class TransactionService extends CrudService<Transaction> {
     constructor(protected _http:Http) {
         super("transactions", false, _http);
+    }
+
+    parse(json:any):Transaction {
+        return Transaction.parse(json);
+    }
+}
+
+@Injectable()
+export class PendingTransactionService extends CrudService<Transaction> {
+    constructor(protected _http:Http) {
+        super("pendingtnxs", false, _http);
     }
 
     parse(json:any):Transaction {

@@ -1,0 +1,47 @@
+<div class="content">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Citibank loader
+            </div>
+            <div class="panel-body">
+                <form class="form-inline">
+                    <input class="form-control" type="text" [(ngModel)]="credentials.user" placeholder="username"/>
+                    <input class="form-control" type="password" [(ngModel)]="credentials.pass"
+                           placeholder="password"/>
+                    <button class="form-control btn-primary" type="submit" (click)="loadTransactions()">Load</button>
+                </form>
+                <div class="text-center">
+                    <pagination class="pagination-sm"
+                                [maxSize]="10"
+                                [itemsPerPage]="limit"
+                                [totalItems]="numOfTnxs|async"
+                                [boundaryLinks]="true"
+                                [(ngModel)]="page"
+                                (pageChanged)="setPage($event)"></pagination>
+                </div>
+                <table class="table table-condensed table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-nowrap col-sm-2">Date</th>
+                        <th class="text-nowrap col-sm-6">Description</th>
+                        <th class="text-nowrap col-sm-2">Account</th>
+                        <th class="text-nowrap col-sm-2">Amount</th>
+                        <th class="text-nowrap"></th>
+                    </tr>
+                    </thead>
+                    <tr pending-transaction *ngFor="let tnx of transactions | async" [tnx]="tnx"></tr>
+                </table>
+                <div class="text-center">
+                    <pagination class="pagination-lg"
+                                [maxSize]="10"
+                                [itemsPerPage]="limit"
+                                [totalItems]="numOfTnxs|async"
+                                [boundaryLinks]="true"
+                                [(ngModel)]="page"
+                                (pageChanged)="setPage($event)"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

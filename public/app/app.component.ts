@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {TransactionListComponent} from "./transaction-list.component";
-import {TransactionService, AccountService, CategoryService} from "./crud.service";
+import {TransactionService, AccountService, CategoryService, PendingTransactionService} from "./crud.service";
 import {AccountListComponent} from "./account-list.component";
 import {UserService} from "./user.service";
 import {CategoryListComponent} from "./category-list.component";
@@ -11,6 +11,7 @@ import {LoggedInRouterOutletDirective} from "./logged-in-router-outlet.directive
 import {ReportsComponent} from "./reports.component";
 import {ReportsService} from "./reports.service";
 import {DebugComponent} from "./debug.component";
+import {CitiLoaderComponent} from "./citi-loader.component";
 
 @Component({
     selector: 'my-app',
@@ -27,6 +28,7 @@ import {DebugComponent} from "./debug.component";
     providers: [
         UserService,
         TransactionService,
+        PendingTransactionService,
         AccountService,
         CategoryService,
         ReportsService
@@ -37,6 +39,7 @@ import {DebugComponent} from "./debug.component";
     {path: '/accounts', name: 'Accounts', component: AccountListComponent},
     {path: '/categories', name: 'Categories', component: CategoryListComponent},
     {path: '/transactions', name: 'Transactions', component: TransactionListComponent},
+    {path: '/citibank', name: 'Citibank', component: CitiLoaderComponent},
     {path: '/reports', name: 'Reports', component: ReportsComponent},
     {path: '/debugger', name: 'Debug', component: DebugComponent},
     {path: '/', name: 'Home', component: TransactionListComponent}
