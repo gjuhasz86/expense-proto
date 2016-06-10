@@ -5,6 +5,7 @@
     <td class="text-nowrap">{{tnx.amount}}</td>
     <td class="text-nowrap">
         <button class="btn btn-xs btn-default" (click)="startEdit()">Edit</button>
+        <button class="btn btn-xs btn-primary" (click)="save(tnx)">Save</button>
     </td>
 </template>
 <template [ngIf]="editing">

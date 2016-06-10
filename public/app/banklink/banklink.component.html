@@ -5,12 +5,27 @@
                 BankLink
             </div>
             <div class="panel-body">
-                <form class="form-inline">
-                    <input class="form-control" type="text" [(ngModel)]="credentials.user" placeholder="username"/>
-                    <input class="form-control" type="password" [(ngModel)]="credentials.pass"
-                           placeholder="password"/>
-                    <button class="form-control btn-primary" type="submit" (click)="loadTransactions()">Load</button>
-                </form>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-inline">
+                            <input class="form-control" type="text" [(ngModel)]="credentials.user"
+                                   placeholder="username"/>
+                            <input class="form-control" type="password" [(ngModel)]="credentials.pass"
+                                   placeholder="password"/>
+                            <button class="form-control btn-primary" [disabled]="loadDisabled" type="submit"
+                                    (click)="loadTransactions()">Load
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <account-mapper
+                                [tnxs]="transactions|async"
+                                [pendingAccountIds]="pendingAccounts|async"></account-mapper>
+                    </div>
+                </div>
+
                 <div class="text-center">
                     <pagination class="pagination-sm"
                                 [maxSize]="10"

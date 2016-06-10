@@ -1,0 +1,16 @@
+<div class="form-inline">
+    <div class="form-group">
+        {{pendingAccountId}}
+    </div>
+    <div class="form-group">
+        <select class="form-control" [(ngModel)]="selectedFrom">
+            <option *ngFor="let a of (pendingAccountIds)" [value]="a">{{a}}</option>
+        </select>
+        <select class="form-control" [(ngModel)]="selectedTo">
+            <option *ngFor="let a of (accounts | async)" [value]="a._id">{{a.name}}</option>
+        </select>
+        <button class="form-control btn-primary" (click)="update()" type="submit">Update account</button>
+        <button class="form-control btn-danger" (click)="save()" type="submit">Save all</button>
+        <button class="form-control btn-danger" (click)="delete()" type="submit">Delete all</button>
+    </div>
+</div>

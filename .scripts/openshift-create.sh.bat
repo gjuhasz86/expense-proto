@@ -8,6 +8,8 @@ echo -n "Database user name: "
 read user
 echo -n "Database user password: "
 read pass
+echo -n "Citibank client location on server: "
+read citi
 
 if [ -z "$gitrepo" ]; then
   echo "Skip creating app";
@@ -28,6 +30,7 @@ fi
 rhc env-set OPENSHIFT_EXPENSE_DB=$dbname -a $app
 rhc env-set OPENSHIFT_EXPENSE_USER=$user -a $app
 rhc env-set OPENSHIFT_EXPENSE_PWD=$pass -a $app
+rhc env-set OPENSHIFT_EXPENSE_CITI_CLIENT=$citi -a $app
 
 # create user in the database
 addUserCmd="db.getSiblingDB('$dbname').addUser('$user', '$pass')"

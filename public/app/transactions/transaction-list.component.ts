@@ -37,6 +37,7 @@ export class TransactionListComponent implements OnInit {
         this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount)
         this.pages = this.genPages();
         this.numOfTnxs = this._tnxService.getCount();
+
         this.refresh();
     }
 
@@ -62,4 +63,5 @@ export class TransactionListComponent implements OnInit {
     setPage(p:any) {
         this.pageSubj.next(p.page);
     }
+
 }

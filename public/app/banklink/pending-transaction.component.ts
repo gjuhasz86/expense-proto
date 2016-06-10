@@ -17,7 +17,8 @@ export class PendingTransactionComponent implements OnInit {
     accountName:Observable<string>;
     accounts:Observable<Account[]>;
 
-    constructor(private _tnxService:PendingTransactionService,
+    constructor(private _pTnxService:PendingTransactionService,
+                private _tnxService:TransactionService,
                 private _accService:AccountService) {
     }
 
@@ -49,11 +50,16 @@ export class PendingTransactionComponent implements OnInit {
     update(tnx:Transaction):void {
         console.log("updating");
         console.log(tnx);
-        this._tnxService.updateItem(tnx);
+        this._pTnxService.updateItem(tnx);
     }
 
     delete(tnx:Transaction):void {
-        this._tnxService.deleteItem(tnx);
+        this._pTnxService.deleteItem(tnx);
+    }
+
+    save(tnx:Transaction):void {
+        this._tnxService.saveItem(tnx);
+        this.delete(tnx);
     }
 
 }
