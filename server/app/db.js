@@ -15,6 +15,7 @@ mongo.connect(dbConf.url, function (err, db) {
     } else {
         console.log("Database has been initialized");
         myDb = db;
+        router.dbRef = db;
     }
 });
 

@@ -5,7 +5,7 @@ import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'login',
-    templateUrl: 'app/login.component.html',
+    templateUrl: 'app/login/login.component.html',
 })
 export class LoginComponent implements OnInit {
     public user:Observable<any>;

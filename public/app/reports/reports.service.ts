@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
-import {Transaction} from "./transaction";
+import {Transaction} from "../transactions/transaction";
 import 'rxjs/Rx';
 import {ReplaySubject} from "rxjs/ReplaySubject";
-import {Account} from "./account";
-import {Category} from "./category";
+import {Account} from "../accounts/account";
+import {Category} from "../categories/category";
 import 'rxjs/add/operator/debounceTime';
 
 @Injectable()

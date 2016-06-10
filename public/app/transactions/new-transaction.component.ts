@@ -1,12 +1,12 @@
 import {Component, OnInit, Input, OnChanges} from "@angular/core";
 import {Transaction} from "./transaction";
-import {TransactionService, AccountService} from "./crud.service";
+import {TransactionService, AccountService} from "../crud.service";
 import {Observable} from "rxjs/Observable";
-import {Account} from "./account";
+import {Account} from "../accounts/account";
 
 @Component({
     selector: 'new-transaction',
-    templateUrl: 'app/new-transaction.component.html'
+    templateUrl: 'app/transactions/new-transaction.component.html'
 })
 export class NewTransactionComponent implements OnInit, OnChanges {
     tnx:any;

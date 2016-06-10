@@ -1,13 +1,13 @@
 import {Component, OnInit, Inject} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {AccountService} from "./crud.service";
+import {AccountService} from "../crud.service";
 import {Account} from "./account";
 import {AccountComponent} from "./account.component";
 import {NewAccountComponent} from "./new-account.component";
 
 @Component({
     selector: 'account-list',
-    templateUrl: 'app/account-list.component.html',
+    templateUrl: 'app/accounts/account-list.component.html',
     directives: [
         NewAccountComponent,
         AccountComponent]

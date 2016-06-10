@@ -4,6 +4,7 @@ export class Transaction {
     public accountId:string;
     public amount:number;
     public date:Date;
+    public reference:String;
 
     id():string {
         return this._id;
@@ -16,6 +17,7 @@ export class Transaction {
         res.accountId = json.accountId;
         res.amount = parseInt(json.amount) || 0;
         res.date = new Date(json.date);
+        res.reference = json.reference;
         return res;
     }
 }

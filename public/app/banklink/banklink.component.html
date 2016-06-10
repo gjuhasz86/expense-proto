@@ -2,23 +2,30 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Transactions
-                <div class="badge">{{numOfTnxs|async}}</div>
+                BankLink
             </div>
             <div class="panel-body">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <new-transaction [defaultAccount]="defaultAccount"></new-transaction>
+                        <form class="form-inline">
+                            <input class="form-control" type="text" [(ngModel)]="credentials.user"
+                                   placeholder="username"/>
+                            <input class="form-control" type="password" [(ngModel)]="credentials.pass"
+                                   placeholder="password"/>
+                            <button class="form-control btn-primary" [disabled]="loadDisabled" type="submit"
+                                    (click)="loadTransactions()">Load
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <transaction-filter
-                                [account]="defaultAccount"
-                                (accountChange)="onAccountChanged($event)">
-                        </transaction-filter>
+                        <account-mapper
+                                [tnxs]="transactions|async"
+                                [pendingAccountIds]="pendingAccounts|async"></account-mapper>
                     </div>
                 </div>
+
                 <div class="text-center">
                     <pagination class="pagination-sm"
                                 [maxSize]="10"
@@ -38,7 +45,7 @@
                         <th class="text-nowrap"></th>
                     </tr>
                     </thead>
-                    <tr transaction *ngFor="#tnx of transactions | async" [tnx]="tnx"></tr>
+                    <tr pending-transaction *ngFor="let tnx of transactions | async" [tnx]="tnx"></tr>
                 </table>
                 <div class="text-center">
                     <pagination class="pagination-lg"

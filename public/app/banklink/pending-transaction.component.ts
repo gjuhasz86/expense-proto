@@ -1,14 +1,14 @@
 import {Input, Component, Inject, OnInit} from "@angular/core";
-import {Transaction} from "./transaction";
-import {TransactionService, AccountService} from "./crud.service";
-import {Account} from "./account";
+import {Transaction} from "../transactions/transaction";
+import {TransactionService, AccountService, PendingTransactionService} from "../crud.service";
+import {Account} from "../accounts/account";
 import {Observable} from "rxjs/Observable";
 
 @Component({
-    selector: '[transaction]',
-    templateUrl: 'app/transaction.component.html',
+    selector: '[pending-transaction]',
+    templateUrl: 'app/banklink/pending-transaction.component.html',
 })
-export class TransactionComponent implements OnInit {
+export class PendingTransactionComponent implements OnInit {
     @Input()
     tnx:Transaction;
     newTnx:Transaction;
@@ -17,7 +17,8 @@ export class TransactionComponent implements OnInit {
     accountName:Observable<string>;
     accounts:Observable<Account[]>;
 
-    constructor(private _tnxService:TransactionService,
+    constructor(private _pTnxService:PendingTransactionService,
+                private _tnxService:TransactionService,
                 private _accService:AccountService) {
     }
 
@@ -49,11 +50,16 @@ export class TransactionComponent implements OnInit {
     update(tnx:Transaction):void {
         console.log("updating");
         console.log(tnx);
-        this._tnxService.updateItem(tnx);
+        this._pTnxService.updateItem(tnx);
     }
 
     delete(tnx:Transaction):void {
-        this._tnxService.deleteItem(tnx);
+        this._pTnxService.deleteItem(tnx);
+    }
+
+    save(tnx:Transaction):void {
+        this._tnxService.saveItem(tnx);
+        this.delete(tnx);
     }
 
 }

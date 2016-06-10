@@ -98,6 +98,11 @@ router.get('/size', function (req, res) {
         });
 });
 
+router.post('/update', function (req, res, next) {
+    req.body.date = new Date(req.body.date);
+    return next();
+});
+
 router.post('/save', function (req, res, next) {
     req.body.date = new Date(req.body.date);
     return next();

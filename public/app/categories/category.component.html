@@ -2,7 +2,7 @@
     <td>{{cat._id}}</td>
     <td>{{cat.name}}</td>
     <td>
-        <div class="inline" *ngFor="#c of cat.children">{{c.shortName}}</div>
+        <div class="inline" *ngFor="let c of cat.children">{{c.shortName}}</div>
     </td>
     <td class="text-nowrap">
         <button class="btn btn-xs btn-default" (click)="startEdit()">Edit</button>

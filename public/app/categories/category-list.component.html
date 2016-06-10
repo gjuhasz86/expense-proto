@@ -2,26 +2,24 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Accounts
+                Categories
             </div>
             <div class="panel-body">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <new-account></new-account>
+                        <new-category></new-category>
                     </div>
                 </div>
                 <table class="table table-condensed table-hover">
                     <thead>
                     <tr>
                         <th class="text-nowrap col-sm-2">Id</th>
-                        <th class="text-nowrap col-sm-4">Name</th>
-                        <th class="text-nowrap col-sm-2">Initial balance</th>
-                        <th class="text-nowrap col-sm-2">Currency</th>
-                        <th class="text-nowrap col-sm-2">Decimal places</th>
+                        <th class="text-nowrap col-sm-8">Name</th>
+                        <th class="text-nowrap col-sm-2">Children</th>
                         <th class="text-nowrap"></th>
                     </tr>
                     </thead>
-                    <tr account *ngFor="#acc of accounts | async" [acc]="acc"></tr>
+                    <tr category *ngFor="let cat of categories | async" [cat]="cat"></tr>
                 </table>
             </div>
         </div>

@@ -5,13 +5,13 @@ import {
     Output,
     EventEmitter
 } from "@angular/core";
-import {AccountService} from "./crud.service";
-import {Account} from "./account";
+import {AccountService} from "../crud.service";
+import {Account} from "../accounts/account";
 import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'transaction-filter',
-    templateUrl: 'app/transaction-filter.component.html',
+    templateUrl: 'app/transactions/transaction-filter.component.html',
     directives: []
 })
 export class TransactionFilterComponent implements OnInit {

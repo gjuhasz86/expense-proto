@@ -9,14 +9,24 @@ var crud = require('./crud');
 var db = require('./db');
 var auth = require('./auth');
 var transactions = require('./transactions');
+var banklink = require('./banklink');
+var debug = require('./debug');
 
 var router = express.Router();
+const MongoStore = require('connect-mongo')(session);
 
 router.use(express.static(path.join(__dirname, '/../../public')));
 
 router.use(cookieParser());
 router.use(bodyParser.json());
-router.use(session({secret: 'some secret', resave: true, saveUninitialized: true})); // verify session setup
+router.use(db, function (req, res, next) {
+    session({
+        secret: 'some secret',
+        resave: true,
+        saveUninitialized: true,
+        store: new MongoStore({db: req.db})
+    })(req, res, next);
+});
 
 router.use(auth);
 
@@ -26,14 +36,13 @@ router.use("/api", auth.isAuthenticated, function (res, req, next) {
 
 // DB access routes
 router.use('/api/transactions', coll('transactions'), db, transactions, crud);
+router.use('/api/pendingtnxs', coll('pendingtnxs'), db, transactions, crud);
 router.use('/api/accounts', coll('accounts'), db, crud);
 router.use('/api/categories', coll('categories'), db, crud);
 
-router.get('/debug', function (req, res) {
-    console.log("debug");
-    console.log(req.query);
-    res.send('debug called');
-});
+router.use('/api/banklink', banklink);
+
+router.use('/debug', debug);
 
 router.get('/health', function (req, res) {
     res.writeHead(200);

@@ -5,7 +5,7 @@ import {Router} from '@angular/router-deprecated';
 
 @Component({
     selector: 'user-info',
-    templateUrl: 'app/user-info.component.html',
+    templateUrl: 'app/login/user-info.component.html',
 })
 export class UserInfoComponent implements OnInit {
     public user:Observable<any>;

@@ -1,0 +1,24 @@
+<template [ngIf]="!editing">
+    <td class="text-nowrap">{{tnx.date | date: 'yyyy'}}-{{tnx.date | date:'MM'}}-{{tnx.date | date: 'dd'}}</td>
+    <td>{{tnx.description}}</td>
+    <td class="text-nowrap">{{accountName | async}}</td>
+    <td class="text-nowrap">{{tnx.amount}}</td>
+    <td class="text-nowrap">
+        <button class="btn btn-xs btn-default" (click)="startEdit()">Edit</button>
+    </td>
+</template>
+<template [ngIf]="editing">
+    <td><input class="form-control" [(ngModel)]="newTnx.date" placeholder="date"/></td>
+    <td><input class="form-control" [(ngModel)]="newTnx.description" placeholder="description"/></td>
+    <td class="col-sm-2">
+        <select class="form-control" [(ngModel)]="newTnx.accountId">
+            <option *ngFor="let a of (accounts | async)" [value]="a._id">{{a.name}}</option>
+        </select>
+    </td>
+    <td><input class="form-control" [(ngModel)]="newTnx.amount" placeholder="amount"/></td>
+    <td class="text-nowrap">
+        <button class="btn btn-danger" (click)="delete(newTnx)">Delete</button>
+        <button class="btn btn-primary" (click)="update(newTnx)">Save</button>
+        <button class="btn btn-default" (click)="stopEdit()">Cancel</button>
+    </td>
+</template>

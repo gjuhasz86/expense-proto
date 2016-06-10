@@ -1,9 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {Account} from "./account";
+import {Account} from "./accounts/account";
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
 import {AccountService} from "./crud.service";
-import {NewTransactionComponent} from "./new-transaction.component";
+import {NewTransactionComponent} from "./transactions/new-transaction.component";
 import {Debug2Component} from "./debug2.component";
 
 @Component({

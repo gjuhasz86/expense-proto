@@ -10,6 +10,7 @@ router.post('/save', function (req, res) {
     console.log("reading debug");
     console.log(req.debug);
     req.body.owner = req.user.id;
+    delete req.body._id;
     var coll = req.collection;
     console.log('saving ' + coll + " " + JSON.stringify(req.body));
     var db = req.db;
@@ -22,6 +23,7 @@ router.post('/save', function (req, res) {
 router.post('/savemany', function (req, res) {
     req.body.forEach(function (item) {
         item.owner = req.user.id;
+        delete item.body._id;
     });
     var coll = req.collection;
     console.log('saving ' + coll + " " + JSON.stringify(req.body));
@@ -72,7 +74,6 @@ router.post('/update', function (req, res) {
         if (err)
             console.log(err);
         else {
-            // console.log(docs);
             console.log(docs.modifiedCount);
         }
         res.end();

@@ -2,17 +2,17 @@ import {Component, OnInit, Inject} from "@angular/core";
 import {TransactionComponent} from "./transaction.component";
 import {Observable} from "rxjs/Observable";
 import {Transaction} from "./transaction";
-import {TransactionService} from "./crud.service";
+import {TransactionService} from "../crud.service";
 import * as _ from 'underscore';
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {NewTransactionComponent} from "./new-transaction.component";
 import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap'
 import {TransactionFilterComponent} from "./transaction-filter.component";
-import {Debug2Component} from "./debug2.component";
+import {Debug2Component} from "../debug2.component";
 
 @Component({
     selector: 'transaction-list',
-    templateUrl: 'app/transaction-list.component.html',
+    templateUrl: 'app/transactions/transaction-list.component.html',
     directives: [
         NewTransactionComponent,
         TransactionComponent,
@@ -37,6 +37,7 @@ export class TransactionListComponent implements OnInit {
         this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount)
         this.pages = this.genPages();
         this.numOfTnxs = this._tnxService.getCount();
+
         this.refresh();
     }
 
@@ -62,4 +63,5 @@ export class TransactionListComponent implements OnInit {
     setPage(p:any) {
         this.pageSubj.next(p.page);
     }
+
 }
