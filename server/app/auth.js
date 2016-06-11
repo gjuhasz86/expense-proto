@@ -1,6 +1,5 @@
 var express = require('express');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var db = require('./db');
@@ -16,20 +15,24 @@ function isAuthenticated(req, res, next) {
     res.sendStatus(401);
 };
 
+function ensureAdmin(req, res, next) {
+    var user = req.user.id;
+    db.dbRef.collection("admins").find({userId: user}).limit(1).next(function (err, doc) {
+        console.log("Checking for admin rights [" + user + "]" + typeof user);
+        console.log(JSON.stringify(doc));
+        if (doc) {
+            return next();
+        } else {
+            return res.sendStatus(401);
+        }
+    });
+};
+
 passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
-    // if (id == '31337') {
-    //     done(null, {id: '31337', username: 'admin'});
-    // }
-    // else if (id == '4006') {
-    //     done(null, {id: '4006', username: 'noob'});
-    // }
-    // else {
-    //     done({error: "no such user"});
-    // }
     db.dbRef.collection("users").find({id: id}).limit(1).next(function (err, doc) {
         console.log("deserialized user");
         console.log(JSON.stringify(doc));
@@ -45,32 +48,27 @@ passport.use(new GoogleStrategy({
     function (accessToken, refreshToken, profile, done) {
         console.log("authenticating");
         console.log(JSON.stringify(profile));
-        db.dbRef.collection("users").findOneAndUpdate(
-            {id: profile.id},
-            {$set: {id: profile.id, username: profile.displayName}},
-            {upsert: true, returnOriginal: false}, function (err, r) {
-                console.log("created user");
-                console.log(JSON.stringify(r));
-                return done(null, r.value);
+        globalConf(function (conf) {
+            if (conf.signupEnabled) {
+                console.log("Signup enabled");
+            } else {
+                console.log("Signup disabled");
             }
-        );
+
+            db.dbRef.collection("users").findOneAndUpdate(
+                {id: profile.id},
+                {$set: {id: profile.id, username: profile.displayName}},
+                {upsert: conf.signupEnabled, returnOriginal: !conf.signupEnabled}, function (err, r) {
+                    console.log("created user");
+                    console.log(JSON.stringify(r));
+                    return done(null, r.value);
+                }
+            );
+        });
 
 
     }
 ));
-
-// passport.use('local-login', new LocalStrategy(
-//     function (username, password, done) {
-//         console.log("authenticating");
-//         if (username == 'admin' && password == 'simple') {
-//             return done(null, {id: '31337', username: 'admin'});
-//         } else if (username == 'noob' && password == 'simple') {
-//             return done(null, {id: '4006', username: 'noob'});
-//         } else {
-//             return done(null, false, {message: 'Incorrect username or password.'});
-//         }
-//     }
-// ));
 
 router.get('/auth/google',
     passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/plus.login']}));
@@ -98,5 +96,20 @@ router.get('/auth/currentuser', isAuthenticated, function (req, res) {
 });
 
 router.isAuthenticated = isAuthenticated;
+router.ensureAdmin = ensureAdmin;
+
+var defaultGlobalConf = {scope: "global", signupEnabled: true};
+function globalConf(callback) {
+    db.dbRef.collection("config").findOneAndUpdate(
+        {scope: "global"},
+        {$setOnInsert: defaultGlobalConf},
+        {upsert: true, returnOriginal: false}, function (err, doc) {
+            console.log("loaded global config");
+            console.log(JSON.stringify(doc));
+            return callback(doc.value);
+        }
+    );
+}
+
 
 module.exports = router;

@@ -67,10 +67,15 @@ router.post('/update', function (req, res) {
     var idToUpdate = new mongodb.ObjectID(req.body._id);
     console.log(idToUpdate);
     req.body._id = idToUpdate;
-    req.body.owner = req.user.id;
-    console.log("updating2 " + coll + " " + JSON.stringify(req.body));
     var db = req.db;
-    db.collection(coll).updateOne({_id: idToUpdate, owner: req.user.id}, req.body, null, function (err, docs) {
+
+    var find = {_id: idToUpdate};
+    if (!req.ignoreOwner) {
+        req.body.owner = req.user.id;
+        find.owner = req.user.id;
+    }
+    console.log("updating2 " + coll + " " + JSON.stringify(req.body));
+    db.collection(coll).updateOne(find, req.body, null, function (err, docs) {
         if (err)
             console.log(err);
         else {

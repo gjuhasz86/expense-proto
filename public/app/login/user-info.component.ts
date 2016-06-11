@@ -21,8 +21,8 @@ export class UserInfoComponent implements OnInit {
             .map(
                 res => {
                     if (res) {
-                        console.log("Logged in: " + res.json());
-                        return res.json();
+                        console.log("Logged in: " + JSON.stringify(res));
+                        return res;
                     }
                     else {
                         console.log("user-info: not logged in, navigating to login");

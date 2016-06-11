@@ -10,6 +10,8 @@ var db = require('./db');
 var auth = require('./auth');
 var transactions = require('./transactions');
 var banklink = require('./banklink');
+var admin = require('./admin');
+var public = require('./public');
 var debug = require('./debug');
 
 var router = express.Router();
@@ -30,17 +32,18 @@ router.use(db, function (req, res, next) {
 
 router.use(auth);
 
-router.use("/api", auth.isAuthenticated, function (res, req, next) {
-    next();
-});
+router.use('/public', public);
 
-// DB access routes
+router.use("/api", auth.isAuthenticated, jump);
 router.use('/api/transactions', coll('transactions'), db, transactions, crud);
 router.use('/api/pendingtnxs', coll('pendingtnxs'), db, transactions, crud);
 router.use('/api/accounts', coll('accounts'), db, crud);
 router.use('/api/categories', coll('categories'), db, crud);
-
 router.use('/api/banklink', banklink);
+
+router.use('/api/admin', auth.ensureAdmin, jump);
+router.use('/api/admin', admin, jump);
+router.use('/api/admin/config', coll('config'), db, ignoreOwner, crud);
 
 router.use('/debug', debug);
 
@@ -63,6 +66,14 @@ function coll(coll) {
     }
 }
 
+function jump(req, res, next) {
+    next();
+}
+
+function ignoreOwner(req, res, next) {
+    req.ignoreOwner = true;
+    next();
+}
 /////////////////////
 /// MODULE EXPORT
 

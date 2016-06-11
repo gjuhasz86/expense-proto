@@ -1,12 +1,15 @@
-<div class="panel panel-default" *ngIf="!(user | async)">
-    <div class="panel-body">
-        <form class="form-inline">
-            <input class="form-control" type="text" [(ngModel)]="loginData.username" placeholder="username"/>
-            <input class="form-control" type="password" [(ngModel)]="loginData.password" placeholder="password"/>
-            <button class="form-control btn-primary" type="submit" (click)="login()">Login</button>
-        </form>
-    </div>
-</div>
+<!--<div class="panel panel-default" *ngIf="!(user | async)">-->
+<!--<div class="panel-body">-->
+<!--<form class="form-inline">-->
+<!--<input class="form-control" type="text" [(ngModel)]="loginData.username" placeholder="username"/>-->
+<!--<input class="form-control" type="password" [(ngModel)]="loginData.password" placeholder="password"/>-->
+<!--<button class="form-control btn-primary" type="submit" (click)="login()">Login</button>-->
+<!--<div class="text-center">-->
+<!--<a class="form-control btn-primary" href="/auth/google">Login with Google</a>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
 <div *ngIf="user | async">
     <div class="input-group">
         <label class="form-control">{{(user | async).username}}</label>

@@ -13,7 +13,8 @@
                 <li><a [routerLink]="['Transactions']">Transactions</a></li>
                 <li><a [routerLink]="['BankLink']">BankLink</a></li>
                 <li><a [routerLink]="['Reports']">Reports</a></li>
-                <li><a [routerLink]="['Debug']">Debug</a></li>
+                <li *ngIf="_userService.isAdmin()"><a [routerLink]="['Debug']">Debug</a></li>
+                <li *ngIf="_userService.isAdmin()"><a [routerLink]="['Admin']">Admin</a></li>
             </ul>
         </div>
         <div class="col-sm-8">
