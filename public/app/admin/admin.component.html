@@ -1,0 +1,26 @@
+<div class="content">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Admin
+            </div>
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-inline">
+                            <label>Sign up:</label>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-primary" [disabled]="config?.signupEnabled"
+                                        (click)="setSignupEnabled(true)"> Enable
+                                </button>
+                                <button type="button" class="btn btn-primary" [disabled]="!config?.signupEnabled"
+                                        (click)="setSignupEnabled(false)"> Disable
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

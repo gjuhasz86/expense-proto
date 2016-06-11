@@ -15,6 +15,19 @@ function isAuthenticated(req, res, next) {
     res.sendStatus(401);
 };
 
+function ensureAdmin(req, res, next) {
+    var user = req.user.id;
+    db.dbRef.collection("admins").find({userId: user}).limit(1).next(function (err, doc) {
+        console.log("Checking for admin rights [" + user + "]" + typeof user);
+        console.log(JSON.stringify(doc));
+        if (doc) {
+            return next();
+        } else {
+            return res.sendStatus(401);
+        }
+    });
+};
+
 passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
@@ -45,7 +58,7 @@ passport.use(new GoogleStrategy({
             db.dbRef.collection("users").findOneAndUpdate(
                 {id: profile.id},
                 {$set: {id: profile.id, username: profile.displayName}},
-                {upsert: conf.signupEnabled, returnOriginal: false}, function (err, r) {
+                {upsert: conf.signupEnabled, returnOriginal: !conf.signupEnabled}, function (err, r) {
                     console.log("created user");
                     console.log(JSON.stringify(r));
                     return done(null, r.value);
@@ -83,6 +96,7 @@ router.get('/auth/currentuser', isAuthenticated, function (req, res) {
 });
 
 router.isAuthenticated = isAuthenticated;
+router.ensureAdmin = ensureAdmin;
 
 var defaultGlobalConf = {scope: "global", signupEnabled: true};
 function globalConf(callback) {

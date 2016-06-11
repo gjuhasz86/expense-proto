@@ -11,7 +11,7 @@ import 'rxjs/add/operator/debounceTime';
 
 @Injectable()
 abstract class CrudService<T> {
-    private events:ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    protected events:ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     private _headers:Headers;
     private allItems:ReplaySubject<T[]> = new ReplaySubject<T[]>(1);
 
@@ -132,6 +132,25 @@ export class TransactionService extends CrudService<Transaction> {
 
     parse(json:any):Transaction {
         return Transaction.parse(json);
+    }
+}
+
+@Injectable()
+export class ConfigService extends CrudService<any> {
+    constructor(protected _http:Http) {
+        super("admin/config", false, _http);
+    }
+
+    parse(json:any):any {
+        return json;
+    }
+
+    getGlobalConfig():Observable<any> {
+        return this.events
+            .debounceTime(100)
+            .map(x=>`/public/globalconfig`)
+            .flatMap((url:string) => this._http.get(url))
+            .map(res =>res.json());
     }
 }
 

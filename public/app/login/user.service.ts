@@ -8,6 +8,7 @@ export class UserService {
     private _headers:Headers;
     private user:ReplaySubject<any> = new ReplaySubject<any>(1);
     private loggedIn:boolean = false;
+    private admin:boolean = false;
     public globalConf:ReplaySubject<any> = new ReplaySubject<any>(1);
 
     constructor(private _http:Http) {
@@ -15,23 +16,27 @@ export class UserService {
         this._headers.append('Content-Type', 'application/json');
         this._http.get('/auth/currentuser')
             .subscribe(
-                res => this.user.next(res),
+                res => this.user.next(res.json()),
                 err => {
                     console.log('user service: not logged in');
                     console.log(err);
                     this.user.next(undefined);
                 });
         this.user.subscribe(res=> {
-            console.log("user change: " + res);
+            console.log("user change: " + JSON.stringify(res));
             if (res) {
                 this.loggedIn = true;
+                if (res.isAdmin) {
+                    this.admin = true;
+                } else {
+                    this.admin = false;
+                }
             } else {
                 this.loggedIn = false;
             }
         });
         this._http.get('/public/globalconfig')
             .subscribe(res => this.globalConf.next(res.json()));
-
     }
 
     currentUser():Observable<any> {
@@ -40,6 +45,10 @@ export class UserService {
 
     isLoggedIn():boolean {
         return this.loggedIn;
+    }
+
+    isAdmin():boolean {
+        return this.admin;
     }
 
     login(loginData:any):void {

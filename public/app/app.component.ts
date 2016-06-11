@@ -1,6 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {TransactionListComponent} from "./transactions/transaction-list.component";
-import {TransactionService, AccountService, CategoryService, PendingTransactionService} from "./crud.service";
+import {
+    TransactionService, AccountService, CategoryService, PendingTransactionService,
+    ConfigService
+} from "./crud.service";
 import {AccountListComponent} from "./accounts/account-list.component";
 import {UserService} from "./login/user.service";
 import {CategoryListComponent} from "./categories/category-list.component";
@@ -12,6 +15,7 @@ import {ReportsComponent} from "./reports/reports.component";
 import {ReportsService} from "./reports/reports.service";
 import {DebugComponent} from "./debug.component";
 import {BankLinkComponent} from "./banklink/banklink.component";
+import {AdminComponent} from "./admin/admin.component";
 
 @Component({
     selector: 'my-app',
@@ -27,6 +31,7 @@ import {BankLinkComponent} from "./banklink/banklink.component";
     ],
     providers: [
         UserService,
+        ConfigService,
         TransactionService,
         PendingTransactionService,
         AccountService,
@@ -42,6 +47,7 @@ import {BankLinkComponent} from "./banklink/banklink.component";
     {path: '/banklink', name: 'BankLink', component: BankLinkComponent},
     {path: '/reports', name: 'Reports', component: ReportsComponent},
     {path: '/debugger', name: 'Debug', component: DebugComponent},
+    {path: '/admin', name: 'Admin', component: AdminComponent},
     {path: '/', name: 'Home', component: TransactionListComponent}
 ])
 export class AppComponent implements OnInit {
