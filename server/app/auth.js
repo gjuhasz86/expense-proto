@@ -40,7 +40,7 @@ passport.deserializeUser(function (id, done) {
 passport.use(new GoogleStrategy({
         clientID: env.GOOGLE_CLIENT_ID,
         clientSecret: env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/callback"
+        callbackURL: "http://" + env.OPENSHIFT_APP_DNS + "/auth/google/callback"
     },
     function (accessToken, refreshToken, profile, done) {
         console.log("authenticating");

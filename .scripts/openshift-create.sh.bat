@@ -8,6 +8,10 @@ echo -n "Database user name: "
 read user
 echo -n "Database user password: "
 read pass
+echo -n "Google client id: "
+read googleclid
+echo -n "Google client secret: "
+read googleclsec
 echo -n "Citibank client location on server: "
 read citi
 
@@ -30,6 +34,8 @@ fi
 rhc env-set OPENSHIFT_EXPENSE_DB=$dbname -a $app
 rhc env-set OPENSHIFT_EXPENSE_USER=$user -a $app
 rhc env-set OPENSHIFT_EXPENSE_PWD=$pass -a $app
+rhc env-set GOOGLE_CLIENT_ID=$googleclid -a $app
+rhc env-set GOOGLE_CLIENT_SECRET=$googleclsec -a $app
 rhc env-set OPENSHIFT_EXPENSE_CITI_CLIENT=$citi -a $app
 
 # create user in the database
