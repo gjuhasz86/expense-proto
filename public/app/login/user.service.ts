@@ -8,6 +8,7 @@ export class UserService {
     private _headers:Headers;
     private user:ReplaySubject<any> = new ReplaySubject<any>(1);
     private loggedIn:boolean = false;
+    public globalConf:ReplaySubject<any> = new ReplaySubject<any>(1);
 
     constructor(private _http:Http) {
         this._headers = new Headers();
@@ -27,7 +28,10 @@ export class UserService {
             } else {
                 this.loggedIn = false;
             }
-        })
+        });
+        this._http.get('/public/globalconfig')
+            .subscribe(res => this.globalConf.next(res.json()));
+
     }
 
     currentUser():Observable<any> {

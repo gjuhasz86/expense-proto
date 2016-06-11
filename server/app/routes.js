@@ -10,6 +10,7 @@ var db = require('./db');
 var auth = require('./auth');
 var transactions = require('./transactions');
 var banklink = require('./banklink');
+var public = require('./public');
 var debug = require('./debug');
 
 var router = express.Router();
@@ -34,6 +35,7 @@ router.use("/api", auth.isAuthenticated, function (res, req, next) {
     next();
 });
 
+router.use('/public', public);
 // DB access routes
 router.use('/api/transactions', coll('transactions'), db, transactions, crud);
 router.use('/api/pendingtnxs', coll('pendingtnxs'), db, transactions, crud);

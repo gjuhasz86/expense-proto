@@ -3,9 +3,16 @@
     <div class="panel panel-default" *ngIf="!(user | async)">
         <div class="panel-body">
             <form class="form-inline">
-                <input class="form-control" type="text" [(ngModel)]="loginData.username" placeholder="username"/>
-                <input class="form-control" type="password" [(ngModel)]="loginData.password" placeholder="password"/>
-                <button class="form-control btn-primary" type="submit" (click)="login()">Login</button>
+                <!--<input class="form-control" type="text" [(ngModel)]="loginData.username" placeholder="username"/>-->
+                <!--<input class="form-control" type="password" [(ngModel)]="loginData.password" placeholder="password"/>-->
+                <!--<button class="form-control btn-primary" type="submit" (click)="login()">Login</button>-->
+                <div *ngIf="(_userService.globalConf|async).signupEnabled">
+                    <a class="form-control btn-primary" href="/auth/google">Login or Signup with Google</a>
+                </div>
+                <div *ngIf="!(_userService.globalConf|async).signupEnabled">
+                    <div class="alert alert-warning" role="alert">Signup is currently disabled</div>
+                    <a class="form-control btn-primary" href="/auth/google">Login with Google</a>
+                </div>
             </form>
         </div>
     </div>
@@ -19,5 +26,4 @@
     </div>
 </div>
 <div>
-    <a href="/auth/google">Login with Google</a>
 </div>
