@@ -11,7 +11,7 @@ var auth = require('./auth');
 var transactions = require('./transactions');
 var banklink = require('./banklink');
 var admin = require('./admin');
-var public = require('./public');
+var pub = require('./public');
 var debug = require('./debug');
 
 var router = express.Router();
@@ -32,7 +32,7 @@ router.use(db, function (req, res, next) {
 
 router.use(auth);
 
-router.use('/public', public);
+router.use('/public', pub);
 
 router.use("/api", auth.isAuthenticated, jump);
 router.use('/api/transactions', coll('transactions'), db, transactions, crud);
