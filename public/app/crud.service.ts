@@ -55,12 +55,19 @@ abstract class CrudService<T> {
     }
 
 
-    getPage(page:Observable<number>, limit:number, sortBy:string, order:string, account:string):Observable<T[]> {
+    getPage(page:Observable<number>, limit:number, sortBy:string, order:string, account:string, description:string):Observable<T[]> {
         let source = Observable.combineLatest(page, this.events.startWith(true));
         return source.map(ev=> {
             let page = ev[0];
             let skip = limit * (page - 1);
-            return `/api/${this.collection}/search?skip=${skip}&limit=${limit}&sort=${sortBy}&order=${order}&account=${account}`
+
+            let qSkip = `skip=${skip}`;
+            let qLimit = `limit=${limit}`;
+            let qSort = `sort=${sortBy}`;
+            let qOrder = `order=${order}`;
+            let qAccount = account == "" ? "" : `account=${account}`;
+            let qDesc = `description=${description}`;
+            return `/api/${this.collection}/search?${qSkip}&${qLimit}&${qSort}&${qOrder}&${qAccount}&${qDesc}`
         })
             .flatMap((url:string) => this._http.get(url))
             .map((res:Response) => res.json().map(this.parse));
@@ -71,7 +78,13 @@ abstract class CrudService<T> {
         return source.map(ev=> {
             let page = ev[0];
             let skip = limit * (page - 1);
-            return `/api/${this.collection}/search?skip=${skip}&limit=${limit}&sort=${sortBy}&order=${order}`
+
+            let qSkip = `skip=${skip}`;
+            let qLimit = `limit=${limit}`;
+            let qSort = `sort=${sortBy}`;
+            let qOrder = `order=${order}`;
+
+            return `/api/${this.collection}/search?${qSkip}&${qLimit}&${qSort}&${qOrder}`
         })
             .flatMap((url:string) => this._http.get(url))
             .map((res:Response) => res.json().map(this.parse));

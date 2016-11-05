@@ -15,7 +15,8 @@
                     <div class="panel-body">
                         <transaction-filter
                                 [account]="defaultAccount"
-                                (accountChange)="onAccountChanged($event)">
+                                [description]="descriptionRegex"
+                                (filterChange)="onFilterChanged($event)">
                         </transaction-filter>
                     </div>
                 </div>

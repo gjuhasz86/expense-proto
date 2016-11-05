@@ -29,12 +29,13 @@ export class TransactionListComponent implements OnInit {
     pages:Observable<number[]>;
     numOfTnxs:Observable<number>;
     defaultAccount:string;//= "574218a2fa58b0b820f5b936";
+    descriptionRegex:string = ".*";
 
     constructor(private _tnxService:TransactionService) {
     }
 
     ngOnInit() {
-        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount)
+        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount, this.descriptionRegex)
         this.pages = this.genPages();
         this.numOfTnxs = this._tnxService.getCount();
 
@@ -46,9 +47,17 @@ export class TransactionListComponent implements OnInit {
         this.pageSubj.next(1);
     }
 
-    onAccountChanged(accId):void {
-        this.defaultAccount = accId;
-        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount);
+    onFilterChanged(e):void {
+        this.defaultAccount = e.accountId;
+        this.descriptionRegex = e.description;
+        this.transactions = this._tnxService
+            .getPage(
+                this.pageSubj,
+                this.limit,
+                "date",
+                "desc",
+                this.defaultAccount,
+                this.descriptionRegex);
         this.refresh();
     }
 
