@@ -28,6 +28,9 @@
                                 [boundaryLinks]="true"
                                 [(ngModel)]="page"
                                 (pageChanged)="setPage($event)"></pagination>
+                    <!--TODO: fix the horrible css below-->
+                    <input style="position: absolute; margin-top: 21px; margin-left: 10px; width: 50px; text-align: center;"
+                           [ngModel]="limit" (ngModelChange)="onLimitChange($event)"/>
                 </div>
                 <table class="table table-condensed table-hover">
                     <thead>

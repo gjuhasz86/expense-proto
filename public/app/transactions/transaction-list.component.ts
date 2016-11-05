@@ -53,6 +53,18 @@ export class TransactionListComponent implements OnInit {
         this.pageSubj.next(1);
     }
 
+    onLimitChange(e) {
+        this.limit = e;
+        this.transactions = this._tnxService
+            .getPage(
+                this.pageSubj,
+                this.limit,
+                "date",
+                "desc",
+                this.defaultAccount,
+                this.descriptionRegex);
+    }
+
     onFilterChanged(e):void {
         this.defaultAccount = e.accountId;
         this.descriptionRegex = e.description;
