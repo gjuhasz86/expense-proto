@@ -38,7 +38,7 @@ export class BankLinkComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.transactions = this._tnxService.getPage2(this.pageSubj, this.limit, "date", "desc");
+        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", "", undefined);
         this.numOfTnxs = this._tnxService.getCount();
         this.pendingAccounts = this.transactions.map((tnxs:Transaction[]) => {
             return _.chain(tnxs).map(t=>t.accountId).uniq().value();

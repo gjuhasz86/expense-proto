@@ -54,42 +54,6 @@ abstract class CrudService<T> {
             })
     }
 
-
-    getPage(page:Observable<number>, limit:number, sortBy:string, order:string, account:string, description:string):Observable<T[]> {
-        let source = Observable.combineLatest(page, this.events.startWith(true));
-        return source.map(ev=> {
-            let page = ev[0];
-            let skip = limit * (page - 1);
-
-            let qSkip = `skip=${skip}`;
-            let qLimit = `limit=${limit}`;
-            let qSort = `sort=${sortBy}`;
-            let qOrder = `order=${order}`;
-            let qAccount = account == "" ? "" : `account=${account}`;
-            let qDesc = `description=${description}`;
-            return `/api/${this.collection}/search?${qSkip}&${qLimit}&${qSort}&${qOrder}&${qAccount}&${qDesc}`
-        })
-            .flatMap((url:string) => this._http.get(url))
-            .map((res:Response) => res.json().map(this.parse));
-    }
-
-    getPage2(page:Observable<number>, limit:number, sortBy:string, order:string):Observable<T[]> {
-        let source = Observable.combineLatest(page, this.events.startWith(true));
-        return source.map(ev=> {
-            let page = ev[0];
-            let skip = limit * (page - 1);
-
-            let qSkip = `skip=${skip}`;
-            let qLimit = `limit=${limit}`;
-            let qSort = `sort=${sortBy}`;
-            let qOrder = `order=${order}`;
-
-            return `/api/${this.collection}/search?${qSkip}&${qLimit}&${qSort}&${qOrder}`
-        })
-            .flatMap((url:string) => this._http.get(url))
-            .map((res:Response) => res.json().map(this.parse));
-    }
-
     saveItem(json:T):void {
         console.log(`calling ${this.collection} save`);
 
@@ -137,8 +101,53 @@ abstract class CrudService<T> {
     }
 }
 
+abstract class TransactionLikeService extends CrudService<Transaction> {
+    constructor(private _collection:string, private _autoInit:boolean, protected _http:Http) {
+        super(_collection, _autoInit, _http);
+    }
+
+    getPage(page:Observable<number>, limit:number, sortBy:string, order:string, account:string, description:string):Observable<Transaction[]> {
+        let source = Observable.combineLatest(page, this.events.startWith(true));
+        return source.map(ev=> {
+            let page = ev[0];
+            let skip = limit * (page - 1);
+
+            let qSkip = `skip=${skip}`;
+            let qLimit = `limit=${limit}`;
+            let qSort = `sort=${sortBy}`;
+            let qOrder = `order=${order}`;
+            let qAccount = account == "" ? "" : `account=${account}`;
+            let qDesc = description == undefined ? "" : `description=${description}`;
+            return `/api/${this._collection}/search?${qSkip}&${qLimit}&${qSort}&${qOrder}&${qAccount}&${qDesc}`
+        })
+            .flatMap((url:string) => this._http.get(url))
+            .map((res:Response) => res.json().map(this.parse));
+    }
+
+    getSize(page:Observable<number>, limit:number, sortBy:string, order:string, account:string, description:string):Observable<number> {
+        let source = Observable.combineLatest(page, this.events.startWith(true));
+        return source.map(ev=> {
+            let page = ev[0];
+            let skip = limit * (page - 1);
+
+            let qSkip = `skip=${skip}`;
+            let qLimit = `limit=${limit}`;
+            let qSort = `sort=${sortBy}`;
+            let qOrder = `order=${order}`;
+            let qAccount = account == "" ? "" : `account=${account}`;
+            let qDesc = description == undefined ? "" : `description=${description}`;
+            return `/api/${this._collection}/size?${qSkip}&${qLimit}&${qSort}&${qOrder}&${qAccount}&${qDesc}`
+        })
+            .flatMap((url:string) => this._http.get(url))
+            .map((res:Response) => res.json())//.map(this.parse));
+            .map(res=> res.count);
+    }
+
+
+}
+
 @Injectable()
-export class TransactionService extends CrudService<Transaction> {
+export class TransactionService extends TransactionLikeService {
     constructor(protected _http:Http) {
         super("transactions", false, _http);
     }
@@ -146,6 +155,7 @@ export class TransactionService extends CrudService<Transaction> {
     parse(json:any):Transaction {
         return Transaction.parse(json);
     }
+
 }
 
 @Injectable()
@@ -168,7 +178,7 @@ export class ConfigService extends CrudService<any> {
 }
 
 @Injectable()
-export class PendingTransactionService extends CrudService<Transaction> {
+export class PendingTransactionService extends TransactionLikeService {
     constructor(protected _http:Http) {
         super("pendingtnxs", false, _http);
     }

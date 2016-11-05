@@ -37,8 +37,14 @@ export class TransactionListComponent implements OnInit {
     ngOnInit() {
         this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount, this.descriptionRegex)
         this.pages = this.genPages();
-        this.numOfTnxs = this._tnxService.getCount();
-
+        this.numOfTnxs = this._tnxService
+            .getSize(
+                this.pageSubj,
+                this.limit,
+                "date",
+                "desc",
+                this.defaultAccount,
+                this.descriptionRegex);
         this.refresh();
     }
 
@@ -52,6 +58,14 @@ export class TransactionListComponent implements OnInit {
         this.descriptionRegex = e.description;
         this.transactions = this._tnxService
             .getPage(
+                this.pageSubj,
+                this.limit,
+                "date",
+                "desc",
+                this.defaultAccount,
+                this.descriptionRegex);
+        this.numOfTnxs = this._tnxService
+            .getSize(
                 this.pageSubj,
                 this.limit,
                 "date",
