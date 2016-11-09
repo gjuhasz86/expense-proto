@@ -1,6 +1,13 @@
 <template [ngIf]="!editing">
-    <td class="text-nowrap">{{tnx.date | date: 'yyyy'}}-{{tnx.date | date:'MM'}}-{{tnx.date | date: 'dd'}}</td>
-    <td>{{tnx.description}}</td>
+    <td class="text-nowrap" style="padding-left: 10px;padding-right: 10px">{{tnx.date | date: 'yyyy'}}-{{tnx.date |
+        date:'MM'}}-{{tnx.date | date: 'dd'}}
+    </td>
+    <td class="description-cell">
+        <div class="description-div">
+            <span class="description">{{tnx.description}}</span>
+            <span class="description-extra">{{tnx.extra}}</span>
+        </div>
+    </td>
     <td class="text-nowrap">{{accountName | async}}</td>
     <td class="text-nowrap">{{tnx.amount}}</td>
     <td class="text-nowrap">
