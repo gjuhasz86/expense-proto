@@ -1,7 +1,6 @@
 <template [ngIf]="!editing">
     <td>
         <transaction-control (addCategory)="addCat($event)" (remCategory)="remCat($event)"></transaction-control>
-        <div>asd</div>
         <input type="checkbox" [(ngModel)]="selected">
     </td>
     <td class="text-nowrap" style="padding-left: 10px;padding-right: 10px">{{tnx.date | date: 'yyyy'}}-{{tnx.date |
