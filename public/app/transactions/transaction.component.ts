@@ -1,6 +1,6 @@
 import {Input, Component, Inject, OnInit} from "@angular/core";
 import {Transaction} from "./transaction";
-import {TransactionService, AccountService} from "../crud.service";
+import {TransactionService, AccountService, CategoryService} from "../crud.service";
 import {Account} from "../accounts/account";
 import {Observable} from "rxjs/Observable";
 import {Category} from "../categories/category";
@@ -20,15 +20,44 @@ export class TransactionComponent implements OnInit {
 
     accountName: Observable<string>;
     accounts: Observable<Account[]>;
+    categories: Observable<Category[]>;
+
 
     constructor(private _tnxService: TransactionService,
-                private _accService: AccountService) {
+                private _accService: AccountService,
+                private _catService: CategoryService) {
     }
 
     ngOnInit() {
         this.accounts = this._accService.getAllItemsCached();
         this.accountName = this.getAccountName(this.tnx.accountId);
+        this.categories = this._catService.categoryMap().map(catMap=> {
+
+                console.log(JSON.stringify(this.tnx));
+                console.log(this.tnx.categories);
+                if (this.tnx.categories == null) {
+                    console.log("it is null");
+                } else {
+                    console.log("it is NOT null");
+                }
+
+                if (this.tnx.categories == null) {
+                    return [];
+                } else {
+                    console.log(this.tnx.categories);
+                    let r = this.tnx.categories.map(id=>catMap[id]);
+                    console.log(r);
+                    return r;
+                }
+            }
+        );
         // this._accService.refresh();
+    }
+
+    catName(c: Category): string {
+        console.log("Get name for category");
+        console.log(c);
+        return c.name;
     }
 
     clicked(): void {

@@ -22,25 +22,20 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        <transaction-control #tnxCtrl></transaction-control>
                         <div class="form-inline">
                             <div class="form-group">
-                                <transaction-control #tnxCtrl></transaction-control>
-                                <div class="form-inline">
-                                    <div class="form-group">
-                                        <select class="form-control" [(ngModel)]="category">
-                                            <option *ngFor="let c of (categories | async)" [value]="c._id">{{c.name}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <input class="form-control" [(ngModel)]="category" placeholder="categories"/>
-                                <button class="form-control btn-primary" (click)="tnxCtrl.sendAddCategory(category)"
-                                        type="submit">Add
-                                </button>
-                                <button class="form-control btn-primary" (click)="tnxCtrl.sendRemCategory(category)"
-                                        type="submit">Remove
-                                </button>
+                                <select class="form-control" [(ngModel)]="category">
+                                    <option *ngFor="let c of (categories | async)" [value]="c._id">{{c.name}}
+                                    </option>
+                                </select>
                             </div>
+                            <button class="form-control btn-primary" (click)="tnxCtrl.sendAddCategory(category)"
+                                    type="submit">Add
+                            </button>
+                            <button class="form-control btn-primary" (click)="tnxCtrl.sendRemCategory(category)"
+                                    type="submit">Remove
+                            </button>
                         </div>
                     </div>
                 </div>

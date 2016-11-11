@@ -13,7 +13,9 @@
             <span class="description-extra">{{tnx.extra}}</span>
         </div>
     </td>
-    <td><div *ngFor="let c of tnx.categories" class="badge">{{c}}</div></td>
+    <td>
+        <div *ngFor="let c of (categories|async)" class="badge">{{c.name}}</div>
+    </td>
     <td class="text-nowrap">{{accountName | async}}</td>
     <td class="text-nowrap">{{tnx.amount}}</td>
     <td class="text-nowrap">
