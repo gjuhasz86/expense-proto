@@ -23,7 +23,7 @@ router.post('/save', function (req, res) {
 router.post('/savemany', function (req, res) {
     req.body.forEach(function (item) {
         item.owner = req.user.id;
-        delete item.body._id;
+        delete item._id;
     });
     var coll = req.collection;
     console.log('saving ' + coll + " " + JSON.stringify(req.body));

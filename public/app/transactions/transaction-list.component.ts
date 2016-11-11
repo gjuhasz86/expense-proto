@@ -2,13 +2,15 @@ import {Component, OnInit, Inject} from "@angular/core";
 import {TransactionComponent} from "./transaction.component";
 import {Observable} from "rxjs/Observable";
 import {Transaction} from "./transaction";
-import {TransactionService} from "../crud.service";
+import {TransactionService, CategoryService} from "../crud.service";
 import * as _ from 'underscore';
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {NewTransactionComponent} from "./new-transaction.component";
 import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap'
 import {TransactionFilterComponent} from "./transaction-filter.component";
 import {Debug2Component} from "../debug2.component";
+import {TransactionControlComponent, TransactionControlService} from "./transaction-control.component";
+import {Category} from "../categories/category";
 
 @Component({
     selector: 'transaction-list',
@@ -18,8 +20,10 @@ import {Debug2Component} from "../debug2.component";
         TransactionComponent,
         TransactionFilterComponent,
         Debug2Component,
-        PAGINATION_DIRECTIVES
-    ]
+        PAGINATION_DIRECTIVES,
+        TransactionControlComponent
+    ],
+    providers: [TransactionControlService]
 })
 export class TransactionListComponent implements OnInit {
     transactions:Observable<Transaction[]>;
@@ -29,26 +33,64 @@ export class TransactionListComponent implements OnInit {
     pages:Observable<number[]>;
     numOfTnxs:Observable<number>;
     defaultAccount:string;//= "574218a2fa58b0b820f5b936";
+    descriptionRegex:string = ".*";
+    categories:Observable<Category[]>;
 
-    constructor(private _tnxService:TransactionService) {
+    constructor(private _tnxService:TransactionService, private _catService:CategoryService) {
     }
 
     ngOnInit() {
-        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount)
+        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount, this.descriptionRegex)
         this.pages = this.genPages();
-        this.numOfTnxs = this._tnxService.getCount();
-
+        this.numOfTnxs = this._tnxService
+            .getSize(
+                this.pageSubj,
+                this.limit,
+                "date",
+                "desc",
+                this.defaultAccount,
+                this.descriptionRegex);
+        this.categories = this._catService.getAllInflatedCategories();
         this.refresh();
     }
 
     refresh() {
         this._tnxService.refresh();
+        this._catService.refresh();
         this.pageSubj.next(1);
     }
 
-    onAccountChanged(accId):void {
-        this.defaultAccount = accId;
-        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount);
+    onLimitChange(e) {
+        this.limit = e;
+        this.transactions = this._tnxService
+            .getPage(
+                this.pageSubj,
+                this.limit,
+                "date",
+                "desc",
+                this.defaultAccount,
+                this.descriptionRegex);
+    }
+
+    onFilterChanged(e):void {
+        this.defaultAccount = e.accountId;
+        this.descriptionRegex = e.description;
+        this.transactions = this._tnxService
+            .getPage(
+                this.pageSubj,
+                this.limit,
+                "date",
+                "desc",
+                this.defaultAccount,
+                this.descriptionRegex);
+        this.numOfTnxs = this._tnxService
+            .getSize(
+                this.pageSubj,
+                this.limit,
+                "date",
+                "desc",
+                this.defaultAccount,
+                this.descriptionRegex);
         this.refresh();
     }
 
@@ -63,5 +105,4 @@ export class TransactionListComponent implements OnInit {
     setPage(p:any) {
         this.pageSubj.next(p.page);
     }
-
 }

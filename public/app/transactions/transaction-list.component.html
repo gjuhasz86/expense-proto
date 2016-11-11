@@ -15,8 +15,28 @@
                     <div class="panel-body">
                         <transaction-filter
                                 [account]="defaultAccount"
-                                (accountChange)="onAccountChanged($event)">
+                                [description]="descriptionRegex"
+                                (filterChange)="onFilterChanged($event)">
                         </transaction-filter>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <transaction-control #tnxCtrl></transaction-control>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <select class="form-control" [(ngModel)]="category">
+                                    <option *ngFor="let c of (categories | async)" [value]="c._id">{{c.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <button class="form-control btn-primary" (click)="tnxCtrl.sendAddCategory(category)"
+                                    type="submit">Add
+                            </button>
+                            <button class="form-control btn-primary" (click)="tnxCtrl.sendRemCategory(category)"
+                                    type="submit">Remove
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="text-center">
@@ -27,18 +47,24 @@
                                 [boundaryLinks]="true"
                                 [(ngModel)]="page"
                                 (pageChanged)="setPage($event)"></pagination>
+                    <!--TODO: fix the horrible css below-->
+                    <input style="position: absolute; margin-top: 21px; margin-left: 10px; width: 50px; text-align: center;"
+                           [ngModel]="limit" (ngModelChange)="onLimitChange($event)"/>
                 </div>
                 <table class="table table-condensed table-hover">
                     <thead>
                     <tr>
-                        <th class="text-nowrap col-sm-2">Date</th>
-                        <th class="text-nowrap col-sm-6">Description</th>
-                        <th class="text-nowrap col-sm-2">Account</th>
-                        <th class="text-nowrap col-sm-2">Amount</th>
+                        <th class="text-nowrap col-sm-1">-</th>
+                        <th class="text-nowrap col-sm-1">Date</th>
+                        <th class="text-nowrap col-sm-4">Description</th>
+                        <th class="text-nowrap col-sm-2">Categories</th>
+                        <th class="text-nowrap col-sm-1">Account</th>
+                        <th class="text-nowrap col-sm-1">Amount</th>
                         <th class="text-nowrap"></th>
                     </tr>
                     </thead>
-                    <tr transaction *ngFor="let tnx of transactions | async" [tnx]="tnx"></tr>
+                    <tr transaction #tnxcmp *ngFor="let tnx of transactions | async" [tnx]="tnx"
+                        (click)="tnxcmp.clicked()"></tr>
                 </table>
                 <div class="text-center">
                     <pagination class="pagination-lg"

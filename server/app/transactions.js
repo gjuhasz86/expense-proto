@@ -57,7 +57,7 @@ function defaultSearchQuery(q) {
 
     if (q.description != undefined) {
         // TODO: sanitize user input
-        descriptionFilter.$regex = q.description;
+        descriptionFilter.$regex = new RegExp(q.description, "i");
         hasDescriptionFilter = true;
     }
 

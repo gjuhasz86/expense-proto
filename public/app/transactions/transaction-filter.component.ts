@@ -17,21 +17,35 @@ import {Observable} from "rxjs/Observable";
 export class TransactionFilterComponent implements OnInit {
     accounts:Observable<Account[]>;
     @Input() account:string;
-    @Output() accountChange:EventEmitter<any> = new EventEmitter();
+    @Input() description:string;
+    @Output() filterChange:EventEmitter<any> = new EventEmitter();
 
     constructor(private _accService:AccountService) {
     }
 
-    onChange(e) {
+    emitFilterChange() {
+        let e = {
+            accountId: this.account,
+            description: this.description
+        };
+        this.filterChange.emit(e);
+    }
+
+    onAccountChange(e) {
         this.account = e;
-        this.accountChange.emit(e);
+        this.emitFilterChange();
+    }
+
+    onDesriptionChange(e) {
+        this.description = e;
+        this.emitFilterChange();
     }
 
     ngOnInit() {
         this.accounts = this._accService.getAllItemsCached();
         this.accounts.subscribe((accs:Account[]) => {
             if (!this.account && accs[0]) {
-                this.onChange(accs[0].id());
+                this.onAccountChange(accs[0].id());
             }
         });
     }

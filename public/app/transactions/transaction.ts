@@ -1,16 +1,18 @@
 export class Transaction {
-    private _id:string;
-    public description:string;
-    public accountId:string;
-    public amount:number;
-    public date:Date;
-    public reference:String;
+    private _id: string;
+    public description: string;
+    public accountId: string;
+    public amount: number;
+    public date: Date;
+    public reference: string;
+    public extra: string;
+    public categories: string[] = [];
 
-    id():string {
+    id(): string {
         return this._id;
     }
 
-    static parse(json:any):Transaction {
+    static parse(json: any): Transaction {
         let res = new Transaction();
         res._id = json._id;
         res.description = json.description;
@@ -18,6 +20,12 @@ export class Transaction {
         res.amount = parseInt(json.amount) || 0;
         res.date = new Date(json.date);
         res.reference = json.reference;
+        res.extra = json.extra;
+        if (json.categories) {
+            res.categories = json.categories;
+        }else {
+            res.categories = [];
+        }
         return res;
     }
 }
