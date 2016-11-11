@@ -6,6 +6,7 @@ export class Transaction {
     public date:Date;
     public reference:string;
     public extra:string;
+    public categories:string[] = [];
 
     id():string {
         return this._id;
@@ -20,6 +21,7 @@ export class Transaction {
         res.date = new Date(json.date);
         res.reference = json.reference;
         res.extra = json.extra;
+        res.categories = [].concat(json.categories);
         return res;
     }
 }

@@ -1,4 +1,9 @@
 <template [ngIf]="!editing">
+    <td>
+        <transaction-control (addCategory)="addCat($event)" (remCategory)="remCat($event)"></transaction-control>
+        <div>asd</div>
+        <input type="checkbox" [(ngModel)]="selected">
+    </td>
     <td class="text-nowrap" style="padding-left: 10px;padding-right: 10px">{{tnx.date | date: 'yyyy'}}-{{tnx.date |
         date:'MM'}}-{{tnx.date | date: 'dd'}}
     </td>
@@ -8,6 +13,7 @@
             <span class="description-extra">{{tnx.extra}}</span>
         </div>
     </td>
+    <td><div *ngFor="let c of tnx.categories" class="badge">{{c}}</div></td>
     <td class="text-nowrap">{{accountName | async}}</td>
     <td class="text-nowrap">{{tnx.amount}}</td>
     <td class="text-nowrap">
@@ -15,8 +21,10 @@
     </td>
 </template>
 <template [ngIf]="editing">
+    <td></td>
     <td><input class="form-control" [(ngModel)]="newTnx.date" placeholder="date"/></td>
     <td><input class="form-control" [(ngModel)]="newTnx.description" placeholder="description"/></td>
+    <td></td>
     <td class="col-sm-2">
         <select class="form-control" [(ngModel)]="newTnx.accountId">
             <option *ngFor="let a of (accounts | async)" [value]="a._id">{{a.name}}</option>
