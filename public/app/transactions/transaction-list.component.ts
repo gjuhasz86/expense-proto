@@ -35,6 +35,7 @@ export class TransactionListComponent implements OnInit {
     defaultAccount:string;//= "574218a2fa58b0b820f5b936";
     descriptionRegex:string = ".*";
     categories:Observable<Category[]>;
+    allSelected:boolean;
 
     constructor(private _tnxService:TransactionService, private _catService:CategoryService) {
     }
@@ -104,5 +105,10 @@ export class TransactionListComponent implements OnInit {
 
     setPage(p:any) {
         this.pageSubj.next(p.page);
+    }
+
+    toggleSelection(){
+        this.allSelected = !this.allSelected;
+
     }
 }

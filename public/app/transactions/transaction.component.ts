@@ -112,4 +112,7 @@ export class TransactionComponent implements OnInit {
             }
         }
     }
+    setSelection(b:boolean){
+        this.selected = b;
+    }
 }
