@@ -1,6 +1,10 @@
 <template [ngIf]="!editing">
     <td>
-        <transaction-control (addCategory)="addCat($event)" (remCategory)="remCat($event)" (setSelection)="setSelection($event)"></transaction-control>
+        <transaction-control
+                (addCategory)="addCat($event)"
+                (remCategory)="remCat($event)"
+                (setSelection)="setSelection($event)"
+                (deleteSelected)="deleteSelected()"></transaction-control>
         <input type="checkbox" [(ngModel)]="selected">
     </td>
     <td class="text-nowrap" style="padding-left: 10px;padding-right: 10px">{{tnx.date | date: 'yyyy'}}-{{tnx.date |

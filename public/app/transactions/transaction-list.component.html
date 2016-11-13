@@ -31,10 +31,13 @@
                                 </select>
                             </div>
                             <button class="form-control btn-primary" (click)="tnxCtrl.sendAddCategory(category)"
-                                    type="submit">Add
+                                    type="submit">Add Caregory
                             </button>
                             <button class="form-control btn-primary" (click)="tnxCtrl.sendRemCategory(category)"
-                                    type="submit">Remove
+                                    type="submit">Remove Caregory
+                            </button>
+                            <button class="form-control btn-danger" (click)="tnxCtrl.sendDeleteSelected()"
+                                    type="submit">Delete selected
                             </button>
                         </div>
                     </div>

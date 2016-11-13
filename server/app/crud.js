@@ -61,6 +61,26 @@ router.post('/delete', function (req, res) {
     });
 });
 
+router.post('/deletemany', function (req, res) {
+    var ids = req.body.map(function (item) {
+        return new mongodb.ObjectID(item);
+    });
+    var delObj = { _id: { "$in": ids}, owner: req.user.id};
+    var coll = req.collection;
+    console.log('deleting many ' + coll + " " + JSON.stringify(delObj));
+    var db = req.db;
+    db.collection(coll).deleteMany(delObj, function (err, docs) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(docs.deletedCount);
+        }
+        res.end();
+    });
+
+});
+
+
 router.post('/update', function (req, res) {
     var coll = req.collection;
     console.log("updating1 " + coll + " " + JSON.stringify(req.body));
