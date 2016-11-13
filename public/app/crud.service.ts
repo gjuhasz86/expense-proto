@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
@@ -8,12 +8,14 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 import {Account} from "./accounts/account";
 import {Category} from "./categories/category";
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/bufferTime';
 
 @Injectable()
 abstract class CrudService<T> {
     protected events: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     private _headers: Headers;
     private allItems: ReplaySubject<T[]> = new ReplaySubject<T[]>(1);
+    private deleteStream: EventEmitter<T> = new EventEmitter<T>();
 
     constructor(private collection: String, private autoInit: boolean, protected _http: Http) {
         this._headers = new Headers();
@@ -22,6 +24,13 @@ abstract class CrudService<T> {
         if (autoInit) {
             this.refresh();
         }
+
+        this.deleteStream
+            .bufferTime(500)
+            .filter(x=>x.length != 0)
+            .subscribe(t=> {
+                this.deleteMany(t);
+            });
     }
 
     abstract parse(json: any): T;
@@ -99,6 +108,28 @@ abstract class CrudService<T> {
                 console.log(error);
             });
     }
+
+    sendDelete(json: T): void {
+        this.deleteStream.emit(json);
+    }
+
+    deleteMany(json: T[]): void {
+        console.log(`calling ${this.collection} deleteMany [${json.length}]`);
+
+        let ids = json.map(t=>this.getId(t));
+        this._http
+            .post(`/api/${this.collection}/deletemany`, JSON.stringify(ids), {headers: this._headers})
+            .subscribe(res => {
+                console.log("DELETE Response came!!!");
+                console.log(res);
+                this.refresh();
+            }, error => {
+                console.log("DELETE ERROR came!!!");
+                console.log(error);
+            });
+    }
+
+    abstract getId(t: T): string;
 }
 
 abstract class TransactionLikeService extends CrudService<Transaction> {
@@ -143,11 +174,14 @@ abstract class TransactionLikeService extends CrudService<Transaction> {
             .map(res=> res.count);
     }
 
-
+    getId(t: Transaction): string {
+        return t.id()
+    }
 }
 
 @Injectable()
 export class TransactionService extends TransactionLikeService {
+
     constructor(protected _http: Http) {
         super("transactions", false, _http);
     }
@@ -155,7 +189,6 @@ export class TransactionService extends TransactionLikeService {
     parse(json: any): Transaction {
         return Transaction.parse(json);
     }
-
 }
 
 @Injectable()
@@ -174,6 +207,10 @@ export class ConfigService extends CrudService<any> {
             .map(x=>`/public/globalconfig`)
             .flatMap((url: string) => this._http.get(url))
             .map(res =>res.json());
+    }
+
+    getId(t: any): string {
+        return t._id()
     }
 }
 
@@ -207,6 +244,10 @@ export class AccountService extends CrudService<Account> {
 
     parse(json: any): Account {
         return Account.parse(json);
+    }
+
+    getId(t: Account): string {
+        return t.id()
     }
 }
 
@@ -284,6 +325,10 @@ export class CategoryService extends CrudService<Category> {
         delete cat.children;
 
         super.updateItem(cat);
+    }
+
+    getId(t: Category): string {
+        return t.id()
     }
 }
 

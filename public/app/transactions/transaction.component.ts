@@ -115,4 +115,11 @@ export class TransactionComponent implements OnInit {
     setSelection(b:boolean){
         this.selected = b;
     }
+
+    deleteSelected(){
+        if(this.selected){
+            console.log("Received deletion request");
+            this._tnxService.sendDelete(this.tnx);
+        }
+    }
 }

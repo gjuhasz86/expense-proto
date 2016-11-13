@@ -6,6 +6,7 @@ export class TransactionControlService {
     addCategory: EventEmitter<any> = new EventEmitter();
     remCategory: EventEmitter<any> = new EventEmitter();
     setSelection: EventEmitter<any> = new EventEmitter();
+    deleteSelected: EventEmitter<any> = new EventEmitter();
 }
 
 @Component({
@@ -16,6 +17,8 @@ export class TransactionControlComponent {
     @Output() addCategory: EventEmitter<any> = this._ctrlSvc.addCategory;
     @Output() remCategory: EventEmitter<any> = this._ctrlSvc.remCategory;
     @Output() setSelection: EventEmitter<any> = this._ctrlSvc.setSelection;
+    @Output() deleteSelected: EventEmitter<any> = this._ctrlSvc.deleteSelected;
+
 
     constructor(private _ctrlSvc: TransactionControlService) {
     }
@@ -35,5 +38,10 @@ export class TransactionControlComponent {
     public sendSetSelection(b: boolean) {
         console.log("TnxCtrl emitting: " + b);
         this.setSelection.emit(b);
+    }
+
+    public sendDeleteSelected(){
+        console.log("TnxCtrl emitting delete selected");
+        this.deleteSelected.emit(true);
     }
 }
