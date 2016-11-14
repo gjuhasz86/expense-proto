@@ -69,6 +69,14 @@ function defaultSearchQuery(q) {
         q.filter.accountId = q.account;
     }
 
+    if (q.category != undefined) {
+        if (q.category == "") {
+            q.filter.categories = {$in: [null, []]};
+        } else {
+            q.filter.categories = q.category;
+        }
+    }
+
 }
 
 router.get('/search', function (req, res) {
@@ -80,6 +88,7 @@ router.get('/search', function (req, res) {
     console.log("searching " + coll + " with filter: " + JSON.stringify(q.filter));
     req.db.collection(coll).find(q.filter).sort(q.sort).skip(q.skip).limit(q.limit)
         .toArray(function (err, docs) {
+            console.log(JSON.stringify(err));
             console.log(JSON.stringify(req.query) + ' found:' + docs.length);
             res.send(docs);
         });

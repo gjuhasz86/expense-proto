@@ -26,22 +26,23 @@ import {Category} from "../categories/category";
     providers: [TransactionControlService]
 })
 export class TransactionListComponent implements OnInit {
-    transactions:Observable<Transaction[]>;
-    page:number;
-    pageSubj:ReplaySubject<number> = new ReplaySubject<number>(1);
-    limit:number = 20;
-    pages:Observable<number[]>;
-    numOfTnxs:Observable<number>;
-    defaultAccount:string;//= "574218a2fa58b0b820f5b936";
-    descriptionRegex:string = ".*";
-    categories:Observable<Category[]>;
-    allSelected:boolean;
+    transactions: Observable<Transaction[]>;
+    page: number;
+    pageSubj: ReplaySubject<number> = new ReplaySubject<number>(1);
+    limit: number = 20;
+    pages: Observable<number[]>;
+    numOfTnxs: Observable<number>;
+    defaultAccount: string;//= "574218a2fa58b0b820f5b936";
+    descriptionRegex: string = "";
+    defaultCategory: string;
+    categories: Observable<Category[]>;
+    allSelected: boolean;
 
-    constructor(private _tnxService:TransactionService, private _catService:CategoryService) {
+    constructor(private _tnxService: TransactionService, private _catService: CategoryService) {
     }
 
     ngOnInit() {
-        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount, this.descriptionRegex)
+        this.transactions = this._tnxService.getPage(this.pageSubj, this.limit, "date", "desc", this.defaultAccount, this.descriptionRegex, this.defaultCategory, false)
         this.pages = this.genPages();
         this.numOfTnxs = this._tnxService
             .getSize(
@@ -50,7 +51,9 @@ export class TransactionListComponent implements OnInit {
                 "date",
                 "desc",
                 this.defaultAccount,
-                this.descriptionRegex);
+                this.descriptionRegex,
+                this.defaultCategory,
+                false);
         this.categories = this._catService.getAllInflatedCategories();
         this.refresh();
     }
@@ -70,12 +73,15 @@ export class TransactionListComponent implements OnInit {
                 "date",
                 "desc",
                 this.defaultAccount,
-                this.descriptionRegex);
+                this.descriptionRegex,
+                this.defaultCategory,
+                false);
     }
 
-    onFilterChanged(e):void {
+    onFilterChanged(e): void {
         this.defaultAccount = e.accountId;
         this.descriptionRegex = e.description;
+        this.defaultCategory = e.category;
         this.transactions = this._tnxService
             .getPage(
                 this.pageSubj,
@@ -83,7 +89,9 @@ export class TransactionListComponent implements OnInit {
                 "date",
                 "desc",
                 this.defaultAccount,
-                this.descriptionRegex);
+                this.descriptionRegex,
+                this.defaultCategory,
+                e.categoryFilterOn);
         this.numOfTnxs = this._tnxService
             .getSize(
                 this.pageSubj,
@@ -91,11 +99,13 @@ export class TransactionListComponent implements OnInit {
                 "date",
                 "desc",
                 this.defaultAccount,
-                this.descriptionRegex);
+                this.descriptionRegex,
+                this.defaultCategory,
+                e.categoryFilterOn);
         this.refresh();
     }
 
-    genPages():Observable < number[] > {
+    genPages(): Observable < number[] > {
         return this.pageSubj.map(p=> {
             let first = Math.max(1, p - 2);
             let last = first + 5;
@@ -103,11 +113,11 @@ export class TransactionListComponent implements OnInit {
         })
     }
 
-    setPage(p:any) {
+    setPage(p: any) {
         this.pageSubj.next(p.page);
     }
 
-    toggleSelection(){
+    toggleSelection() {
         this.allSelected = !this.allSelected;
 
     }

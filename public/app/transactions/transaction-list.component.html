@@ -16,6 +16,7 @@
                         <transaction-filter
                                 [account]="defaultAccount"
                                 [description]="descriptionRegex"
+                                [category]="defaultCategory"
                                 (filterChange)="onFilterChanged($event)">
                         </transaction-filter>
                     </div>
@@ -57,7 +58,8 @@
                 <table class="table table-condensed table-hover">
                     <thead>
                     <tr>
-                        <th class="text-nowrap"><input #allSelCb type="checkbox" [(ngModel)]="allSelected" (click)="tnxCtrl.sendSetSelection(allSelCb.checked)"></th>
+                        <th class="text-nowrap"><input #allSelCb type="checkbox" [(ngModel)]="allSelected"
+                                                       (click)="tnxCtrl.sendSetSelection(allSelCb.checked)"></th>
                         <th class="text-nowrap">Date</th>
                         <th class="text-nowrap col-sm-12">Description</th>
                         <th class="text-nowrap">Categories</th>

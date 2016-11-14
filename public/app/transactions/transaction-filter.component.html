@@ -6,5 +6,11 @@
         </select>
         <input class="form-control" [ngModel]="description" (ngModelChange)="onDesriptionChange($event)"
                placeholder="description"/>
+        <select class="form-control" [ngModel]="category" (ngModelChange)="onCategoryChange($event)">
+            <option value="">--Uncategorized--</option>
+            <option *ngFor="let c of (categories | async)" [value]="c._id">{{c.name}}
+            </option>
+        </select>
+        <input type="checkbox" [(ngModel)]="categoryFilterOn">
     </div>
 </div>
