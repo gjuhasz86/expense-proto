@@ -1,6 +1,8 @@
 /.idea
+/data
 /public/js
 /public/typings
 /public/node_modules
 /server/node_modules
+/env.sh
 /start-local.cmd
