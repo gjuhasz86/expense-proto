@@ -137,7 +137,7 @@ abstract class TransactionLikeService extends CrudService<Transaction> {
         super(_collection, _autoInit, _http);
     }
 
-    getPage(page: Observable<number>, limit: number, sortBy: string, order: string, account: string, description: string): Observable<Transaction[]> {
+    getPage(page: Observable<number>, limit: number, sortBy: string, order: string, account: string, description: string, category: string, categoryFilterOn: Boolean): Observable<Transaction[]> {
         let source = Observable.combineLatest(page, this.events.startWith(true));
         return source.map(ev=> {
             let page = ev[0];
@@ -149,13 +149,14 @@ abstract class TransactionLikeService extends CrudService<Transaction> {
             let qOrder = `order=${order}`;
             let qAccount = account == "" ? "" : `account=${account}`;
             let qDesc = description == undefined ? "" : `description=${description}`;
-            return `/api/${this._collection}/search?${qSkip}&${qLimit}&${qSort}&${qOrder}&${qAccount}&${qDesc}`
+            let qCategory = categoryFilterOn ? `category=${category}` : "";
+            return `/api/${this._collection}/search?${qSkip}&${qLimit}&${qSort}&${qOrder}&${qAccount}&${qDesc}&${qCategory}`
         })
             .flatMap((url: string) => this._http.get(url))
             .map((res: Response) => res.json().map(this.parse));
     }
 
-    getSize(page: Observable<number>, limit: number, sortBy: string, order: string, account: string, description: string): Observable<number> {
+    getSize(page: Observable<number>, limit: number, sortBy: string, order: string, account: string, description: string, category: string, categoryFilterOn: Boolean): Observable<number> {
         let source = Observable.combineLatest(page, this.events.startWith(true));
         return source.map(ev=> {
             let page = ev[0];
@@ -167,7 +168,8 @@ abstract class TransactionLikeService extends CrudService<Transaction> {
             let qOrder = `order=${order}`;
             let qAccount = account == "" ? "" : `account=${account}`;
             let qDesc = description == undefined ? "" : `description=${description}`;
-            return `/api/${this._collection}/size?${qSkip}&${qLimit}&${qSort}&${qOrder}&${qAccount}&${qDesc}`
+            let qCategory = category == "" ? "" : `category=${category}`;
+            return `/api/${this._collection}/size?${qSkip}&${qLimit}&${qSort}&${qOrder}&${qAccount}&${qDesc}&${qCategory}`
         })
             .flatMap((url: string) => this._http.get(url))
             .map((res: Response) => res.json())//.map(this.parse));
