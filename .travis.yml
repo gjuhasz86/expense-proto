@@ -10,5 +10,5 @@ deploy:
   domain: alphaintent
   on:
     repo: gjuhasz86/expense-proto
-    branch: dev-0.2
-  deployment_branch: master
+    branch: master
+  deployment_branch: dev-0.2
