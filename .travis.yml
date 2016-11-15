@@ -1,4 +1,13 @@
 language: node_js
 node_js:
-  - "7.1.0"
-
+- 7.1.0
+deploy:
+  provider: openshift
+  user: jaysicks.reg@gmail.com
+  password:
+    secure: TReHTheCcp0J/I6bm3WPNuFb+glmzJZ3xATdgn3CldA69iRAsM4f5jaxHFy4ptaAbTxc/ZBGX1+3j/m35YGMHUxffRJ9Q7PpHmsdOhGvRwnRqXoM0/uyobgFdfhkLYc9LXiKCBhzgm/NYBCg3gwqkk90lwgyNHxUW/PDOZ69r5mbb00Xp12iO6oPdp0NnxylLiVYJkwmC/AWjiXgWfrU07Ff34Iq2BBO7sdJ5y/40KdAXqcokfyiqTZN5nMfWI7gpCxybauCKcxzPZtbUHhkvXbUG5/qEaWWh+T5NfjML+nyio0tOTfkzi0x1xJ3KuyLmVmX7AxUguRhtTBSNkY9LV5vOPQvImNaijR5SuBrOMbwXDEwQfzmAOGZFdNy6Hkarydam0nUNE1dduMCEBygJzpovGXXvaibQ4txV5v8YQfw0bjRhznCq7pnboW9s399WIAC1jWV5KeBSz5mQaGsOarA9/p3IkJzz4yZO3Wp33NoaIV+hdpl0u80nVapcZw+eOydJ3HPtTtdh22wQ8e8bX+EP3r6iUjkCHCbcQHfnTeG58hQNvUUhs615NL409GzxQp0zNbVa2TU/Yr5nnL5sU24APr/PQez8y/WnFr168HZmoedYwZxd85oYo9EEVUaDe+wIVHazPIS02hUE87WCSBlpBC0hgr91e+K0FK5Bws=
+  app: expense2
+  domain: alphaintent
+  on:
+    repo: gjuhasz86/expense-proto
+    branch: dev-0.2
