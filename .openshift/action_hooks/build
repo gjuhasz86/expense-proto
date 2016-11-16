@@ -1,0 +1,11 @@
+#!/bin/bash
+
+mkdir -p $OPENSHIFT_DATA_DIR/npmcache
+
+OLD_HOME=$HOME
+export HOME=$OPENSHIFT_DATA_DIR/npmcache
+
+cd "${OPENSHIFT_REPO_DIR}/server"
+npm install
+
+export HOME=$OLD_HOME
