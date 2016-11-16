@@ -1,1 +1,2 @@
-placeholder
+# expense-proto
+Expense manager prototype
