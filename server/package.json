@@ -5,8 +5,7 @@
   "private": true,
   "main": "start.js",
   "scripts": {
-    "start": "node --use_strict start.js",
-    "start-local": "node --use_strict app.js"
+    "start": "node --use_strict app.js"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
