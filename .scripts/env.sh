@@ -1,5 +1,11 @@
+
 echo -n "Git repo (Leave empty if app is existing on openshift): "
 read gitrepo
+
+echo -n "Branch to push as master: "
+read branch
+
+
 echo -n "App name: "
 read app
 
@@ -52,6 +58,7 @@ while true; do
     esac
 done
 
+set -o verbose
 
 if [ -z "$gitrepo" ]; then
   echo "Skip creating app";
@@ -61,6 +68,12 @@ else
   rhc cartridge add -c https://raw.githubusercontent.com/gjuhasz86/openshift-cartridge-mongodb/master/metadata/manifest.yml --app $app;
 
   rhc app-restart -a $app;
+
+  if [ "$branch" ]; then
+    echo "Setting master branch to user specified one: $branch"
+    cd $app
+    git push -f origin origin/$branch:master
+  fi
 fi
 
 
@@ -84,3 +97,5 @@ rhc env-set EXPENSE_APP_DNS=$appdns -a $app;
 # create user in the database
 addUserCmd="db.getSiblingDB('$dbname').createUser({user:'$user', pwd:'$pass', roles: ['readWrite']})";
 rhc ssh -a $app 'mongo $EXPENSE_MONGODB_DB_HOST:$EXPENSE_MONGODB_DB_PORT/$EXPENSE_DB --eval "'$addUserCmd'"';
+
+rhc app-restart -a $app;
