@@ -5,7 +5,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var db = require('./db');
 
 var router = express.Router();
-var authConf = require('./config/autg');
+var authConf = require('./config/auth');
 
 router.use(passport.initialize());
 router.use(passport.session());
