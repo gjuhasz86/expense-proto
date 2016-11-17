@@ -12,3 +12,5 @@ deploy:
     repo: gjuhasz86/expense-proto
     branch: dev-0.2
   deployment_branch: dev-0.2:master
+notifications:
+  email: false
