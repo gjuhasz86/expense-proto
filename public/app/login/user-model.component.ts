@@ -1,6 +1,42 @@
-import {Component, Output, OnInit} from "@angular/core";
-import {UserReqService} from "./user.req.service";
+import {Component, Output, OnInit, Input, Injectable} from "@angular/core";
+import {UserReqService} from "./user-req.service";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {ReplaySubject} from "rxjs/ReplaySubject";
+import 'rxjs/add/operator/debounceTime'
+
+@Injectable()
+export class UserModelRelayService {
+    readonly userChange = new BehaviorSubject<any>({});
+
+    private readonly refresh$ = new ReplaySubject<boolean>(1);
+    private readonly logout$ = new ReplaySubject<boolean>(1);
+
+    constructor(private _svc: UserReqService) {
+        this.refresh$.debounceTime(200)
+            .subscribe(x => this.doRefresh());
+        this.logout$.debounceTime(200)
+            .subscribe(x => this.doLogout());
+    }
+
+    refresh() {
+        this.refresh$.next(true);
+    }
+
+    logout() {
+        this.logout$.next(true);
+    }
+
+    private doRefresh(): void {
+        this._svc.currentUser()
+            .subscribe(u => this.userChange.next(u));
+    }
+
+    private doLogout(): void {
+        this._svc.logout()
+            .subscribe(u => this.userChange.next(u));
+    }
+
+}
 
 @Component({
     selector: "user-model",
@@ -8,9 +44,13 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 })
 export class UserModelComponent implements OnInit {
-    @Output() readonly userChange = new BehaviorSubject<any>({});
+    @Input() user: any = {};
+    @Output() readonly userChange = this._relay.userChange;
 
-    constructor(private _svc: UserReqService) {
+    constructor(private _relay: UserModelRelayService) {
+        this.userChange.subscribe(u => {
+            this.user = u;
+        });
     }
 
     ngOnInit(): void {
@@ -18,17 +58,15 @@ export class UserModelComponent implements OnInit {
     }
 
     refresh(): void {
-        this._svc.currentUser()
-            .subscribe(u => this.userChange.next(u));
+        this._relay.refresh();
     }
 
     logout(): void {
-        this._svc.logout()
-            .subscribe(u => this.userChange.next(u));
+        this._relay.logout();
     }
 
-    private login(data: any): void {
-        this._svc.login(data).subscribe(u => this.userChange.next(u));
-    }
+    // private login(data: any): void {
+    //     this._svc.login(data).subscribe(u => this.userChange.next(u));
+    // }
 
 }
