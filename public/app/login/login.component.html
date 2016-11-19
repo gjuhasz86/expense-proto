@@ -1,0 +1,9 @@
+<div>
+    <user-model #userModel></user-model>
+    <!--<input type="text" placeholder="username" [(ngModel)]="username">-->
+    <!--<input type="password" placeholder="password" [(ngModel)]="password">-->
+    <a class="form-control btn-primary" href="/auth/google">Login with Google</a>
+    <!--<button type="button" (click)="userModel.login(username,password)"> Login</button>-->
+    <button type="button" (click)="userModel.logout()">Logout</button>
+    <button type="button" (click)="userModel.refresh()">Refresh</button>
+</div>

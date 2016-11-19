@@ -6,19 +6,27 @@ import {TodoListComponent} from "./todo/todo-list.component";
 import {TodoService} from "./todo/todo.service";
 import {SelectionRelayComponent, SelectionRelayService} from "./todo/selection-relay.component";
 import {FormsModule} from "@angular/forms";
+import {UserReqService} from "./login/user.req.service";
+import {UserModelComponent} from "./login/user-model.component";
+import {LoginComponent} from "./login/login.component";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
     imports: [
         BrowserModule,
+        HttpModule,
         FormsModule],
     declarations: [
         AppComponent,
         TodoInputComponent,
         TodoListComponent,
-        SelectionRelayComponent],
+        SelectionRelayComponent,
+        UserModelComponent,
+        LoginComponent],
     providers: [
         TodoService,
-        SelectionRelayService
+        SelectionRelayService,
+        UserReqService
     ],
     bootstrap: [AppComponent]
 })
