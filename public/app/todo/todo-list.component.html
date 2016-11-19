@@ -1,0 +1,18 @@
+<div>
+    <selection-relay #mainRelay></selection-relay>
+    <input #mainCb type="checkbox"
+           (click)="mainRelay.broadcast.sendSetTo(mainCb.checked)">
+    <button type="button"
+            (click)="mainRelay.broadcast.sendDeleteSelected()">Delete
+    </button>
+    <div *ngFor="let t of (todos|async)">
+        <selection-relay #relay
+                         (deleteSelected)="delete(t.id,relay.selected)">
+        </selection-relay>
+        <input type="checkbox" [(ngModel)]="relay.selected">
+        <span>{{t.id}} - {{t.desc}}</span>
+        <button type="button"
+                (click)="delete(t.id,true)">Delete
+        </button>
+    </div>
+</div>
