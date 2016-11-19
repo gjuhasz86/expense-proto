@@ -1,25 +1,27 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import {Observable} from "rxjs/Observable";
-import 'rxjs/Rx';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {ErrorLoggerService} from "../common/error-logger.service";
 
 @Injectable()
 export class UserReqService {
 
     private static readonly _headers = UserReqService.genHeaders();
 
-    constructor(private _http: Http) {
+    constructor(private _http: Http,
+                private errLog: ErrorLoggerService) {
     }
 
     currentUser(): Observable<any> {
         return this._http.get('/auth/currentuser')
             .map(res => res.json())
-            .catch(
-                err => {
-                    console.log('user service: not logged in');
-                    console.log(JSON.stringify(err));
-                    return Observable.of({});
-                });
+            .catch(err => {
+                this.errLog.log('user service: not logged in', err);
+                return Observable.of({});
+            });
     }
 
     login(loginData: any): Observable<any> {
@@ -27,8 +29,7 @@ export class UserReqService {
             .map(res => res)
             .catch(
                 err => {
-                    console.log('user service: error during login');
-                    console.log(JSON.stringify(err));
+                    this.errLog.log('user service: error during login', err);
                     return Observable.of({});
                 });
     }
@@ -38,8 +39,7 @@ export class UserReqService {
             .map(res => ({}))
             .catch(
                 err => {
-                    console.log('user service: error during logout');
-                    console.log(JSON.stringify(err));
+                    this.errLog.log('user service: error during logout', err);
                     return Observable.of({});
                 });
     }

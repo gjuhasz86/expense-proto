@@ -4,5 +4,4 @@ import {Component} from "@angular/core";
     templateUrl: "app/login/login.component.html"
 })
 export class LoginComponent {
-
 }
