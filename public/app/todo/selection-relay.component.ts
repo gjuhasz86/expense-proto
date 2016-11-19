@@ -1,5 +1,6 @@
-import {Output, EventEmitter, Component, Input} from "@angular/core";
+import {Output, EventEmitter, Component, Input, Injectable} from "@angular/core";
 
+@Injectable()
 export class SelectionRelayService {
     setAll: EventEmitter<boolean> = new EventEmitter<boolean>();
     deleteSelected: EventEmitter<boolean> = new EventEmitter<boolean>();

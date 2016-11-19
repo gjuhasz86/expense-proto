@@ -43,7 +43,7 @@ export class TodoService {
 
     private genTodos(): Todo[] {
         let ts = [];
-        for (let i = 0; i < 3000; i++) {
+        for (let i = 0; i < 30; i++) {
             ts.push(this.genRndTodo());
         }
         return ts;
