@@ -8,8 +8,8 @@ import 'rxjs/add/operator/debounceTime'
 export class UserModelRelayService {
     readonly userChange = new BehaviorSubject<any>({});
 
-    private readonly refresh$ = new ReplaySubject<boolean>(1);
-    private readonly logout$ = new ReplaySubject<boolean>(1);
+    private readonly refresh$ = new ReplaySubject<void>(1);
+    private readonly logout$ = new ReplaySubject<void>(1);
 
     constructor(private _svc: UserReqService) {
         this.refresh$.debounceTime(200)
@@ -19,11 +19,11 @@ export class UserModelRelayService {
     }
 
     refresh() {
-        this.refresh$.next(true);
+        this.refresh$.next(null);
     }
 
     logout() {
-        this.logout$.next(true);
+        this.logout$.next(null);
     }
 
     private doRefresh(): void {
@@ -48,9 +48,7 @@ export class UserModelComponent implements OnInit {
     @Output() readonly userChange = this._relay.userChange;
 
     constructor(private _relay: UserModelRelayService) {
-        this.userChange.subscribe(u => {
-            this.user = u;
-        });
+        this.userChange.subscribe(u => (this.user = u));
     }
 
     ngOnInit(): void {
