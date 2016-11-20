@@ -5,4 +5,5 @@ import {Component} from '@angular/core';
     templateUrl: 'app/category/category-list.component.html'
 })
 export class CategoryListComponent {
+    constructor() {}
 }
