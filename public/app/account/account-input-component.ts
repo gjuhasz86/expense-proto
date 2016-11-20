@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AccountModelRelayService} from "./account-model.component";
+import {AccountModelRelayService} from "./account-relay.component";
 import {Account} from "./account";
 
 @Component({

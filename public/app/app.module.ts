@@ -1,7 +1,7 @@
-import {NgModule}      from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {AppComponent}   from './app.component';
-import {TodoInputComponent}   from './todo/todo-input.component';
+import {NgModule} from "@angular/core";
+import {BrowserModule} from "@angular/platform-browser";
+import {AppComponent} from "./app.component";
+import {TodoInputComponent} from "./todo/todo-input.component";
 import {TodoListComponent} from "./todo/todo-list.component";
 import {TodoService} from "./todo/todo.service";
 import {SelectionRelayComponent, SelectionRelayService} from "./todo/selection-relay.component";
@@ -12,7 +12,7 @@ import {LoginComponent} from "./login/login.component";
 import {HttpModule} from "@angular/http";
 import {ErrorLoggerService} from "./common/error-logger.service";
 import {AccountReqService} from "./account/account-req.service";
-import {AccountModelRelayService, AccountModelComponent} from "./account/account-model.component";
+import {AccountModelRelayService, AccountRelayComponent} from "./account/account-relay.component";
 import {AccountListComponent} from "./account/account-list.component";
 import {AccountInputComponent} from "./account/account-input-component";
 
@@ -28,7 +28,7 @@ import {AccountInputComponent} from "./account/account-input-component";
         SelectionRelayComponent,
         UserModelComponent,
         LoginComponent,
-        AccountModelComponent,
+        AccountRelayComponent,
         AccountListComponent,
         AccountInputComponent],
     providers: [

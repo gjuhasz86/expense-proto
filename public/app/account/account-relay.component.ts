@@ -2,6 +2,7 @@ import {Injectable, Component, Input, Output, OnInit} from "@angular/core";
 import {AccountReqService} from "./account-req.service";
 import {Account} from "./account";
 import {CommonModelRelayService} from "../common/common-model-relay.service";
+import {CommonRelayComponent} from "../common/common-relay.component";
 
 
 @Injectable()
@@ -12,14 +13,15 @@ export class AccountModelRelayService extends CommonModelRelayService<Account> {
 }
 
 @Component({
-    selector: "account-model",
+    selector: "account-relay",
     template: `<div> Accounts: {{accounts | json}}</div>`
 })
-export class AccountModelComponent implements OnInit {
+export class AccountRelayComponent extends CommonRelayComponent<Account> implements OnInit {
     @Input() accounts: Account[];
     @Output() accountsChange = this._relay.onChange;
 
-    constructor(private _relay: AccountModelRelayService) {
+    constructor(_relay: AccountModelRelayService) {
+        super(_relay);
         this.accountsChange.subscribe(a => (this.accounts = a));
     }
 
@@ -27,8 +29,5 @@ export class AccountModelComponent implements OnInit {
         this.refresh();
     }
 
-    refresh(): void {
-        this._relay.refresh();
-    }
 
 }

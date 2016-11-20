@@ -4,6 +4,7 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/of"
 import 'rxjs/add/operator/debounceTime'
+import 'rxjs/add/operator/catch';
 
 export abstract class CommonModelRelayService<T> {
 
