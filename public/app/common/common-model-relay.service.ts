@@ -27,8 +27,6 @@ export abstract class CommonModelRelayService<T> {
 
     save(t: T) { this.save$.next(t); }
 
-    // remove(t: T) { this.remove$.next(acc.id()); }
-
     removeId(id: string) { this.remove$.next(id); }
 
 

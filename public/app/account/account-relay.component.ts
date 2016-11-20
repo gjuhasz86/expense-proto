@@ -7,9 +7,7 @@ import {CommonRelayComponent} from "../common/common-relay.component";
 
 @Injectable()
 export class AccountModelRelayService extends CommonModelRelayService<Account> {
-    constructor(_svc: AccountReqService) {
-        super(_svc);
-    }
+    constructor(_svc: AccountReqService) { super(_svc); }
 }
 
 @Component({

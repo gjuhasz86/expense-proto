@@ -1,7 +1,6 @@
 <div>
     <user-model #userModel [(user)]="user"></user-model>
     <div>Hello {{user.username}}!</div>
-    <div>Hello {{ userModel.userChange|async|json}}!</div>
     <a href="/auth/google">Login with Google</a>
     <button type="button" (click)="userModel.logout()">Logout</button>
     <button type="button" (click)="userModel.refresh()">Refresh</button>

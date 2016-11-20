@@ -40,7 +40,7 @@ export class UserModelRelayService {
 
 @Component({
     selector: "user-model",
-    template: `<div>User: {{userChange|async|json}}</div>`
+    template: `<div *ngIf="false">User: {{userChange|async|json}}</div>`
 
 })
 export class UserModelComponent implements OnInit {

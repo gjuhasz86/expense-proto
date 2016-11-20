@@ -1,0 +1,5 @@
+<div>
+    <input type="text" placeholder="name" [(ngModel)]="name" (keyup.enter)="save(name,pId)"/>
+    <input type="text" placeholder="parentId" [(ngModel)]="pId" (keyup.enter)="save(name,pId)"/>
+    <button type="button" (click)="save(name,pId)">Save</button>
+</div>

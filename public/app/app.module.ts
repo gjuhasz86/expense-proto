@@ -15,6 +15,10 @@ import {AccountReqService} from "./account/account-req.service";
 import {AccountModelRelayService, AccountRelayComponent} from "./account/account-relay.component";
 import {AccountListComponent} from "./account/account-list.component";
 import {AccountInputComponent} from "./account/account-input-component";
+import {CategoryRelayComponent, CategoryModelRelayService} from "./category/category-relay.component";
+import {CategoryListComponent} from "./category/category-list.component";
+import {CategoryInputComponent} from "./category/category-input.component";
+import {CategoryReqService} from "./category/category-req.service";
 
 @NgModule({
     imports: [
@@ -30,7 +34,11 @@ import {AccountInputComponent} from "./account/account-input-component";
         LoginComponent,
         AccountRelayComponent,
         AccountListComponent,
-        AccountInputComponent],
+        AccountInputComponent,
+        CategoryRelayComponent,
+        CategoryListComponent,
+        CategoryInputComponent
+    ],
     providers: [
         TodoService,
         SelectionRelayService,
@@ -38,7 +46,9 @@ import {AccountInputComponent} from "./account/account-input-component";
         UserModelRelayService,
         ErrorLoggerService,
         AccountReqService,
-        AccountModelRelayService
+        AccountModelRelayService,
+        CategoryReqService,
+        CategoryModelRelayService
     ],
     bootstrap: [AppComponent]
 })

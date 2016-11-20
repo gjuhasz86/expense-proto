@@ -1,0 +1,12 @@
+<div>
+    <category-relay #relay [(categories)]="categories"></category-relay>
+    <div>
+        <button type="button" (click)="relay.refresh()">Refresh</button>
+    </div>
+    <div>
+        <div *ngFor="let c of categories">
+            <button type="button" (click)="relay.removeId(c.id())">x</button>
+            <span>{{c.id()}} - {{c.shortName}} - {{c.name}}</span>
+        </div>
+    </div>
+</div>
