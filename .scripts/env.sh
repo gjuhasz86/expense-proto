@@ -15,6 +15,7 @@ if [ -z "$gitrepo" ]; then
   d_pass=$(rhc ssh -a $app 'echo $EXPENSE_DB_PWD');
   d_googleclid=$(rhc ssh -a $app 'echo $EXPENSE_GOOGLE_CLIENT_ID');
   d_googleclsec=$(rhc ssh -a $app 'echo $EXPENSE_GOOGLE_CLIENT_SECRET');
+  d_redirectProtocol=$(rhc ssh -a $app 'echo $EXPENSE_APP_REDIRECT_PROTOCOL');
 fi
 
 echo -n "Database name [$d_dbname]: "
@@ -37,6 +38,10 @@ echo -n "Google client secret [$d_googleclsec]: "
 read googleclsec
 googleclsec=${googleclsec:-$d_googleclsec}
 
+echo -n "Redirect protocol (http|https) [$d_redirectProtocol]: "
+read redirectProtocol
+redirectProtocol=${redirectProtocol:-$d_redirectProtocol}
+
 #d_citi=$(rhc ssh -a $app 'echo $EXPENSE_DB');
 #echo -n "Citibank client location on server: "
 #read citi
@@ -47,6 +52,7 @@ echo rhc env-set EXPENSE_DB_USER=$user -a $app;
 echo rhc env-set EXPENSE_DB_PWD=$pass -a $app;
 echo rhc env-set EXPENSE_GOOGLE_CLIENT_ID=$googleclid -a $app;
 echo rhc env-set EXPENSE_GOOGLE_CLIENT_SECRET=$googleclsec -a $app;
+echo rhc env-set EXPENSE_APP_REDIRECT_PROTOCOL=$redirectProtocol -a $app;
 echo
 
 while true; do
@@ -92,6 +98,7 @@ rhc env-set EXPENSE_MONGODB_DB_PORT=$mongoport -a $app;
 rhc env-set EXPENSE_GOOGLE_CLIENT_ID=$googleclid -a $app;
 rhc env-set EXPENSE_GOOGLE_CLIENT_SECRET=$googleclsec -a $app;
 rhc env-set EXPENSE_APP_DNS=$appdns -a $app;
+rhc env-set EXPENSE_APP_REDIRECT_PROTOCOL=$redirectProtocol -a $app;
 
 # TODO handle case when the user already exists
 # create user in the database
