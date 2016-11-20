@@ -4,6 +4,7 @@ import {Component} from '@angular/core';
     template: `
 <h1>Hello Angular!</h1>
 <login></login>
+<account-input></account-input>
 <account-list></account-list>
 <todo-input></todo-input>
 <todo-list></todo-list>
