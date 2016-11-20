@@ -11,6 +11,9 @@ import {UserModelComponent, UserModelRelayService} from "./login/user-model.comp
 import {LoginComponent} from "./login/login.component";
 import {HttpModule} from "@angular/http";
 import {ErrorLoggerService} from "./common/error-logger.service";
+import {AccountReqService} from "./account/account-req.service";
+import {AccountModelRelayService, AccountModelComponent} from "./account/account-model.component";
+import {AccountListComponent} from "./account/account-list.component";
 
 @NgModule({
     imports: [
@@ -23,13 +26,17 @@ import {ErrorLoggerService} from "./common/error-logger.service";
         TodoListComponent,
         SelectionRelayComponent,
         UserModelComponent,
-        LoginComponent],
+        LoginComponent,
+        AccountModelComponent,
+        AccountListComponent],
     providers: [
         TodoService,
         SelectionRelayService,
         UserReqService,
         UserModelRelayService,
-        ErrorLoggerService
+        ErrorLoggerService,
+        AccountReqService,
+        AccountModelRelayService
     ],
     bootstrap: [AppComponent]
 })
