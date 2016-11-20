@@ -29,9 +29,10 @@ export class Category {
     }
 
     static parse(json: any) {
+        let pId = json.parentId && json.parentId != "" ? json.parentId : null;
         return new Category(
             json._id,
             json.shortName,
-            json.parentId);
+            pId);
     }
 }
