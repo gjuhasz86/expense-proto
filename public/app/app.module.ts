@@ -14,6 +14,7 @@ import {ErrorLoggerService} from "./common/error-logger.service";
 import {AccountReqService} from "./account/account-req.service";
 import {AccountModelRelayService, AccountModelComponent} from "./account/account-model.component";
 import {AccountListComponent} from "./account/account-list.component";
+import {AccountInputComponent} from "./account/account-input-component";
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import {AccountListComponent} from "./account/account-list.component";
         UserModelComponent,
         LoginComponent,
         AccountModelComponent,
-        AccountListComponent],
+        AccountListComponent,
+        AccountInputComponent],
     providers: [
         TodoService,
         SelectionRelayService,

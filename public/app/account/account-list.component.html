@@ -1,0 +1,12 @@
+<div>
+    <account-model #relay [(accounts)]="accounts"></account-model>
+    <div>
+        <button type="button" (click)="relay.refresh()">Refresh</button>
+    </div>
+    <div>
+        <div *ngFor="let a of accounts">
+            <button type="button" (click)="remove(a)">x</button>
+            <span>{{a.name}}</span>
+        </div>
+    </div>
+</div>
