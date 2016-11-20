@@ -3,7 +3,7 @@ import {AccountReqService} from "./account-req.service";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Account} from "./account";
 import {ReplaySubject} from "rxjs/ReplaySubject";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AccountModelRelayService {
@@ -47,12 +47,13 @@ export class AccountModelRelayService {
 
     private doSave(a: Account): void {
         this._svc.save(a)
-            .catch(e => null)
+            .catch(e => Observable.of(null))
             .subscribe(x => this.refresh());
     }
 
     private doRemove(id: string): void {
         this._svc.remove(id)
+            .catch(e => Observable.of(null))
             .subscribe(x => this.refresh());
     }
 
