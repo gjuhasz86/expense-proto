@@ -1,5 +1,4 @@
 <div>
-    <account-model #accountsModel [(accounts)]="accounts"></account-model>
     <input type="text" [(ngModel)]="accName" (keyup.enter)="save(accName)"/>
     <button type="button" (click)="save(accName)">Save</button>
 </div>
