@@ -1,4 +1,4 @@
-export class Category {
+export class Category implements Cloneable, HasId{
     public parent: Category;
     public children: Category[] = [];
     public name: string = "";
@@ -11,7 +11,7 @@ export class Category {
         return this._id;
     }
 
-    toSimpleObj(): any {
+    clone(): any {
         return {
             _id: this._id,
             shortName: this.shortName,
