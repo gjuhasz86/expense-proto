@@ -12,16 +12,14 @@ export class CategoryModelRelayService extends CommonModelRelayService<Category>
 
 @Component({
     selector: 'category-relay',
-    template: `<div> Categories: {{stringify(categories)|json}}</div>`
+    template: `<div> Categories: {{stringify(categories|async)|json}}</div>`
 })
 export class CategoryRelayComponent extends CommonRelayComponent<Category> implements OnInit {
 
-    @Input() categories: Category[];
-    @Output() categoriesChange = this._relay.onChange;
+    @Output() categories = this.relay.onChange;
 
-    constructor(_relay: CategoryModelRelayService) {
-        super(_relay);
-        this.categoriesChange.subscribe(c => (this.categories = c));
+    constructor(relay: CategoryModelRelayService) {
+        super(relay);
     }
 
     ngOnInit(): void {

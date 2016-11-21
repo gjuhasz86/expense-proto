@@ -17,7 +17,7 @@ import {AccountListComponent} from "./account/account-list.component";
 import {AccountInputComponent} from "./account/account-input-component";
 import {CategoryRelayComponent, CategoryModelRelayService} from "./category/category-relay.component";
 import {CategoryListComponent} from "./category/category-list.component";
-import {CategoryInputComponent, CategoryEditRelayService} from "./category/category-input.component";
+import {CategoryInputComponent} from "./category/category-input.component";
 import {CategoryReqService} from "./category/category-req.service";
 import {CategoryPageComponent} from "./category/category-page.component";
 import {ActionRelayService, ActionRelayComponent} from "./common/action-relay-component";

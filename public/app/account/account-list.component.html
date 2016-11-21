@@ -1,5 +1,5 @@
 <div>
-    <account-relay #relay [(accounts)]="accounts"></account-relay>
+    <account-relay #relay (accounts)="accounts=$event"></account-relay>
     <div>
         <button type="button" (click)="relay.refresh()">Refresh</button>
     </div>

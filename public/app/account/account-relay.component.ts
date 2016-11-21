@@ -12,15 +12,13 @@ export class AccountModelRelayService extends CommonModelRelayService<Account> {
 
 @Component({
     selector: "account-relay",
-    template: `<div> Accounts: {{accounts | json}}</div>`
+    template: `<div> Accounts: {{accounts | async | json}}</div>`
 })
 export class AccountRelayComponent extends CommonRelayComponent<Account> implements OnInit {
-    @Input() accounts: Account[];
-    @Output() accountsChange = this._relay.onChange;
+    @Output() accounts = this.relay.onChange;
 
     constructor(_relay: AccountModelRelayService) {
         super(_relay);
-        this.accountsChange.subscribe(a => (this.accounts = a));
     }
 
     ngOnInit(): void {

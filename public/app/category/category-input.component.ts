@@ -3,15 +3,6 @@ import {CategoryModelRelayService} from "./category-relay.component";
 import {Category} from "./category";
 import {ActionRelayService} from "../common/action-relay-component";
 
-@Injectable()
-export class CategoryEditRelayService {
-    edit$ = new EventEmitter<any>();
-
-    sendForEdit(c: any): void {
-        this.edit$.emit(c);
-    }
-}
-
 @Component({
     selector: 'category-input',
     templateUrl: 'app/category/category-input.component.html'
