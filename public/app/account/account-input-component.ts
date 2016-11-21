@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {AccountModelRelayService} from "./account-relay.component";
+import {Component, ViewChild} from '@angular/core';
+import {AccountModelRelayService, AccountRelayComponent} from "./account-relay.component";
 import {Account} from "./account";
 
 @Component({
@@ -7,12 +7,15 @@ import {Account} from "./account";
     templateUrl: 'app/account/account-input.component.html'
 })
 export class AccountInputComponent {
-    private accName: string = "";
+    private name: string = "";
+
+    @ViewChild(AccountRelayComponent) private readonly relay: AccountRelayComponent;
 
     constructor(private _relay: AccountModelRelayService) { }
 
     save(accName: string): void {
         this._relay.save(Account.of2(accName, "HUF"));
-        this.accName = "";
+        // this._relay.save(Account.of2(accName, "HUF"));
+        this.name = "";
     }
 }

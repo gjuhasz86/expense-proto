@@ -16,7 +16,7 @@ export class CategoryModelRelayService extends CommonModelRelayService<Category>
 })
 export class CategoryRelayComponent extends CommonRelayComponent<Category> implements OnInit {
 
-    @Output() categories = this.relay.onChange;
+    @Output() categories = this.relay.changed;
 
     constructor(relay: CategoryModelRelayService) {
         super(relay);

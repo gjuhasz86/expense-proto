@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 
 export abstract class CommonModelRelayService<T> {
 
-    readonly onChange = new BehaviorSubject<T[]>([]);
+    readonly changed = new BehaviorSubject<T[]>([]);
 
     protected readonly refresh$ = new ReplaySubject<void>(1);
     protected readonly save$ = new ReplaySubject<T>(1);
@@ -17,13 +17,13 @@ export abstract class CommonModelRelayService<T> {
 
     constructor(protected _svc: CrudReqService<T>) {
         this.refresh$.debounceTime(200)
-            .subscribe(x => this.doRefresh());
+            .subscribe(x => this.onRefresh());
         this.save$
-            .subscribe(a => this.doSave(a));
+            .subscribe(a => this.onSave(a));
         this.update$
-            .subscribe(a => this.doUpdate(a));
+            .subscribe(a => this.onUpdate(a));
         this.remove$
-            .subscribe(a => this.doRemove(a));
+            .subscribe(a => this.onRemove(a));
     }
 
     refresh() { this.refresh$.next(null); }
@@ -35,24 +35,24 @@ export abstract class CommonModelRelayService<T> {
     removeId(id: string) { this.remove$.next(id); }
 
 
-    private doRefresh(): void {
+    private onRefresh(): void {
         this._svc.list()
-            .subscribe(ts => this.onChange.next(ts));
+            .subscribe(ts => this.changed.next(ts));
     }
 
-    private doSave(t: T): void {
+    private onSave(t: T): void {
         this._svc.save(t)
             .catch(e => Observable.of(null))
             .subscribe(x => this.refresh());
     }
 
-    private doUpdate(t: T): void {
+    private onUpdate(t: T): void {
         this._svc.update(t)
             .catch(e => Observable.of(null))
             .subscribe(x => this.refresh());
     }
 
-    private doRemove(id: string): void {
+    private onRemove(id: string): void {
         this._svc.remove(id)
             .catch(e => Observable.of(null))
             .subscribe(x => this.refresh());
