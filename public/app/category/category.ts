@@ -1,4 +1,4 @@
-export class Category implements Cloneable, HasId{
+export class Category implements Cloneable, HasId {
     public parent: Category;
     public children: Category[] = [];
     public name: string = "";
@@ -7,7 +7,7 @@ export class Category implements Cloneable, HasId{
                 public readonly shortName: string,
                 public readonly parentId: string) { }
 
-    public id(): string {
+    id(): string {
         return this._id;
     }
 
@@ -15,8 +15,7 @@ export class Category implements Cloneable, HasId{
         return {
             _id: this._id,
             shortName: this.shortName,
-            parentId: this.parentId,
-            name: this.name
+            parentId: this.parentId
         }
     }
 

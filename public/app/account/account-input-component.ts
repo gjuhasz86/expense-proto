@@ -13,8 +13,8 @@ export class AccountInputComponent {
 
     constructor(private _relay: AccountModelRelayService) { }
 
-    save(accName: string): void {
-        this._relay.save(Account.of2(accName, "HUF"));
+    save(name: string): void {
+        this._relay.save(Account.of2(name, "HUF"));
         // this._relay.save(Account.of2(accName, "HUF"));
         this.name = "";
     }
