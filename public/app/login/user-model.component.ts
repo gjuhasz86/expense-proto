@@ -40,31 +40,28 @@ export class UserModelRelayService {
 
 @Component({
     selector: "user-model",
-    template: `<div *ngIf="false">User: {{userChange|async|json}}</div>`
+    template: `<div *ngIf="false">User: {{user|async|json}}</div>`
 
 })
 export class UserModelComponent implements OnInit {
-    @Input() user: any = {};
-    @Output() readonly userChange = this._relay.userChange;
+    @Output() readonly user = this.relay.userChange;
 
-    constructor(private _relay: UserModelRelayService) {
-        this.userChange.subscribe(u => (this.user = u));
-    }
+    constructor(private relay: UserModelRelayService) { }
 
     ngOnInit(): void {
         this.refresh();
     }
 
     refresh(): void {
-        this._relay.refresh();
+        this.relay.refresh();
     }
 
     logout(): void {
-        this._relay.logout();
+        this.relay.logout();
     }
 
     // private login(data: any): void {
-    //     this._svc.login(data).subscribe(u => this.userChange.next(u));
+    //     this._svc.login(data).subscribe(u => this.user.next(u));
     // }
 
 }

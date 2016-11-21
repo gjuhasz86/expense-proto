@@ -1,5 +1,5 @@
 <div>
-    <category-relay #relay [(categories)]="categories"></category-relay>
+    <category-relay #relay (categories)="categories=$event"></category-relay>
     <action-relay #action></action-relay>
     <div>
         <button type="button" (click)="relay.refresh()">Refresh</button>

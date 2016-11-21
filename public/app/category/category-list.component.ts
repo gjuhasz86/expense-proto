@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Category} from "./category";
 
 @Component({
     selector: 'category-list',
