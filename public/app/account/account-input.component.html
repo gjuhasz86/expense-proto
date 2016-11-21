@@ -1,4 +1,5 @@
 <div>
-    <input type="text" [(ngModel)]="accName" (keyup.enter)="save(accName)"/>
-    <button type="button" (click)="save(accName)">Save</button>
+    <account-relay #relay></account-relay>
+    <input type="text" [(ngModel)]="name" (keyup.enter)="save(name)"/>
+    <button type="button" (click)="save(name)">Save</button>
 </div>

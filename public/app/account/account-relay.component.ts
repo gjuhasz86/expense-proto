@@ -1,4 +1,4 @@
-import {Injectable, Component, Input, Output, OnInit} from "@angular/core";
+import {Injectable, Component, Output, OnInit} from "@angular/core";
 import {AccountReqService} from "./account-req.service";
 import {Account} from "./account";
 import {CommonModelRelayService} from "../common/common-model-relay.service";
@@ -15,7 +15,7 @@ export class AccountModelRelayService extends CommonModelRelayService<Account> {
     template: `<div> Accounts: {{accounts | async | json}}</div>`
 })
 export class AccountRelayComponent extends CommonRelayComponent<Account> implements OnInit {
-    @Output() accounts = this.relay.onChange;
+    @Output() accounts = this.relay.changed;
 
     constructor(_relay: AccountModelRelayService) {
         super(_relay);
