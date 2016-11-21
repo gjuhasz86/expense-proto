@@ -12,6 +12,10 @@ export abstract class CommonRelayComponent<T> {
         this.relay.save(t);
     }
 
+    update(t: T) {
+        this.relay.update(t);
+    }
+
     removeId(id: string) {
         this.relay.removeId(id);
     }

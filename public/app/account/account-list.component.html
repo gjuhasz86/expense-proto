@@ -6,7 +6,7 @@
     <div>
         <div *ngFor="let a of accounts">
             <button type="button" (click)="relay.removeId(a.id())">x</button>
-            <span>{{a.name}}</span>
+            <span>{{a.id()}} - {{a.name}} - {{a.currency}}</span>
         </div>
     </div>
 </div>

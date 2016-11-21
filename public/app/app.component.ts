@@ -5,6 +5,9 @@ import {Component} from '@angular/core';
 <h1>Hello Angular!</h1>
 <login></login>
 <hr>
+<transaction-input></transaction-input>
+<transaction-list></transaction-list>
+<hr>
 <category-page></category-page>
 <hr>
 <account-input></account-input>

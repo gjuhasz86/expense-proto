@@ -21,6 +21,10 @@ import {CategoryInputComponent} from "./category/category-input.component";
 import {CategoryReqService} from "./category/category-req.service";
 import {CategoryPageComponent} from "./category/category-page.component";
 import {ActionRelayService, ActionRelayComponent} from "./common/action-relay-component";
+import {TransactionListComponent} from "./transaction/transaction-list.component";
+import {TransactionInputComponent} from "./transaction/transaction-input.component";
+import {TransactionReqService} from "./transaction/transaction-req.service";
+import {TransactionModelRelayService, TransactionRelayComponent} from "./transaction/transaction-relay.component";
 
 @NgModule({
     imports: [
@@ -28,31 +32,42 @@ import {ActionRelayService, ActionRelayComponent} from "./common/action-relay-co
         HttpModule,
         FormsModule],
     declarations: [
+        AccountInputComponent,
+        CategoryInputComponent,
+        TransactionInputComponent,
+
+        AccountRelayComponent,
+        CategoryRelayComponent,
+        TransactionRelayComponent,
+
+        AccountListComponent,
+        CategoryListComponent,
+        TransactionListComponent,
+
+        CategoryPageComponent,
+
         AppComponent,
         TodoInputComponent,
         TodoListComponent,
         SelectionRelayComponent,
         UserModelComponent,
         LoginComponent,
-        AccountRelayComponent,
-        AccountListComponent,
-        AccountInputComponent,
-        CategoryRelayComponent,
-        CategoryListComponent,
-        CategoryInputComponent,
-        CategoryPageComponent,
         ActionRelayComponent
     ],
     providers: [
+        AccountReqService,
+        CategoryReqService,
+        TransactionReqService,
+        UserReqService,
+
+        AccountModelRelayService,
+        CategoryModelRelayService,
+        TransactionModelRelayService,
+        UserModelRelayService,
+
         TodoService,
         SelectionRelayService,
-        UserReqService,
-        UserModelRelayService,
         ErrorLoggerService,
-        AccountReqService,
-        AccountModelRelayService,
-        CategoryReqService,
-        CategoryModelRelayService,
         ActionRelayService
     ],
     bootstrap: [AppComponent]

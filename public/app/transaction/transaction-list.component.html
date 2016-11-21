@@ -1,0 +1,14 @@
+<div>
+    <transaction-relay #relay (transactions)="transactions=$event"></transaction-relay>
+    <action-relay #action></action-relay>
+    <div>
+        <button type="button" (click)="relay.refresh()">Refresh</button>
+    </div>
+    <div>
+        <div *ngFor="let t of transactions">
+            <button type="button" (click)="relay.removeId(t.id())">x</button>
+            <button type="button" (click)="action.relay.transaction.edit(t)">edit</button>
+            <span>{{t.id()}} - {{t.description}} - {{t.amount}} - {{t.date}}</span>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 import {Component, Injectable, EventEmitter} from '@angular/core';
 import {Category} from "../category/category";
 import {Account} from "../account/account";
+import {Transaction} from "../transaction/transaction";
 
 export class ActionRelay<T extends Cloneable> {
     edit$ = new EventEmitter<any>();
@@ -14,6 +15,7 @@ export class ActionRelay<T extends Cloneable> {
 export class ActionRelayService {
     account = new ActionRelay<Account>();
     category = new ActionRelay<Category>();
+    transaction = new ActionRelay<Transaction>();
 }
 
 @Component({
