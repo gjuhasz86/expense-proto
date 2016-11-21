@@ -2,11 +2,11 @@ import {Component, Injectable, EventEmitter} from '@angular/core';
 import {Category} from "../category/category";
 import {Account} from "../account/account";
 
-export class ActionRelay<T> {
+export class ActionRelay<T extends Cloneable> {
     edit$ = new EventEmitter<any>();
 
-    edit(t: any): void {
-        this.edit$.emit(JSON.parse(JSON.stringify(t)));
+    edit(t: T): void {
+        this.edit$.emit(t.clone());
     }
 }
 

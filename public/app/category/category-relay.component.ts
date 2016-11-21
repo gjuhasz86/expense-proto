@@ -29,7 +29,7 @@ export class CategoryRelayComponent extends CommonRelayComponent<Category> imple
     }
 
     private stringify(cats: Category[]): any[] {
-        return cats.map(c => c.toSimpleObj());
+        return cats.map(c => c.clone());
     }
 
 }

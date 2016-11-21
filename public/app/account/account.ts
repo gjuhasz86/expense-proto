@@ -1,4 +1,4 @@
-export class Account {
+export class Account implements Cloneable, HasId {
 
     constructor(private readonly _id: string,
                 public readonly name: string,
@@ -7,8 +7,18 @@ export class Account {
                 public readonly precision: number) {
     }
 
-    public id(): string {
+    id(): string {
         return this._id;
+    }
+
+    clone(): any {
+        return {
+            _id: this._id,
+            name: this.name,
+            currency: this.currency,
+            initialBalance: this.initialBalance,
+            precision: this.precision
+        }
     }
 
     static of2(name: string, ccy: string): Account {
