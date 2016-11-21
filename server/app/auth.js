@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 
 var db = require('./db');
 
@@ -40,6 +41,7 @@ passport.deserializeUser(function (id, done) {
     })
 });
 
+
 passport.use(new GoogleStrategy({
         clientID: authConf.clientId,
         clientSecret: authConf.clientSecret,
@@ -65,10 +67,21 @@ passport.use(new GoogleStrategy({
                 }
             );
         });
-
-
     }
 ));
+
+passport.use(new LocalStrategy(
+    function (username, password, done) {
+        db.dbRef.collection("users").findOne(
+            {username: "test"}, function (err, user) {
+                if (err) {
+                    return done(err);
+                }
+                return done(null, user);
+            });
+    }
+));
+
 
 router.get('/auth/google',
     passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/plus.login']}));
@@ -80,7 +93,7 @@ router.get('/auth/google/callback',
     });
 
 
-router.post('/auth/login', passport.authenticate('local-login'), function (req, res) {
+router.get('/auth/login', passport.authenticate('local'), function (req, res) {
     res.json(req.user);
 });
 
