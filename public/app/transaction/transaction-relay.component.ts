@@ -12,7 +12,7 @@ export class TransactionModelRelayService extends CommonModelRelayService<Transa
 
 @Component({
     selector: 'transaction-relay',
-    template: `<div> Transactionsaaa: {{transactions | async | json}}</div>`
+    template: `<div *ngIf="false"> Transactions: {{transactions | async | json}}</div>`
 })
 export class TransactionRelayComponent extends CommonRelayComponent<Transaction> implements OnInit {
     @Output() transactions = this.relay.changed;
