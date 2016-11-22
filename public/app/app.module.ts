@@ -4,7 +4,7 @@ import {AppComponent} from "./app.component";
 import {TodoInputComponent} from "./todo/todo-input.component";
 import {TodoListComponent} from "./todo/todo-list.component";
 import {TodoService} from "./todo/todo.service";
-import {SelectionRelayComponent, SelectionRelayService} from "./todo/selection-relay.component";
+import {SelectionRelayComponent, SelectionRelayService} from "./common/selection-relay.component";
 import {FormsModule} from "@angular/forms";
 import {UserReqService} from "./login/user-req.service";
 import {UserModelComponent, UserModelRelayService} from "./login/user-model.component";

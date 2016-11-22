@@ -1,11 +1,18 @@
 <div>
     <transaction-relay #relay (transactions)="transactions=$event"></transaction-relay>
-    <action-relay #action></action-relay>
+    <action-relay #mainAction></action-relay>
     <div>
+        <input #mainCb type="checkbox"
+               (click)="mainAction.relay.setAllSelection(mainCb.checked)">
+        <button type="button"
+                (click)="mainAction.relay.deleteSelected()">Delete
+        </button>
         <button type="button" (click)="relay.refresh()">Refresh</button>
     </div>
     <div>
         <div *ngFor="let t of transactions">
+            <action-relay #action (deleteSelected)="delete(t._id,cb.checked)"></action-relay>
+            <input #cb type="checkbox" [checked]="action.setAllSelection | async">
             <button type="button" (click)="relay.removeId(t.id())">x</button>
             <button type="button" (click)="action.relay.transaction.edit(t)">edit</button>
             <span>{{t.id()}} - {{t.description}} - {{t.amount}} - {{t.date}}</span>
