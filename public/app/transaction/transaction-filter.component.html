@@ -1,0 +1,14 @@
+<div>
+    <label>Account</label>
+    <input type="text" [(ngModel)]="account"
+           (ngModelChange)="accountChange.emit($event)"/>
+    <label>Description</label>
+    <input type="text" [(ngModel)]="description"
+           (ngModelChange)="descriptionChange.emit($event)"/>
+    <label>Category</label>
+    <input type="text" [(ngModel)]="category"
+           (ngModelChange)="categoryChange.emit($event)"/>
+    <button type="button" (click)="categoryChange.emit(null)">X</button>
+    <button type="button" (click)="filtered.emit(null)">Filter</button>
+    cat:{{category|json}}
+</div>
