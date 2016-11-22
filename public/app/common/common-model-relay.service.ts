@@ -8,9 +8,13 @@ import 'rxjs/add/operator/debounceTime'
 import 'rxjs/add/operator/catch';
 
 export interface Filter {
-    page: number,
+    page: number
     limit: number
+    account: string
+    description: string
+    category: string
 }
+
 export abstract class CommonModelRelayService<T> {
 
     readonly changed = new BehaviorSubject<T[]>([]);
@@ -44,12 +48,12 @@ export abstract class CommonModelRelayService<T> {
     filter(filt: Filter) { this.filter$.next(filt); }
 
     private onRefresh(filt: Filter): void {
-        console.log("onRefresh" + JSON.stringify(filt));
+        console.log(`onRefresh [${this._svc.coll}] ` + JSON.stringify(filt));
         if (!filt) {
             this._svc.list()
                 .subscribe(ts => this.changed.next(ts));
         } else {
-            this._svc.search(filt.page, filt.limit)
+            this._svc.search(filt)
                 .subscribe(ts => this.changed.next(ts));
         }
     }

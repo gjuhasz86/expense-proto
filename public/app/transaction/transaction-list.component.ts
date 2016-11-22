@@ -7,7 +7,14 @@ import {Filter} from "../common/common-model-relay.service";
     templateUrl: 'app/transaction/transaction-list.component.html'
 })
 export class TransactionListComponent {
-    private filter: Filter = {page: 1, limit: 2};
+    private filter: Filter = {
+        page: 1,
+        limit: 2,
+        account: null,
+        description: "",
+        category: null
+    };
+
 
     constructor(private relay: TransactionModelRelayService) {}
 

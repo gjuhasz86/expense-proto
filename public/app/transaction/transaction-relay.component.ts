@@ -15,8 +15,8 @@ export class TransactionModelRelayService extends CommonModelRelayService<Transa
     template: `<div *ngIf="false"> Transactions: {{transactions | async | json}}</div>`
 })
 export class TransactionRelayComponent extends CommonRelayComponent<Transaction> implements OnInit {
-    @Output() transactions = this.relay.changed;
     @Input('filter') filterField: Filter;
+    @Output() transactions = this.relay.changed;
 
 
     constructor(relay: TransactionModelRelayService) {
