@@ -1,5 +1,10 @@
 <div>
-    <transaction-relay #relay (transactions)="transactions=$event"></transaction-relay>
+    <label>Page</label>
+    <input type="text" [(ngModel)]="filter.page"/>
+    <label>Limit</label>
+    <input type="text" [(ngModel)]="filter.limit"/>
+    <button type="button" (click)="relay.sendFilter()">Set</button>
+    <transaction-relay #relay (transactions)="transactions=$event" [filter]="filter"></transaction-relay>
     <action-relay #mainAction></action-relay>
     <div>
         <input #mainCb type="checkbox"

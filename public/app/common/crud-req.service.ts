@@ -46,6 +46,20 @@ export abstract class CrudReqService<T> {
                    });
     }
 
+    search(page: number, limit: number): Observable<T[]> {
+        let skip = limit * (page - 1);
+        let qSkip = `skip=${skip}`;
+        let qLimit = `limit=${limit}`;
+
+        return this.http.get(`/api/${this.coll}/search?${qSkip}&${qLimit}`)
+                   .map(res => res.json() as T[])
+                   .map(json => json.map(this.parse))
+                   .catch(err => {
+                       this.errLog.log(`Could not list items [${this.coll}]`, err);
+                       return Observable.of([]);
+                   });
+    }
+
     abstract parse(json: T): T
 
 

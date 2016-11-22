@@ -1,4 +1,4 @@
-import {CommonModelRelayService} from "./common-model-relay.service";
+import {CommonModelRelayService, Filter} from "./common-model-relay.service";
 
 export abstract class CommonRelayComponent<T> {
 
@@ -18,5 +18,9 @@ export abstract class CommonRelayComponent<T> {
 
     removeId(id: string) {
         this.relay.removeId(id);
+    }
+
+    filter(filt: Filter) {
+        this.relay.filter(filt);
     }
 }
