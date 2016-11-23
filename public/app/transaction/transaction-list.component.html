@@ -24,10 +24,12 @@
         <button type="button" (click)="relay.refresh()">Refresh</button>
     </div>
     <div>
-        <div *ngFor="let t of transactions">
-            <action-relay #action (deleteSelected)="delete(t._id,cb.checked)"></action-relay>
-            <input #cb type="checkbox" [checked]="action.setAllSelection | async">
-            <button type="button" (click)="relay.removeId(t.id())">x</button>
+        selected:{{selSvc.selected | async | json}}
+        <div *ngFor="let t of transactions; trackBy: trackById">
+            <action-relay #action (deleteSelected)="remove(t.id(),cb.checked)"></action-relay>
+            <input #cb type="checkbox" [ngModel]="selSvc.isSelected(t.id())"
+                   (ngModelChange)="selSvc.toggle(t.id())">
+            <button type="button" (click)="remove(t.id(),true)">x</button>
             <button type="button" (click)="action.relay.transaction.edit(t)">edit</button>
             <span>{{t.id()}} - {{t.description}} - {{t.amount}} - {{t.date}}</span>
         </div>

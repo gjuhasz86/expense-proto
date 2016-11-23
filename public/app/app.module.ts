@@ -26,6 +26,7 @@ import {TransactionInputComponent} from "./transaction/transaction-input.compone
 import {TransactionReqService} from "./transaction/transaction-req.service";
 import {TransactionModelRelayService, TransactionRelayComponent} from "./transaction/transaction-relay.component";
 import {TransactionFilterComponent} from "./transaction/transaction-filter.component";
+import {MultiSelectionService} from "./common/multi-selection.service";
 
 @NgModule({
     imports: [
@@ -66,6 +67,8 @@ import {TransactionFilterComponent} from "./transaction/transaction-filter.compo
         CategoryModelRelayService,
         TransactionModelRelayService,
         UserModelRelayService,
+
+        MultiSelectionService,
 
         TodoService,
         SelectionRelayService,

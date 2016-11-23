@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {TransactionModelRelayService} from "./transaction-relay.component";
 import {Filter} from "../common/common-model-relay.service";
+import {Transaction} from "./transaction";
+import {MultiSelectionService} from "../common/multi-selection.service";
 
 @Component({
     selector: 'transaction-list',
@@ -16,9 +18,16 @@ export class TransactionListComponent {
     };
 
 
-    constructor(private relay: TransactionModelRelayService) {}
+    constructor(private relay: TransactionModelRelayService,
+                private selSvc: MultiSelectionService) {}
 
-    delete(id: string, selected: boolean): void {
-        if (selected) this.relay.removeId(id);
+    trackById(index: number, tnx: Transaction) {return index;}
+
+    remove(id: string, selected: boolean): void {
+        if (selected) {
+            this.relay.removeId(id);
+            this.selSvc.remove(id);
+        }
     }
+
 }
