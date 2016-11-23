@@ -33,6 +33,7 @@ import {TransactionPageComponent} from "./transaction/transaction-page.component
 import {PageNotFoundComponent} from "./misc/page-not-found.component";
 
 const appRoutes: Routes = [
+    {path: 'main/login', component: LoginComponent},
     {path: 'main/accounts', component: AccountPageComponent},
     {path: 'main/categories', component: CategoryPageComponent},
     {path: 'main/transactions', component: TransactionPageComponent},
