@@ -5,9 +5,9 @@
     <action-relay #mainAction></action-relay>
 
     <label>Page</label>
-    <input type="text" [(ngModel)]="filter.page"/>
+    <input type="text" [(ngModel)]="filter.page" (keyup.enter)="relay.sendFilter()"/>
     <label>Limit</label>
-    <input type="text" [(ngModel)]="filter.limit"/>
+    <input type="text" [(ngModel)]="filter.limit" (keyup.enter)="relay.sendFilter()"/>
     <button type="button" (click)="relay.sendFilter()">Set</button>
 
     <transaction-filter
@@ -26,7 +26,9 @@
     <div>
         selected:{{selSvc.selected | async | json}}
         <div *ngFor="let t of transactions; trackBy: trackById">
-            <action-relay #action (deleteSelected)="remove(t.id(),cb.checked)"></action-relay>
+            <action-relay #action
+                          (deleteSelected)="remove(t.id(),cb.checked)"
+                          (setAllSelection)="selSvc.set(t.id(),$event)"></action-relay>
             <input #cb type="checkbox" [ngModel]="selSvc.isSelected(t.id())"
                    (ngModelChange)="selSvc.toggle(t.id())">
             <button type="button" (click)="remove(t.id(),true)">x</button>

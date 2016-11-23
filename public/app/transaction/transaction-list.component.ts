@@ -11,7 +11,7 @@ import {MultiSelectionService} from "../common/multi-selection.service";
 export class TransactionListComponent {
     private filter: Filter = {
         page: 1,
-        limit: 2,
+        limit: 20,
         account: null,
         description: "",
         category: null

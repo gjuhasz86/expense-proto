@@ -6,14 +6,20 @@ export class MultiSelectionService {
     private selectedVal = {};
     selected = new BehaviorSubject<any>({});
 
+    set(id: string, value: boolean) {
+        if (value) {
+            this.add(id);
+        } else {
+            this.remove(id);
+        }
+    }
+
     add(id: string) {
-        console.log(`selecting ${id}`);
         this.selectedVal[id] = true;
         this.refresh();
     }
 
     remove(id: string) {
-        console.log(`selecting ${id}`);
         delete this.selectedVal[id];
         this.refresh();
     }
