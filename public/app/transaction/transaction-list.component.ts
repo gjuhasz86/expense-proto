@@ -30,4 +30,23 @@ export class TransactionListComponent {
         }
     }
 
+    addCategory(t: Transaction, cId: string, selected: boolean) {
+        if (selected) {
+            let cl = t.clone();
+            cl.categories.push(cId);
+            this.relay.update(cl);
+        }
+    }
+
+    removeCategory(t: Transaction, cId: string, selected: boolean) {
+        if (selected) {
+            let cl = t.clone();
+            let index = cl.categories.indexOf(cId);
+            if (index > -1) {
+                cl.categories.splice(index, 1);
+            }
+            this.relay.update(cl);
+        }
+    }
+
 }

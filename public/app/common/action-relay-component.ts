@@ -21,12 +21,23 @@ export class ActionRelayService {
     deleteSelected$ = new EventEmitter<void>();
     setAllSelection$ = new EventEmitter<boolean>();
 
+    addCategory$ = new EventEmitter<string>();
+    removeCategory$ = new EventEmitter<string>();
+
     deleteSelected() {
         this.deleteSelected$.emit(null);
     }
 
     setAllSelection(value: boolean) {
         this.setAllSelection$.emit(value);
+    }
+
+    addCategory(id: string) {
+        this.addCategory$.emit(id);
+    }
+
+    removeCategory(id: string) {
+        this.removeCategory$.emit(id);
     }
 }
 
@@ -38,6 +49,9 @@ export class ActionRelayComponent {
 
     @Output() deleteSelected = this.relay.deleteSelected$;
     @Output() setAllSelection = this.relay.setAllSelection$;
+
+    @Output() addCategory = this.relay.addCategory$;
+    @Output() removeCategory = this.relay.removeCategory$;
 
     constructor(public relay: ActionRelayService) { }
 

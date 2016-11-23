@@ -21,7 +21,7 @@ export class Transaction {
             date: this.date,
             reference: this.reference,
             extra: this.extra,
-            categories: this.categories,
+            categories: this.categories.slice(0),
         }
     }
 
