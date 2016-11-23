@@ -24,16 +24,24 @@
         <button type="button" (click)="relay.refresh()">Refresh</button>
     </div>
     <div>
+        <label>Category id:</label>
+        <input type="text" [(ngModel)]="categoryId"/>
+        <button type="button" (click)="mainAction.relay.addCategory(categoryId)">Add</button>
+        <button type="button" (click)="mainAction.relay.removeCategory(categoryId)">Remove</button>
+    </div>
+    <div>
         selected:{{selSvc.selected | async | json}}
         <div *ngFor="let t of transactions; trackBy: trackById">
             <action-relay #action
                           (deleteSelected)="remove(t.id(),cb.checked)"
-                          (setAllSelection)="selSvc.set(t.id(),$event)"></action-relay>
+                          (setAllSelection)="selSvc.set(t.id(),$event)"
+                          (addCategory)="addCategory(t, $event, cb.checked)"
+                          (removeCategory)="removeCategory(t, $event, cb.checked)"></action-relay>
             <input #cb type="checkbox" [ngModel]="selSvc.isSelected(t.id())"
                    (ngModelChange)="selSvc.toggle(t.id())">
             <button type="button" (click)="remove(t.id(),true)">x</button>
             <button type="button" (click)="action.relay.transaction.edit(t)">edit</button>
-            <span>{{t.id()}} - {{t.description}} - {{t.amount}} - {{t.date}}</span>
+            <span>{{t.id()}} - {{t.description}} - {{t.amount}} - {{t.date}} - {{t.categories|json}}</span>
         </div>
     </div>
 </div>
