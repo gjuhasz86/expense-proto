@@ -1,5 +1,6 @@
 import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
+import {RouterModule, Routes} from '@angular/router';
 import {AppComponent} from "./app.component";
 import {TodoInputComponent} from "./todo/todo-input.component";
 import {TodoListComponent} from "./todo/todo-list.component";
@@ -27,12 +28,25 @@ import {TransactionReqService} from "./transaction/transaction-req.service";
 import {TransactionModelRelayService, TransactionRelayComponent} from "./transaction/transaction-relay.component";
 import {TransactionFilterComponent} from "./transaction/transaction-filter.component";
 import {MultiSelectionService} from "./common/multi-selection.service";
+import {AccountPageComponent} from "./account/account-page.component";
+import {TransactionPageComponent} from "./transaction/transaction-page.component";
+import {PageNotFoundComponent} from "./misc/page-not-found.component";
+
+const appRoutes: Routes = [
+    {path: 'main/accounts', component: AccountPageComponent},
+    {path: 'main/categories', component: CategoryPageComponent},
+    {path: 'main/transactions', component: TransactionPageComponent},
+    {path: '', component: TransactionListComponent},
+    {path: '**', component: PageNotFoundComponent}
+];
 
 @NgModule({
     imports: [
         BrowserModule,
         HttpModule,
-        FormsModule],
+        FormsModule,
+        RouterModule.forRoot(appRoutes)
+    ],
     declarations: [
         AccountInputComponent,
         CategoryInputComponent,
@@ -46,8 +60,12 @@ import {MultiSelectionService} from "./common/multi-selection.service";
         CategoryListComponent,
         TransactionListComponent,
 
+        AccountPageComponent,
         CategoryPageComponent,
+        TransactionPageComponent,
+
         TransactionFilterComponent,
+        PageNotFoundComponent,
 
         AppComponent,
         TodoInputComponent,
