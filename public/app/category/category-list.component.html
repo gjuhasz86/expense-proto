@@ -1,14 +1,38 @@
-<div>
-  <category-relay #relay (categories)="categories=$event"></category-relay>
-  <action-relay #action></action-relay>
-  <div>
-    <button type="button" (click)="relay.refresh()">Refresh</button>
+<category-relay #relay (categories)="categories=$event"></category-relay>
+<action-relay #action></action-relay>
+
+<div class="card">
+  <div class="card-header">
+    Categories
+    <button class="btn btn-default btn-sm" type="button"
+            (click)="relay.refresh()"><span class="octicon octicon-sync"></span>
+    </button>
   </div>
-  <div>
-    <div *ngFor="let c of categories">
-      <button type="button" (click)="relay.removeId(c.id())">x</button>
-      <button type="button" (click)="action.relay.category.edit(c)">edit</button>
-      <span>{{c.id()}} - {{c.shortName}} - {{c.name}}</span>
-    </div>
+  <div class="card-block">
+    <table class="table table-sm table-hover table-responsive">
+      <thead>
+      <tr>
+        <th class="text-nowrap">Id</th>
+        <th class="text-nowrap">Name</th>
+        <th class="text-nowrap" style="width: 100%">Full name</th>
+        <th class="text-nowrap">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let c of categories">
+        <td class="text-nowrap">{{c.id()}}</td>
+        <td class="text-nowrap">{{c.shortName}}</td>
+        <td class="text-nowrap">{{c.name}}</td>
+        <td class="text-nowrap">
+          <button class="btn btn-primary btn-sm" type="button"
+                  (click)="action.relay.category.edit(c)"><span class="octicon octicon-pencil"></span>
+          </button>
+          <button class="btn btn-danger btn-sm" type="button"
+                  (click)="relay.removeId(c.id())"><span class="octicon octicon-x"></span>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>

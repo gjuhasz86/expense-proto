@@ -12,6 +12,7 @@ export class MainComponent implements OnInit {
     constructor(private router: Router,
                 private userSvc: UserModelRelayService) {
         this.userSvc.userChange.first().subscribe(user => {
+            console.log("Main router routing");
             let mainActive = this.router.isActive('', true);
             if (user.id && mainActive) {
                 this.router.navigate(['main/transactions'])

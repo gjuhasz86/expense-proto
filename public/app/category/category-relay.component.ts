@@ -12,7 +12,7 @@ export class CategoryModelRelayService extends CommonModelRelayService<Category>
 
 @Component({
     selector: 'category-relay',
-    template: `<div> Categories: {{stringify(categories|async)|json}}</div>`
+    template: `<div *ngIf="false"> Categories: {{stringify(categories|async)|json}}</div>`
 })
 export class CategoryRelayComponent extends CommonRelayComponent<Category> implements OnInit {
 
