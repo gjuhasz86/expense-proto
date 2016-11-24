@@ -1,33 +1,28 @@
-<nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
-  <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar"
-          aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
-  <a class="navbar-brand" href="/">Expense manager</a>
-  <div id="navbar">
-    <nav class="nav navbar-nav float-xs-left">
-      <a class="nav-item nav-link" href="#">Dashboard</a>
-      <a class="nav-item nav-link" href="#">Settings</a>
-      <a class="nav-item nav-link" href="#">Profile</a>
-      <a class="nav-item nav-link" href="#">Help</a>
-    </nav>
-    <form class="float-xs-right">
-      <input type="text" class="form-control" placeholder="Search...">
-    </form>
+<nav class="navbar navbar-light bg-faded" style="background-color: #e3f2fd;">
+  <div class="nav navbar-nav">
+    <a class="navbar-brand" href="#">Expense manager</a>
+    <div class="nav-item">
+      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="#">Features</a>
+      <a class="nav-item nav-link" href="#">Pricing</a>
+      <a class="nav-item nav-link" href="#">About</a>
+    </div>
   </div>
 </nav>
+
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
-      <ul class="nav nav-sidebar">
-        <li routerLinkActive="active"><a class="nav-item nav-link" routerLink="/main/login">Login</a></li>
-        <li routerLinkActive="active"><a class="nav-item nav-link" routerLink="/main/accounts">Accounts</a></li>
-        <li routerLinkActive="active"><a class="nav-item nav-link" routerLink="/main/categories">Categories</a>
-        </li>
-        <li routerLinkActive="active"><a class="nav-item nav-link"
-                                         routerLink="/main/transactions">Transactions</a></li>
-      </ul>
+    <div class="col-sm-3 sidebar h-100">
+      <nav class="nav nav-pills nav-stacked">
+        <a class="nav-link" routerLinkActive="active" routerLink="/main/login">Login</a>
+        <a class="nav-link" routerLinkActive="active" routerLink="/main/accounts">Accounts</a>
+        <a class="nav-link" routerLinkActive="active" routerLink="/main/categories">Categories</a>
+        <a class="nav-link" routerLinkActive="active" routerLink="/main/transactions">Transactions</a>
+      </nav>
     </div>
-    <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+    <div class="col-sm-9">
       <router-outlet></router-outlet>
     </div>
   </div>
+
 </div>
