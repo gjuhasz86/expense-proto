@@ -1,10 +1,10 @@
 <div>
-    <transaction-relay #relay></transaction-relay>
-    <input type="text" [(ngModel)]="tnx.date" (keyup.enter)="save()"/>
-    <input type="text" [(ngModel)]="tnx.description" (keyup.enter)="save()"/>
-    <input type="text" [(ngModel)]="tnx.amount" (keyup.enter)="save()"/>
-    <input type="text" [(ngModel)]="tnx.accountId" (keyup.enter)="save()"/>
-    <button type="button" (click)="save()">Save</button>
-    <button type="button" (click)="update()">Update</button>
-    <button type="button" (click)="reset()">Reset</button>
+  <transaction-relay #relay></transaction-relay>
+  <input type="text" [(ngModel)]="tnx.date" (keyup.enter)="save()"/>
+  <input type="text" [(ngModel)]="tnx.description" (keyup.enter)="save()"/>
+  <input type="text" [(ngModel)]="tnx.amount" (keyup.enter)="save()"/>
+  <input type="text" [(ngModel)]="tnx.accountId" (keyup.enter)="save()"/>
+  <button type="button" (click)="save()">Save</button>
+  <button type="button" (click)="update()">Update</button>
+  <button type="button" (click)="reset()">Reset</button>
 </div>

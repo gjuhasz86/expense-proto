@@ -1,8 +1,8 @@
 <div>
-    <user-model #userModel (user)="user=$event"></user-model>
-    <div>Hello {{user.username}}!</div>
-    <a href="/auth/google">Login with Google</a>
-    <a href="/auth/login?username=test&password=test">Login test</a>
-    <button type="button" (click)="userModel.logout()">Logout</button>
-    <button type="button" (click)="userModel.refresh()">Refresh</button>
+  <user-model #userModel (user)="user=$event"></user-model>
+  <div>Hello {{user.username}}!</div>
+  <a href="/auth/google">Login with Google</a>
+  <a href="/auth/login?username=test&password=test">Login test</a>
+  <button type="button" (click)="userModel.logout()">Logout</button>
+  <button type="button" (click)="userModel.refresh()">Refresh</button>
 </div>
