@@ -31,13 +31,14 @@ import {MultiSelectionService} from "./common/multi-selection.service";
 import {AccountPageComponent} from "./account/account-page.component";
 import {TransactionPageComponent} from "./transaction/transaction-page.component";
 import {PageNotFoundComponent} from "./misc/page-not-found.component";
+import {MainComponent} from "./main.component";
 
 const appRoutes: Routes = [
     {path: 'main/login', component: LoginComponent},
     {path: 'main/accounts', component: AccountPageComponent},
     {path: 'main/categories', component: CategoryPageComponent},
     {path: 'main/transactions', component: TransactionPageComponent},
-    {path: '', component: TransactionListComponent},
+    {path: '', component: MainComponent},
     {path: '**', component: PageNotFoundComponent}
 ];
 
@@ -49,6 +50,8 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes)
     ],
     declarations: [
+        MainComponent,
+
         AccountInputComponent,
         CategoryInputComponent,
         TransactionInputComponent,

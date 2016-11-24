@@ -6,7 +6,7 @@ import 'rxjs/add/operator/debounceTime'
 
 @Injectable()
 export class UserModelRelayService {
-    readonly userChange = new BehaviorSubject<any>({});
+    readonly userChange = new ReplaySubject<any>(1);
 
     private readonly refresh$ = new ReplaySubject<void>(1);
     private readonly logout$ = new ReplaySubject<void>(1);

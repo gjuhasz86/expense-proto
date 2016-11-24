@@ -1,6 +1,6 @@
 <div>
   <user-model #userModel (user)="user=$event"></user-model>
-  <div>Hello {{user.username}}!</div>
+  <div>Hello {{user?.username}}!</div>
   <a href="/auth/google">Login with Google</a>
   <a href="/auth/login?username=test&password=test">Login test</a>
   <button type="button" (click)="userModel.logout()">Logout</button>
