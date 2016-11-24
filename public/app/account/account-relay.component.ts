@@ -12,7 +12,7 @@ export class AccountModelRelayService extends CommonModelRelayService<Account> {
 
 @Component({
     selector: "account-relay",
-    template: `<div> Accounts: {{accounts | async | json}}</div>`
+    template: `<div *ngIf="false"> Accounts: {{accounts | async | json}}</div>`
 })
 export class AccountRelayComponent extends CommonRelayComponent<Account> implements OnInit {
     @Output() accounts = this.relay.changed;

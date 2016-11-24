@@ -6,6 +6,23 @@ form {
     margin-bottom: 0em;
 }
 
+.sidebar {
+    display: block;
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+}
+
+.main {
+    padding-top: 15px;
+}
+
+.table td, .table th .middleAlign {
+    vertical-align: middle !important;
+}
+
 /*!* Move down content because we have a fixed navbar that is 50px tall *!*/
 /*body {*/
 /*padding-top: 50px;*/
@@ -36,15 +53,6 @@ form {
 /*.sidebar {*/
 /*display: none;*/
 /*}*/
-
-.sidebar {
-    display: block;
-    padding: 10px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
-}
 
 /*!* Sidebar navigation *!*/
 /*.nav-sidebar {*/

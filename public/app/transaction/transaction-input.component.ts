@@ -36,4 +36,12 @@ export class TransactionInputComponent {
             date: new Date()
         })
     }
+
+    private parseDate(dateStr: string): Date {
+        if (dateStr) {
+            return new Date(dateStr);
+        } else {
+            return null;
+        }
+    }
 }

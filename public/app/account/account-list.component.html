@@ -1,12 +1,37 @@
-<div>
-  <account-relay #relay (accounts)="accounts=$event"></account-relay>
-  <div>
-    <button type="button" (click)="relay.refresh()">Refresh</button>
+<account-relay #relay (accounts)="accounts=$event"></account-relay>
+<div class="card">
+  <div class="card-header">
+    Accounts
+    <button class="btn btn-default btn-sm" type="button"
+            (click)="relay.refresh()"><span class="octicon octicon-sync"></span>
+    </button>
   </div>
-  <div>
-    <div *ngFor="let a of accounts">
-      <button type="button" (click)="relay.removeId(a.id())">x</button>
-      <span>{{a.id()}} - {{a.name}} - {{a.currency}}</span>
-    </div>
+  <div class="card-block">
+    <table class="table table-sm table-hover table-responsive">
+      <thead>
+      <tr>
+        <th class="text-nowrap">Id</th>
+        <th class="text-nowrap" style="width: 100%">Name</th>
+        <th class="text-nowrap">Initial balance</th>
+        <th class="text-nowrap">Currency</th>
+        <th class="text-nowrap">Decimal places</th>
+        <th class="text-nowrap">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let a of accounts">
+        <td class="text-nowrap">{{a.id()}}</td>
+        <td class="text-nowrap">{{a.name}}</td>
+        <td class="text-nowrap">{{a.initialBalance}}</td>
+        <td class="text-nowrap">{{a.currency}}</td>
+        <td class="text-nowrap">{{a.precision}}</td>
+        <td class="text-nowrap">
+          <button class="btn btn-danger btn-sm" type="button"
+                  (click)="relay.removeId(a.id())"><span class="octicon octicon-x"></span>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>

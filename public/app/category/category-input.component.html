@@ -1,7 +1,26 @@
-<div>
-  <input type="text" placeholder="name" [(ngModel)]="cat.shortName" (keyup.enter)="save(cat)"/>
-  <input type="text" placeholder="parentId" [(ngModel)]="cat.parentId" (keyup.enter)="save(cat)"/>
-  <button type="button" (click)="save(cat)">Save</button>
-  <button type="button" (click)="update(cat)">Update</button>
-  <button type="button" (click)="reset()">Reset</button>
+<div class="card card-block">
+  <form class="form-inline">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control form-control-sm" id="name" name="name"
+             [(ngModel)]="cat.shortName" (keyup.enter)="save(cat)">
+    </div>
+    <div class="form-group">
+      <label for="parentId">Parent</label>
+      <input type="text" class="form-control form-control-sm" id="parentId" name="parentId"
+             [(ngModel)]="cat.parentId" (keyup.enter)="save(cat)">
+    </div>
+    <div class="form-group">
+      <label>&nbsp;</label>
+      <button class="btn btn-primary btn-sm" type="button"
+              (click)="save(cat)">Save
+      </button>
+      <button class="btn btn-primary btn-sm" type="button"
+              (click)="update(cat)">Update
+      </button>
+      <button class="btn btn-danger btn-sm" type="button"
+              (click)="reset()">Reset
+      </button>
+    </div>
+  </form>
 </div>
