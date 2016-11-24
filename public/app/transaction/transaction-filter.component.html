@@ -1,17 +1,17 @@
 <div>
-    <label>Account</label>
-    <input type="text" [(ngModel)]="account"
-           (ngModelChange)="accountChange.emit($event)"
-           (keyup.enter)="filtered.emit(null)"/>
-    <label>Description</label>
-    <input type="text" [(ngModel)]="description"
-           (ngModelChange)="descriptionChange.emit($event)"
-           (keyup.enter)="filtered.emit(null)"/>
-    <label>Category</label>
-    <input type="text" [(ngModel)]="category"
-           (ngModelChange)="categoryChange.emit($event)"
-           (keyup.enter)="filtered.emit(null)"/>
-    <button type="button" (click)="categoryChange.emit(null)">X</button>
-    <button type="button" (click)="filtered.emit(null)">Filter</button>
-    cat:{{category|json}}
+  <label>Account</label>
+  <input type="text" [(ngModel)]="account"
+         (ngModelChange)="accountChange.emit($event)"
+         (keyup.enter)="filtered.emit(null)"/>
+  <label>Description</label>
+  <input type="text" [(ngModel)]="description"
+         (ngModelChange)="descriptionChange.emit($event)"
+         (keyup.enter)="filtered.emit(null)"/>
+  <label>Category</label>
+  <input type="text" [(ngModel)]="category"
+         (ngModelChange)="categoryChange.emit($event)"
+         (keyup.enter)="filtered.emit(null)"/>
+  <button type="button" (click)="categoryChange.emit(null)">X</button>
+  <button type="button" (click)="filtered.emit(null)">Filter</button>
+  cat:{{category|json}}
 </div>

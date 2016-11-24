@@ -1,47 +1,47 @@
 <div>
-    <transaction-relay #relay
-                       (transactions)="transactions=$event"
-                       [filter]="filter"></transaction-relay>
-    <action-relay #mainAction></action-relay>
+  <transaction-relay #relay
+                     (transactions)="transactions=$event"
+                     [filter]="filter"></transaction-relay>
+  <action-relay #mainAction></action-relay>
 
-    <label>Page</label>
-    <input type="text" [(ngModel)]="filter.page" (keyup.enter)="relay.sendFilter()"/>
-    <label>Limit</label>
-    <input type="text" [(ngModel)]="filter.limit" (keyup.enter)="relay.sendFilter()"/>
-    <button type="button" (click)="relay.sendFilter()">Set</button>
+  <label>Page</label>
+  <input type="text" [(ngModel)]="filter.page" (keyup.enter)="relay.sendFilter()"/>
+  <label>Limit</label>
+  <input type="text" [(ngModel)]="filter.limit" (keyup.enter)="relay.sendFilter()"/>
+  <button type="button" (click)="relay.sendFilter()">Set</button>
 
-    <transaction-filter
-            [(account)]="filter.account"
-            [(description)]="filter.description"
-            [(category)]="filter.category"
-            (filtered)="relay.sendFilter()"></transaction-filter>
-    <div>
-        <input #mainCb type="checkbox"
-               (click)="mainAction.relay.setAllSelection(mainCb.checked)">
-        <button type="button"
-                (click)="mainAction.relay.deleteSelected()">Delete
-        </button>
-        <button type="button" (click)="relay.refresh()">Refresh</button>
+  <transaction-filter
+      [(account)]="filter.account"
+      [(description)]="filter.description"
+      [(category)]="filter.category"
+      (filtered)="relay.sendFilter()"></transaction-filter>
+  <div>
+    <input #mainCb type="checkbox"
+           (click)="mainAction.relay.setAllSelection(mainCb.checked)">
+    <button type="button"
+            (click)="mainAction.relay.deleteSelected()">Delete
+    </button>
+    <button type="button" (click)="relay.refresh()">Refresh</button>
+  </div>
+  <div>
+    <label>Category id:</label>
+    <input type="text" [(ngModel)]="categoryId"/>
+    <button type="button" (click)="mainAction.relay.addCategory(categoryId)">Add</button>
+    <button type="button" (click)="mainAction.relay.removeCategory(categoryId)">Remove</button>
+  </div>
+  <div>
+    selected:{{selSvc.selected | async | json}}
+    <div *ngFor="let t of transactions; trackBy: trackById">
+      <action-relay #action
+                    (deleteSelected)="remove(t.id(),cb.checked)"
+                    (setAllSelection)="selSvc.set(t.id(),$event)"
+                    (addCategory)="addCategory(t, $event, cb.checked)"
+                    (removeCategory)="removeCategory(t, $event, cb.checked)"></action-relay>
+      <input #cb type="checkbox" [ngModel]="selSvc.isSelected(t.id())"
+             (ngModelChange)="selSvc.toggle(t.id())">
+      <button type="button" (click)="remove(t.id(),true)">x</button>
+      <button type="button" (click)="action.relay.transaction.edit(t)">edit</button>
+      <span>{{t.id()}} - {{t.description}} - {{t.amount}} - {{t.date}} - {{t.categories|json}}</span>
     </div>
-    <div>
-        <label>Category id:</label>
-        <input type="text" [(ngModel)]="categoryId"/>
-        <button type="button" (click)="mainAction.relay.addCategory(categoryId)">Add</button>
-        <button type="button" (click)="mainAction.relay.removeCategory(categoryId)">Remove</button>
-    </div>
-    <div>
-        selected:{{selSvc.selected | async | json}}
-        <div *ngFor="let t of transactions; trackBy: trackById">
-            <action-relay #action
-                          (deleteSelected)="remove(t.id(),cb.checked)"
-                          (setAllSelection)="selSvc.set(t.id(),$event)"
-                          (addCategory)="addCategory(t, $event, cb.checked)"
-                          (removeCategory)="removeCategory(t, $event, cb.checked)"></action-relay>
-            <input #cb type="checkbox" [ngModel]="selSvc.isSelected(t.id())"
-                   (ngModelChange)="selSvc.toggle(t.id())">
-            <button type="button" (click)="remove(t.id(),true)">x</button>
-            <button type="button" (click)="action.relay.transaction.edit(t)">edit</button>
-            <span>{{t.id()}} - {{t.description}} - {{t.amount}} - {{t.date}} - {{t.categories|json}}</span>
-        </div>
-    </div>
+  </div>
 </div>
