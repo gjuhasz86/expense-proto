@@ -5,22 +5,51 @@
 <div class="card">
   <div class="card-header">
     Transactions
-    <button class="btn btn-default btn-sm" type="button"
+    <button class="btn btn-secondary btn-sm" type="button"
             (click)="relay.refresh()"><span class="octicon octicon-sync"></span>
     </button>
   </div>
   <div class="card-block">
+    <nav>
+      <ul class="pagination pagination-sm">
+        <li class="page-item">
+          <a class="page-link" (click)="prevPage()">&laquo;</a>
+        </li>
+        <li class="page-item"><a class="page-link">Page: {{filter.page}}</a></li>
+        <li class="page-item" (click)="nextPage()">
+          <a class="page-link">&raquo;</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="form-group form-inline">
+      <div class="btn-group">
+        <button class="btn btn-secondary btn-sm" type="button"
+                (click)="mainAction.relay.invertSelection()">Invert selection
+        </button>
+        <button class="btn btn-secondary btn-sm" type="button"
+                (click)="mainAction.relay.deleteSelected()">Delete selected {{selectedCount()|async}}
+        </button>
+      </div>
+      <div class="input-group">
+        <input type="text" class="form-control form-control-sm"
+               placeholder="Category"
+               [(ngModel)]="categoryId"/>
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-secondary btn-sm"
+                  (click)="mainAction.relay.addCategory(categoryId)">Add
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm"
+                  (click)="mainAction.relay.removeCategory(categoryId)">Remove
+          </button>
+        </div>
+      </div>
+    </div>
     <table class="table table-sm table-hover table-responsive">
       <thead>
       <tr>
         <th class="text-nowrap">
           <input #mainCb type="checkbox" class="middleAlign"
                  (click)="mainAction.relay.setAllSelection(mainCb.checked)">
-          <span><button class="btn btn-danger btn-sm" type="button"
-                        style="padding: 0 .2rem"
-                        (click)="mainAction.relay.deleteSelected()">
-              <span class="octicon octicon-x"></span>
-            </button></span>
         </th>
         <th class="text-nowrap">Date</th>
         <th class="text-nowrap" style="width: 100%">Description</th>
@@ -31,24 +60,24 @@
       </thead>
       <tbody>
       <tr *ngFor="let t of transactions; trackBy: trackById">
-        <td class="text-nowrap">
+        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">
           <action-relay #action
                         (deleteSelected)="remove(t.id(),cb.checked)"
                         (setAllSelection)="selSvc.set(t.id(),$event)"
+                        (invertSelection)="selSvc.toggle(t.id())"
                         (addCategory)="addCategory(t, $event, cb.checked)"
                         (removeCategory)="removeCategory(t, $event, cb.checked)"></action-relay>
-          <input #cb type="checkbox" [ngModel]="selSvc.isSelected(t.id())"
-                 (ngModelChange)="selSvc.toggle(t.id())">
+          <input #cb type="checkbox" [ngModel]="selSvc.isSelected(t.id())">
         </td>
-        <td class="text-nowrap">{{t.date | date:"yyyy-MM-dd"}}</td>
-        <td class="text-nowrap">{{t.description}}</td>
-        <td class="text-nowrap">{{t.amount}}</td>
-        <td class="text-nowrap">{{t.categories|json}}</td>
+        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.date | date:"yyyy-MM-dd"}}</td>
+        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.description}}</td>
+        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.amount}}</td>
+        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.categories|json}}</td>
         <td class="text-nowrap">
-          <button class="btn btn-primary btn-sm" type="button"
+          <button class="btn btn-secondary btn-sm" type="button"
                   (click)="action.relay.transaction.edit(t)"><span class="octicon octicon-pencil"></span>
           </button>
-          <button class="btn btn-danger btn-sm" type="button"
+          <button class="btn btn-secondary btn-sm" type="button"
                   (click)="relay.removeId(t.id())"><span class="octicon octicon-x"></span>
           </button>
         </td>

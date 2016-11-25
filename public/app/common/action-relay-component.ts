@@ -19,6 +19,7 @@ export class ActionRelayService {
     transaction = new ActionRelay<Transaction>();
 
     deleteSelected$ = new EventEmitter<void>();
+    invertSelection$ = new EventEmitter<void>();
     setAllSelection$ = new EventEmitter<boolean>();
 
     addCategory$ = new EventEmitter<string>();
@@ -26,6 +27,10 @@ export class ActionRelayService {
 
     deleteSelected() {
         this.deleteSelected$.emit(null);
+    }
+
+    invertSelection() {
+        this.invertSelection$.emit(null);
     }
 
     setAllSelection(value: boolean) {
@@ -48,6 +53,7 @@ export class ActionRelayService {
 export class ActionRelayComponent {
 
     @Output() deleteSelected = this.relay.deleteSelected$;
+    @Output() invertSelection = this.relay.invertSelection$;
     @Output() setAllSelection = this.relay.setAllSelection$;
 
     @Output() addCategory = this.relay.addCategory$;

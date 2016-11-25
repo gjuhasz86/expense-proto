@@ -19,7 +19,7 @@ form {
     padding-top: 15px;
 }
 
-.table td, .table th .middleAlign {
+.table td, .table th, .middleAlign {
     vertical-align: middle !important;
 }
 
