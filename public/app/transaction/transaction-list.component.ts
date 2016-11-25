@@ -3,6 +3,7 @@ import {TransactionModelRelayService} from "./transaction-relay.component";
 import {Filter} from "../common/common-model-relay.service";
 import {Transaction} from "./transaction";
 import {MultiSelectionService} from "../common/multi-selection.service";
+import {Observable} from "rxjs";
 
 @Component({
     selector: 'transaction-list',
@@ -21,7 +22,25 @@ export class TransactionListComponent {
     constructor(private relay: TransactionModelRelayService,
                 private selSvc: MultiSelectionService) {}
 
-    trackById(index: number, tnx: Transaction) {return index;}
+    private trackById(index: number, tnx: Transaction) {return index;}
+
+    private selectedCount(): Observable<string> {
+        return this.selSvc.selected
+                   .map(x => Object.keys(x).length)
+                   .map(c => c == 0 ? '' : `(${c})`);
+    }
+
+    private prevPage() {
+        if (this.filter.page > 1) {
+            this.filter.page = this.filter.page - 1;
+            this.relay.filter(this.filter);
+        }
+    }
+
+    private nextPage() {
+        this.filter.page = this.filter.page + 1;
+        this.relay.filter(this.filter);
+    }
 
     remove(id: string, selected: boolean): void {
         if (selected) {
