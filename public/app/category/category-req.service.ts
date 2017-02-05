@@ -19,8 +19,8 @@ export class CategoryReqService extends CrudReqService<Category> {
             return cats
                 .map(cat => CategoryReqService.inflateOne(cat, catMap))
                 .map((cat: Category) => {
-                    console.log("genname01");
-                    console.log(cat);
+                    // console.log("genname01");
+                    // console.log(cat);
                     return CategoryReqService.genName(cat);
                 });
         })

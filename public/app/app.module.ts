@@ -32,6 +32,7 @@ import {AccountPageComponent} from "./account/account-page.component";
 import {TransactionPageComponent} from "./transaction/transaction-page.component";
 import {PageNotFoundComponent} from "./misc/page-not-found.component";
 import {MainComponent} from "./main.component";
+import {Ng2CompleterModule} from "ng2-completer";
 
 const appRoutes: Routes = [
     {path: 'main/login', component: LoginComponent},
@@ -47,6 +48,7 @@ const appRoutes: Routes = [
         BrowserModule,
         HttpModule,
         FormsModule,
+        Ng2CompleterModule,
         RouterModule.forRoot(appRoutes)
     ],
     declarations: [

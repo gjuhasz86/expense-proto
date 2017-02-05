@@ -23,6 +23,14 @@ form {
     vertical-align: middle !important;
 }
 
+.ng2-auto-complete-wrapper {
+    display: inline-block;
+}
+
+.completer-holder {
+    display: inline-block;
+}
+
 /*!* Move down content because we have a fixed navbar that is 50px tall *!*/
 /*body {*/
 /*padding-top: 50px;*/
