@@ -10,6 +10,12 @@
     </button>
   </div>
   <div class="card-block">
+    <transaction-filter
+        [(account)]="filter.account"
+        [(description)]="filter.description"
+        [(category)]="filter.category"
+        (filtered)="relay.sendFilter()"></transaction-filter>
+    <hr/>
     <nav>
       <ul class="pagination pagination-sm">
         <li class="page-item">
@@ -94,12 +100,6 @@
   <label>Limit</label>
   <input type="text" [(ngModel)]="filter.limit" (keyup.enter)="relay.sendFilter()"/>
   <button type="button" (click)="relay.sendFilter()">Set</button>
-
-  <transaction-filter
-      [(account)]="filter.account"
-      [(description)]="filter.description"
-      [(category)]="filter.category"
-      (filtered)="relay.sendFilter()"></transaction-filter>
   <div>
     <button type="button"
             (click)="mainAction.relay.deleteSelected()">Delete

@@ -1,17 +1,27 @@
-<div>
-  <label>Account</label>
-  <input type="text" [(ngModel)]="account"
-         (ngModelChange)="accountChange.emit($event)"
-         (keyup.enter)="filtered.emit(null)"/>
-  <label>Description</label>
-  <input type="text" [(ngModel)]="description"
-         (ngModelChange)="descriptionChange.emit($event)"
-         (keyup.enter)="filtered.emit(null)"/>
-  <label>Category</label>
-  <input type="text" [(ngModel)]="category"
-         (ngModelChange)="categoryChange.emit($event)"
-         (keyup.enter)="filtered.emit(null)"/>
-  <button type="button" (click)="categoryChange.emit(null)">X</button>
-  <button type="button" (click)="filtered.emit(null)">Filter</button>
-  cat:{{category|json}}
-</div>
+<category-relay #relay (categories)="onCategoriesChange($event)"></category-relay>
+<form class="form-inline">
+  <div class="form-group">
+    <div>
+      <label for="accId">Account</label>
+      <input type="text" class="form-control form-control-sm" id="accId" name="accId"
+             [(ngModel)]="account" (ngModelChange)="accountChange.emit($event)"
+             (keyup.enter)="filtered.emit(null)"/>
+      <label for="desc">Description</label>
+      <input type="text" class="form-control form-control-sm" id="desc" name="desc"
+             [(ngModel)]="description" (ngModelChange)="descriptionChange.emit($event)"
+             (keyup)="filtered.emit(null)"/>
+      <label for="autocategory">Category</label>
+      <ng2-completer id="autocategory" name="autocategory" inputClass="form-control form-control-sm"
+                     [(ngModel)]="categorySearchStr" [dataService]="dataService" [minSearchLength]="0"
+                     (selected)="onCategorySelected($event)"></ng2-completer>
+      <button class="btn btn-primary btn-sm" type="button"
+              (click)="clearCategory()">
+        <span class="octicon octicon-x"></span>
+      </button>
+      <button class="btn btn-primary btn-sm" type="button"
+              (click)="filtered.emit(null)">Filter
+      </button>
+      cat:{{category|json}}
+    </div>
+  </div>
+</form>

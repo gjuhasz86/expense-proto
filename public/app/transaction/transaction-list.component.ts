@@ -20,7 +20,7 @@ export class TransactionListComponent {
 
 
     constructor(private relay: TransactionModelRelayService,
-                private selSvc: MultiSelectionService) {}
+                private selSvc: MultiSelectionService) { }
 
     private trackById(index: number, tnx: Transaction) {return index;}
 
