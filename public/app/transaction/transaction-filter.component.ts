@@ -31,14 +31,13 @@ export class TransactionFilterComponent {
     }
 
     onCategoriesChange(cats: Category[]): void {
-        this.categories = cats;
+        this.categories = cats.slice(0);
         let uncat = new Category("", "--Uncategorized--", null);
         uncat.name = "--Uncategorized--";
         let allCat = new Category(null, "--All--", null);
         allCat.name = "--All--";
         this.categories.push(uncat);
         this.categories.push(allCat);
-        console.log(this.categories);
         this.dataService = this.completerService.local(this.categories, 'name', 'shortName');
     }
 
