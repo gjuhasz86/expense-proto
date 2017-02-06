@@ -36,6 +36,9 @@
         <button class="btn btn-secondary btn-sm" type="button"
                 (click)="mainAction.relay.deleteSelected()">Delete selected {{selectedCount()|async}}
         </button>
+        <button class="btn btn-secondary btn-sm" type="button"
+                (click)="clearSelection()">Clear selection {{selectedCount()|async}}
+        </button>
       </div>
       <ng2-completer id="autocategory" name="autocategory" inputClass="form-control form-control-sm"
                      [(ngModel)]="categorySearchStr" [dataService]="dataService" [minSearchLength]="0"

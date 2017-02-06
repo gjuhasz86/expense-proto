@@ -32,6 +32,10 @@ export class TransactionListComponent {
 
     private trackById(index: number, tnx: Transaction) {return index;}
 
+    private clearSelection(): void {
+        this.selSvc.clear();
+    }
+
     private selectedCount(): Observable<string> {
         return this.selSvc.selected
                    .map(x => Object.keys(x).length)

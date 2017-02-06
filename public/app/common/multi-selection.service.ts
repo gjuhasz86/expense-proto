@@ -14,6 +14,11 @@ export class MultiSelectionService {
         }
     }
 
+    clear() {
+        this.selectedVal = {};
+        this.refresh();
+    }
+
     add(id: string) {
         this.selectedVal[id] = true;
         this.refresh();
