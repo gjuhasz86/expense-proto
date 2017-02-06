@@ -34,12 +34,15 @@ import {PageNotFoundComponent} from "./misc/page-not-found.component";
 import {MainComponent} from "./main.component";
 import {Ng2CompleterModule} from "ng2-completer";
 import {CategroyNamePipe} from "./category/category-name.pipe";
+import {ReportPageComponent} from "./report/ReportPageComponent";
+import {ChartModule} from "angular2-highcharts";
 
 const appRoutes: Routes = [
     {path: 'main/login', component: LoginComponent},
     {path: 'main/accounts', component: AccountPageComponent},
     {path: 'main/categories', component: CategoryPageComponent},
     {path: 'main/transactions', component: TransactionPageComponent},
+    {path: 'main/reports', component: ReportPageComponent},
     {path: '', component: MainComponent},
     {path: '**', component: PageNotFoundComponent}
 ];
@@ -50,6 +53,7 @@ const appRoutes: Routes = [
         HttpModule,
         FormsModule,
         Ng2CompleterModule,
+        ChartModule,
         RouterModule.forRoot(appRoutes)
     ],
     declarations: [
@@ -70,6 +74,7 @@ const appRoutes: Routes = [
         AccountPageComponent,
         CategoryPageComponent,
         TransactionPageComponent,
+        ReportPageComponent,
 
         TransactionFilterComponent,
         PageNotFoundComponent,

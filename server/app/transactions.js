@@ -136,19 +136,18 @@ router.get('/stats/monthly', function (req, res) {
                 $project: {
                     year: {$year: "$date"},
                     month: {$month: "$date"},
-                    day: {$dayOfMonth: "$date"},
-                    accountId: "$accountId",
+                    // day: {$dayOfMonth: "$date"},
+                    // accountId: "$accountId",
                     amount: "$amount"
                 }
             },
             {
                 $group: {
                     _id: {
-                        accountId: "$accountId",
+                        // accountId: "$accountId",
                         // accountId: "57428e502325366c136bbb96",
                         year: "$year",
-                        month: "$month",
-                        day: "$day"
+                        month: "$month"
                     },
                     sum: {$sum: "$amount"}
                 }
