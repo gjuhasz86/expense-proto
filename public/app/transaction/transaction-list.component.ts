@@ -4,6 +4,8 @@ import {Filter} from "../common/common-model-relay.service";
 import {Transaction} from "./transaction";
 import {MultiSelectionService} from "../common/multi-selection.service";
 import {Observable} from "rxjs";
+import {CompleterData, CompleterService, CompleterItem} from "ng2-completer";
+import {Category} from "../category/category";
 
 @Component({
     selector: 'transaction-list',
@@ -18,9 +20,15 @@ export class TransactionListComponent {
         category: null
     };
 
+    private categoryId: String;
+    private categories: Category[] = [];
+    private dataService: CompleterData;
+    private categorySearchStr: String;
+
 
     constructor(private relay: TransactionModelRelayService,
-                private selSvc: MultiSelectionService) { }
+                private selSvc: MultiSelectionService,
+                private completerService: CompleterService) { }
 
     private trackById(index: number, tnx: Transaction) {return index;}
 
@@ -40,6 +48,24 @@ export class TransactionListComponent {
     private nextPage() {
         this.filter.page = this.filter.page + 1;
         this.relay.filter(this.filter);
+    }
+
+    onCategoriesChange(cats: Category[]): void {
+        this.categories = cats.slice(0);
+        let uncat = new Category("", "--Uncategorized--", null);
+        uncat.name = "--Uncategorized--";
+        let allCat = new Category(null, "--All--", null);
+        allCat.name = "--All--";
+        this.categories.push(uncat);
+        this.categories.push(allCat);
+        console.log(this.categories);
+        this.dataService = this.completerService.local(this.categories, 'name', 'shortName');
+    }
+
+    onCategorySelected(item?: CompleterItem): void {
+        if (item != null) {
+            this.categoryId = item.originalObject.id();
+        }
     }
 
     remove(id: string, selected: boolean): void {

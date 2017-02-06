@@ -1,6 +1,7 @@
 <transaction-relay #relay
                    (transactions)="transactions=$event"
                    [filter]="filter"></transaction-relay>
+<category-relay #catRelay (categories)="onCategoriesChange($event)"></category-relay>
 <action-relay #mainAction></action-relay>
 <div class="card">
   <div class="card-header">
@@ -36,10 +37,10 @@
                 (click)="mainAction.relay.deleteSelected()">Delete selected {{selectedCount()|async}}
         </button>
       </div>
+      <ng2-completer id="autocategory" name="autocategory" inputClass="form-control form-control-sm"
+                     [(ngModel)]="categorySearchStr" [dataService]="dataService" [minSearchLength]="0"
+                     (selected)="onCategorySelected($event)"></ng2-completer>
       <div class="input-group">
-        <input type="text" class="form-control form-control-sm"
-               placeholder="Category"
-               [(ngModel)]="categoryId"/>
         <div class="input-group-btn">
           <button type="button" class="btn btn-secondary btn-sm"
                   (click)="mainAction.relay.addCategory(categoryId)">Add
@@ -78,7 +79,11 @@
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.date | date:"yyyy-MM-dd"}}</td>
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.description}}</td>
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.amount}}</td>
-        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.categories|json}}</td>
+        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">
+          <span *ngFor="let c of t.categories|categoryName:categories" class="tag tag-info tag-pill">
+            {{c.shortName}}
+          </span>
+        </td>
         <td class="text-nowrap">
           <button class="btn btn-secondary btn-sm" type="button"
                   (click)="action.relay.transaction.edit(t)"><span class="octicon octicon-pencil"></span>

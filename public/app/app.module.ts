@@ -33,6 +33,7 @@ import {TransactionPageComponent} from "./transaction/transaction-page.component
 import {PageNotFoundComponent} from "./misc/page-not-found.component";
 import {MainComponent} from "./main.component";
 import {Ng2CompleterModule} from "ng2-completer";
+import {CategroyNamePipe} from "./category/category-name.pipe";
 
 const appRoutes: Routes = [
     {path: 'main/login', component: LoginComponent},
@@ -79,7 +80,9 @@ const appRoutes: Routes = [
         SelectionRelayComponent,
         UserModelComponent,
         LoginComponent,
-        ActionRelayComponent
+        ActionRelayComponent,
+
+        CategroyNamePipe
     ],
     providers: [
         AccountReqService,
