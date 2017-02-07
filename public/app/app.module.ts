@@ -34,7 +34,7 @@ import {PageNotFoundComponent} from "./misc/page-not-found.component";
 import {MainComponent} from "./main.component";
 import {Ng2CompleterModule} from "ng2-completer";
 import {CategroyNamePipe} from "./category/category-name.pipe";
-import {ReportPageComponent} from "./report/ReportPageComponent";
+import {ReportPageComponent} from "./report/report-page.component";
 import {ChartModule} from "angular2-highcharts";
 
 const appRoutes: Routes = [
