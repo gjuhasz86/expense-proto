@@ -130,15 +130,16 @@ router.get('/stats/monthly', function (req, res) {
     var coll = req.collection;
     req.db.collection(coll)
         .aggregate([
-            // {$match: {owner: req.user.id, date: {$gt: new Date("2016-01-01")}}},
-            {$match: {owner: req.user.id}},
+            {$match: {owner: req.user.id, date: {$gt: new Date("2016-01-01")}}},
+            // {$match: {owner: req.user.id}},
             {
                 $project: {
                     year: {$year: "$date"},
                     month: {$month: "$date"},
                     // day: {$dayOfMonth: "$date"},
                     // accountId: "$accountId",
-                    amount: "$amount"
+                    amount: "$amount",
+                    categories: "$categories"
                 }
             },
             {
@@ -147,7 +148,8 @@ router.get('/stats/monthly', function (req, res) {
                         // accountId: "$accountId",
                         // accountId: "57428e502325366c136bbb96",
                         year: "$year",
-                        month: "$month"
+                        month: "$month",
+                        categories: "$categories"
                     },
                     sum: {$sum: "$amount"}
                 }

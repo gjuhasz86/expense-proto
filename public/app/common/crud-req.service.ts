@@ -2,6 +2,7 @@ import {Http, Headers} from "@angular/http";
 import {ErrorLoggerService} from "./error-logger.service";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/throw";
+import 'rxjs/add/operator/map';
 import {Filter} from "./common-model-relay.service";
 
 
@@ -40,7 +41,7 @@ export abstract class CrudReqService<T> {
                    });
     }
 
-    save(item: T): Observable<void> {
+    save(item: T): Observable<null> {
         return this.http.post(`/api/${this.coll}/save`, JSON.stringify(item), CrudReqService._headers)
                    .catch(err => {
                        this.errLog.log(`Could not save item [${this.coll}]`, err);
@@ -48,7 +49,7 @@ export abstract class CrudReqService<T> {
                    });
     }
 
-    update(item: T): Observable<void> {
+    update(item: T): Observable<null> {
         return this.http.post(`/api/${this.coll}/update`, JSON.stringify(item), CrudReqService._headers)
                    .catch(err => {
                        this.errLog.log(`Could not save item [${this.coll}]`, err);
@@ -56,7 +57,7 @@ export abstract class CrudReqService<T> {
                    });
     }
 
-    remove(id: string): Observable<void> {
+    remove(id: string): Observable<null> {
         let obj = {_id: id};
         return this.http.post(`/api/${this.coll}/delete`, JSON.stringify(obj), CrudReqService._headers)
                    .catch(err => {

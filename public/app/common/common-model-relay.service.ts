@@ -34,7 +34,7 @@ export abstract class CommonModelRelayService<T> {
             .subscribe(a => this.onRemove(a));
         Observable.combineLatest(this.refresh$, this.filter$)
                   .debounceTime(200)
-                  .subscribe(x => this.onRefresh(x[1]));
+                  .subscribe(x => this.onRefresh(<Filter>x[1]));
     }
 
     refresh() { this.refresh$.next(null); }
