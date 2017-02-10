@@ -4,24 +4,30 @@
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control form-control-sm" id="name" name="name"
-             [(ngModel)]="name" (keyup.enter)="save(name)">
+             [(ngModel)]="acc.name" (keyup.enter)="saveUpdate(acc)">
     </div>
     <div class="form-group">
       <label for="inBal">Initial balance</label>
-      <input type="text" class="form-control form-control-sm" id="inBal" size="10">
+      <input type="text" class="form-control form-control-sm" id="inBal" size="10" name="inBal"
+             [(ngModel)]="acc.initialBalance" (keyup.enter)="saveUpdate(acc)">
     </div>
     <div class="form-group">
       <label for="ccy">Currency</label>
-      <input type="text" class="form-control form-control-sm" id="ccy" size="5">
+      <input type="text" class="form-control form-control-sm" id="ccy" size="5" name="ccy"
+             [(ngModel)]="acc.currency" (keyup.enter)="saveUpdate(acc)">
     </div>
     <div class="form-group">
       <label for="decimal">Decimal places</label>
-      <input type="text" class="form-control form-control-sm" id="decimal" size="6">
+      <input type="text" class="form-control form-control-sm" id="decimal" size="6" name="decimal"
+             [(ngModel)]="acc.precision" (keyup.enter)="saveUpdate(acc)">
     </div>
     <div class="form-group">
       <label>&nbsp;</label>
       <button class="btn btn-primary btn-sm" type="button"
-              (click)="save(name)">Save
+              (click)="saveUpdate(acc)">{{acc._id==null?"Save":"Update"}}
+      </button>
+      <button class="btn btn-danger btn-sm" type="button"
+              (click)="reset()">Reset
       </button>
     </div>
   </form>

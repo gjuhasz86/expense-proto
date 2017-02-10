@@ -26,6 +26,7 @@
     "angular-in-memory-web-api": "~0.1.15",
     "angular2-highcharts": "^0.4.3",
     "core-js": "^2.4.1",
+    "jquery": "^3.1.1",
     "ng2-bootstrap": "1.1.16",
     "ng2-completer": "^1.0.0",
     "octicons": "^3.5.0",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@types/core-js": "^0.9.34",
+    "@types/jquery": "^2.0.40",
     "@types/node": "^6.0.45",
     "concurrently": "^3.0.0",
     "lite-server": "^2.2.2",
