@@ -37,6 +37,9 @@ import {CategroyNamePipe} from "./category/category-name.pipe";
 import {ReportPageComponent} from "./report/report-page.component";
 import {ChartModule} from "angular2-highcharts";
 import {TypeaheadModule} from 'ng2-bootstrap';
+import {VarDirective} from './common/var.directive';
+import {AutoShrinkDirective} from "./common/auto-shrink.directive";
+import {AutoFocusDirective} from "./common/auto-focus.directive";
 
 const appRoutes: Routes = [
     {path: 'main/login', component: LoginComponent},
@@ -59,6 +62,10 @@ const appRoutes: Routes = [
         TypeaheadModule
     ],
     declarations: [
+        VarDirective,
+        AutoShrinkDirective,
+        AutoFocusDirective,
+
         MainComponent,
 
         AccountInputComponent,

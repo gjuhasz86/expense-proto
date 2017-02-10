@@ -1,7 +1,6 @@
 <transaction-relay #relay
                    (transactions)="transactions=$event"
                    [filter]="filter"></transaction-relay>
-<category-relay #catRelay (categories)="onCategoriesChange($event)"></category-relay>
 <action-relay #mainAction></action-relay>
 <div class="card">
   <div class="card-header">
@@ -62,11 +61,8 @@
         </button>
       </div>
       <ng2-completer id="autocategory" name="autocategory" inputClass="form-control form-control-sm"
-                     [(ngModel)]="categorySearchStr" [dataService]="dataService" [minSearchLength]="0"
+                     [(ngModel)]="categorySearchStr" [dataService]="dataService$|async" [minSearchLength]="0"
                      (selected)="onCategorySelected($event)"></ng2-completer>
-      <!--<input [(ngModel)]="selected0"-->
-      <!--[typeahead]="states"-->
-      <!--class="form-control">-->
       <div class="input-group">
         <div class="input-group-btn">
           <button type="button" class="btn btn-secondary btn-sm"
@@ -107,14 +103,22 @@
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.description}}</td>
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.amount}}</td>
         <td class="text-nowrap">
-          <span class="tag tag-info tag-pill">
+          <div [hidden]="true" #addCatVisible="var" [var]="false"></div>
+          <span class="tag tag-info tag-pill" [hidden]="addCatVisible.var"
+                (click)="addCatVisible.var=!addCatVisible.var">
             <a class="cat-remove">
               <span class="octicon octicon-plus"></span>
             </a>
           </span>
-          <!--<ng2-completer inputClass="form-control form-control-sm"-->
-          <!--[(ngModel)]="categoryTmp[t.id()]" [dataService]="dataService" [minSearchLength]="0"-->
-          <!--(selected)="onCategorySelected($event)"></ng2-completer>-->
+          <span *ngIf="addCatVisible.var">
+             <div [hidden]="true" #lCatStr="var" [var]="''"></div>
+             <ng2-completer auto-shrink auto-focus
+                            inputClass="form-control-sm"
+                            [(ngModel)]="lCatStr.var" [dataService]="dataService$|async"
+                            [minSearchLength]="0" [clearSelected]="true"
+                            (selected)="addCategoryInCompleter(t,$event)"
+                            (blur)="addCatVisible.var=!addCatVisible.var"></ng2-completer>
+          </span>
           <span *ngFor="let c of t.categories|categoryName:categories" class="tag tag-info tag-pill">
             <span>{{c.shortName}}</span><span>&nbsp;</span>
             <a class="cat-remove" (click)="removeCategory(t, c.id(), true)"><span

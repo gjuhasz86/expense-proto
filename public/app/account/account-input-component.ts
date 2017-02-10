@@ -1,21 +1,47 @@
-import {Component, ViewChild} from '@angular/core';
-import {AccountModelRelayService, AccountRelayComponent} from "./account-relay.component";
+import {Component} from '@angular/core';
+import {AccountModelRelayService} from "./account-relay.component";
 import {Account} from "./account";
+import {ActionRelayService} from "../common/action-relay-component";
 
 @Component({
     selector: 'account-input',
     templateUrl: 'app/account/account-input.component.html'
 })
 export class AccountInputComponent {
-    private name: string = "";
+    private acc: any = AccountInputComponent.empty();
 
-    @ViewChild(AccountRelayComponent) private readonly relay: AccountRelayComponent;
+    constructor(private relay: AccountModelRelayService,
+                actionRelay: ActionRelayService) {
+        actionRelay.account.edit$.subscribe(a => (this.acc = a));
+    }
 
-    constructor(private _relay: AccountModelRelayService) { }
+    private saveUpdate(acc: any): void {
+        if (acc._id == null) {
+            this.save(acc);
+        } else {
+            this.update(acc);
+        }
+    }
 
-    save(name: string): void {
-        this._relay.save(Account.of2(name, "HUF"));
-        // this._relay.save(Account.of2(accName, "HUF"));
-        this.name = "";
+    private save(acc: any): void {
+        this.relay.save(Account.parse(acc));
+        this.reset();
+    }
+
+    private update(acc: any): void {
+        this.relay.update(Account.parse(acc));
+    }
+
+    private reset(): void {
+        this.acc = AccountInputComponent.empty();
+    }
+
+    private static empty(): any {
+        return {
+            name: "",
+            initialBalance: 0,
+            currency: "HUF",
+            precision: 0
+        };
     }
 }

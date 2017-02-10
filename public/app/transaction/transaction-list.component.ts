@@ -1,17 +1,25 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import {TransactionModelRelayService} from "./transaction-relay.component";
 import {Filter} from "../common/common-model-relay.service";
 import {Transaction} from "./transaction";
 import {MultiSelectionService} from "../common/multi-selection.service";
 import {Observable} from "rxjs";
-import {CompleterData, CompleterService, CompleterItem} from "ng2-completer";
+import {CompleterData, CompleterService, CompleterItem, LocalData} from "ng2-completer";
 import {Category} from "../category/category";
+import {CategoryModelRelayService} from "../category/category-relay.component";
 
 @Component({
     selector: 'transaction-list',
     templateUrl: 'app/transaction/transaction-list.component.html'
 })
 export class TransactionListComponent {
+
+    @ViewChildren('completer') test: QueryList<any>;
+
+    debug(x: any): void {
+        console.log(this.elementRef.nativeElement);
+    }
+
     private filter: Filter = {
         page: 1,
         limit: 20,
@@ -22,28 +30,14 @@ export class TransactionListComponent {
 
     private categoryId: String;
     private categories: Category[] = [];
-    private dataService: CompleterData;
+    private dataService$: Observable<CompleterData> = this.categoryRelay.changed.map(cs => this.createDataService(cs));
     private categorySearchStr: String;
-    private categoryTmp = {};
-
-    // public selected0: string;
-    // public states: string[] = ['Alabama', 'Alaska', 'Arizona', 'Arkansas',
-    //     'California', 'Colorado',
-    //     'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho',
-    //     'Illinois', 'Indiana', 'Iowa',
-    //     'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts',
-    //     'Michigan', 'Minnesota',
-    //     'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-    //     'New Jersey', 'New Mexico',
-    //     'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon',
-    //     'Pennsylvania', 'Rhode Island',
-    //     'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-    //     'Virginia', 'Washington',
-    //     'West Virginia', 'Wisconsin', 'Wyoming'];
 
     constructor(private relay: TransactionModelRelayService,
                 private selSvc: MultiSelectionService,
-                private completerService: CompleterService) { }
+                private completerService: CompleterService,
+                private categoryRelay: CategoryModelRelayService,
+                private elementRef: ElementRef) { }
 
     private trackById(index: number, tnx: Transaction) {return index;}
 
@@ -69,7 +63,7 @@ export class TransactionListComponent {
         this.relay.filter(this.filter);
     }
 
-    onCategoriesChange(cats: Category[]): void {
+    createDataService(cats: Category[]): LocalData {
         this.categories = cats.slice(0);
         let uncat = new Category("", "--Uncategorized--", null);
         uncat.name = "--Uncategorized--";
@@ -77,8 +71,7 @@ export class TransactionListComponent {
         allCat.name = "--All--";
         this.categories.push(uncat);
         this.categories.push(allCat);
-        console.log(this.categories);
-        this.dataService = this.completerService.local(this.categories, 'name', 'shortName');
+        return this.completerService.local(this.categories, 'name', 'shortName');
     }
 
     onCategorySelected(item?: CompleterItem): void {
@@ -91,6 +84,14 @@ export class TransactionListComponent {
         if (selected) {
             this.relay.removeId(id);
             this.selSvc.remove(id);
+        }
+    }
+
+    addCategoryInCompleter(t: Transaction, item?: CompleterItem): void {
+        console.log("adding category");
+        console.log(item);
+        if (item != null) {
+            this.addCategory(t, item.originalObject.id(), true);
         }
     }
 
