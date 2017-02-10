@@ -28,14 +28,9 @@ type Chart = any;
 <div class="card card-block">
      <chart [options]="chartOptions" (load)="saveChart($event.context)"></chart>
 </div>
-      <button class="btn btn-danger btn-sm" type="button" (click)="debug()">Debug</button>
 `
 })
 export class ReportPageComponent {
-    debug() {
-        console.log("Debug");
-    }
-
 
     private categories$: Observable<Category[]> = this.categorySvc.changed
                                                       .map(cs => cs.sort((c1, c2) => c1.name.localeCompare(c2.name)));
@@ -182,7 +177,8 @@ export class ReportPageComponent {
     chartOptions: any = {
         chart: {
             type: 'column',
-            zoomType: 'x'
+            zoomType: 'x',
+            height: 500
         },
         title: {text: 'simple chart'},
         xAxis: {
