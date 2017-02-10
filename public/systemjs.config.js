@@ -24,6 +24,8 @@
             '@angular/upgrade': 'npm:@angular/upgrade/bundles/upgrade.umd.js',
             // other libraries
             'rxjs': 'npm:rxjs',
+            'ng2-bootstrap': 'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
+            'moment': 'node_modules/moment/moment.js',
             'ng2-completer': 'node_modules/ng2-completer/ng2-completer.umd.js',
             'angular2-highcharts': 'npm:angular2-highcharts',
             'highcharts': 'npm:highcharts',

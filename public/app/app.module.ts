@@ -36,6 +36,7 @@ import {Ng2CompleterModule} from "ng2-completer";
 import {CategroyNamePipe} from "./category/category-name.pipe";
 import {ReportPageComponent} from "./report/report-page.component";
 import {ChartModule} from "angular2-highcharts";
+import {TypeaheadModule} from 'ng2-bootstrap';
 
 const appRoutes: Routes = [
     {path: 'main/login', component: LoginComponent},
@@ -54,7 +55,8 @@ const appRoutes: Routes = [
         FormsModule,
         Ng2CompleterModule,
         ChartModule,
-        RouterModule.forRoot(appRoutes)
+        RouterModule.forRoot(appRoutes),
+        TypeaheadModule
     ],
     declarations: [
         MainComponent,

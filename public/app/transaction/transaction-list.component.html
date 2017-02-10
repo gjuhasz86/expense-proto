@@ -17,24 +17,45 @@
         [(category)]="filter.category"
         (filtered)="relay.sendFilter()"></transaction-filter>
     <hr/>
-    <nav>
-      <ul class="pagination pagination-sm">
-        <li class="page-item">
-          <a class="page-link" (click)="prevPage()">&laquo;</a>
-        </li>
-        <li class="page-item"><a class="page-link">Page: {{filter.page}}</a></li>
-        <li class="page-item" (click)="nextPage()">
-          <a class="page-link">&raquo;</a>
-        </li>
-      </ul>
-    </nav>
+
+    <div class="form-group form-inline">
+      <div class="input-group input-group-sm">
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button" (click)="prevPage()">&laquo;</button>
+        </span>
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+            <span class="octicon octicon-file-text"></span> {{filter.page}}
+          </button>
+          <div class="dropdown-menu">
+            <input type="text" class="form-control form-control-sm"
+                   [(ngModel)]="filter.page" (keyup.enter)="relay.sendFilter()"/>
+          </div>
+        </div>
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+            <span class="octicon octicon-list-unordered"></span> {{filter.limit}}
+          </button>
+          <div class="dropdown-menu">
+            <input type="text" class="form-control form-control-sm"
+                   [(ngModel)]="filter.limit" (keyup.enter)="relay.sendFilter()"/>
+          </div>
+        </div>
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button" (click)="nextPage()">&raquo;</button>
+        </span>
+      </div>
+    </div>
+
     <div class="form-group form-inline">
       <div class="btn-group">
         <button class="btn btn-secondary btn-sm" type="button"
                 (click)="mainAction.relay.invertSelection()">Invert selection
         </button>
-        <button class="btn btn-secondary btn-sm" type="button"
-                (click)="mainAction.relay.deleteSelected()">Delete selected {{selectedCount()|async}}
+        <button class="btn btn-secondary btn-sm disabled" type="button"
+                (click)="false && mainAction.relay.deleteSelected()">Delete selected {{selectedCount()|async}}
         </button>
         <button class="btn btn-secondary btn-sm" type="button"
                 (click)="clearSelection()">Clear selection {{selectedCount()|async}}
@@ -43,6 +64,9 @@
       <ng2-completer id="autocategory" name="autocategory" inputClass="form-control form-control-sm"
                      [(ngModel)]="categorySearchStr" [dataService]="dataService" [minSearchLength]="0"
                      (selected)="onCategorySelected($event)"></ng2-completer>
+      <!--<input [(ngModel)]="selected0"-->
+      <!--[typeahead]="states"-->
+      <!--class="form-control">-->
       <div class="input-group">
         <div class="input-group-btn">
           <button type="button" class="btn btn-secondary btn-sm"
@@ -82,9 +106,19 @@
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.date | date:"yyyy-MM-dd"}}</td>
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.description}}</td>
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.amount}}</td>
-        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">
+        <td class="text-nowrap">
+          <span class="tag tag-info tag-pill">
+            <a class="cat-remove">
+              <span class="octicon octicon-plus"></span>
+            </a>
+          </span>
+          <!--<ng2-completer inputClass="form-control form-control-sm"-->
+          <!--[(ngModel)]="categoryTmp[t.id()]" [dataService]="dataService" [minSearchLength]="0"-->
+          <!--(selected)="onCategorySelected($event)"></ng2-completer>-->
           <span *ngFor="let c of t.categories|categoryName:categories" class="tag tag-info tag-pill">
-            {{c.shortName}}
+            <span>{{c.shortName}}</span><span>&nbsp;</span>
+            <a class="cat-remove" (click)="removeCategory(t, c.id(), true)"><span
+                class="octicon octicon-x"></span></a>
           </span>
         </td>
         <td class="text-nowrap">
@@ -98,28 +132,5 @@
       </tr>
       </tbody>
     </table>
-  </div>
-</div>
-
-<div>
-
-  <label>Page</label>
-  <input type="text" [(ngModel)]="filter.page" (keyup.enter)="relay.sendFilter()"/>
-  <label>Limit</label>
-  <input type="text" [(ngModel)]="filter.limit" (keyup.enter)="relay.sendFilter()"/>
-  <button type="button" (click)="relay.sendFilter()">Set</button>
-  <div>
-    <button type="button"
-            (click)="mainAction.relay.deleteSelected()">Delete
-    </button>
-  </div>
-  <div>
-    <label>Category id:</label>
-    <input type="text" [(ngModel)]="categoryId"/>
-    <button type="button" (click)="mainAction.relay.addCategory(categoryId)">Add</button>
-    <button type="button" (click)="mainAction.relay.removeCategory(categoryId)">Remove</button>
-  </div>
-  <div>
-    selected:{{selSvc.selected | async | json}}
   </div>
 </div>

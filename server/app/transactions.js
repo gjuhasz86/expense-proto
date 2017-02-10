@@ -130,8 +130,8 @@ router.get('/stats/monthly', function (req, res) {
     var coll = req.collection;
     req.db.collection(coll)
         .aggregate([
-            {$match: {owner: req.user.id, date: {$gt: new Date("2016-01-01")}}},
-            // {$match: {owner: req.user.id}},
+            // {$match: {owner: req.user.id, date: {$gt: new Date("2016-01-01")}}},
+            {$match: {owner: req.user.id}},
             {
                 $project: {
                     year: {$year: "$date"},
