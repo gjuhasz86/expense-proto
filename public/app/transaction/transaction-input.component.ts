@@ -17,12 +17,12 @@ export class TransactionInputComponent {
     }
 
     save() {
-        this.relay.save(this.tnx);
+        this.relay.save(Transaction.parse(this.tnx));
         this.reset();
     }
 
     update() {
-        this.relay.update(this.tnx);
+        this.relay.update(Transaction.parse(this.tnx));
     }
 
     reset() {

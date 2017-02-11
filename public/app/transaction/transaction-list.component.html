@@ -1,6 +1,7 @@
 <transaction-relay #relay
                    (transactions)="transactions=$event"
                    [filter]="filter"></transaction-relay>
+<account-relay #accRelay></account-relay>
 <action-relay #mainAction></action-relay>
 <div class="card">
   <div class="card-header">
@@ -24,21 +25,21 @@
         </span>
         <div class="input-group-btn">
           <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">
+                  aria-expanded="false" (click)="pageInput.setFocus()">
             <span class="octicon octicon-file-text"></span> {{filter.page}}
           </button>
-          <div class="dropdown-menu">
-            <input type="text" class="form-control form-control-sm"
+          <div class="dropdown-menu dropdown-narrow">
+            <input focusable #pageInput="focusable" type="text" class="form-control form-control-sm" size="5"
                    [(ngModel)]="filter.page" (keyup.enter)="relay.sendFilter()"/>
           </div>
         </div>
         <div class="input-group-btn">
           <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">
+                  aria-expanded="false" (click)="limitInput.setFocus()">
             <span class="octicon octicon-list-unordered"></span> {{filter.limit}}
           </button>
-          <div class="dropdown-menu">
-            <input type="text" class="form-control form-control-sm"
+          <div class="dropdown-menu dropdown-narrow">
+            <input focusable #limitInput="focusable" type="text" class="form-control form-control-sm" size="5"
                    [(ngModel)]="filter.limit" (keyup.enter)="relay.sendFilter()"/>
           </div>
         </div>
@@ -83,6 +84,7 @@
         </th>
         <th class="text-nowrap">Date</th>
         <th class="text-nowrap" style="width: 100%">Description</th>
+        <th class="text-nowrap">Account</th>
         <th class="text-nowrap">Amount</th>
         <th class="text-nowrap">Categories</th>
         <th class="text-nowrap">&nbsp;</th>
@@ -101,6 +103,9 @@
         </td>
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.date | date:"yyyy-MM-dd"}}</td>
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.description}}</td>
+        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">
+          <span class="tag tag-default">{{(t.accountId | toAccount : (accRelay.accounts|async))?.name}}</span>
+        </td>
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.amount}}</td>
         <td class="text-nowrap">
           <div [hidden]="true" #addCatVisible="var" [var]="false"></div>

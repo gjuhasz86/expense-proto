@@ -36,10 +36,14 @@ import {Ng2CompleterModule} from "ng2-completer";
 import {CategroyNamePipe} from "./category/category-name.pipe";
 import {ReportPageComponent} from "./report/report-page.component";
 import {ChartModule} from "angular2-highcharts";
-import {TypeaheadModule} from 'ng2-bootstrap';
+import {TypeaheadModule, TabsModule} from 'ng2-bootstrap';
 import {VarDirective} from './common/var.directive';
 import {AutoShrinkDirective} from "./common/auto-shrink.directive";
 import {AutoFocusDirective} from "./common/auto-focus.directive";
+import {MonthlyChartComponent} from "./report/monthly-chart.component";
+import {TotalChartComponent} from "./report/total-chart.component";
+import {ToAccountPipe} from "./account/to-account.pipe";
+import {FocusableDirective} from "./common/focusable.directive";
 
 const appRoutes: Routes = [
     {path: 'main/login', component: LoginComponent},
@@ -59,12 +63,14 @@ const appRoutes: Routes = [
         Ng2CompleterModule,
         ChartModule,
         RouterModule.forRoot(appRoutes),
-        TypeaheadModule
+        TypeaheadModule,
+        TabsModule
     ],
     declarations: [
         VarDirective,
         AutoShrinkDirective,
         AutoFocusDirective,
+        FocusableDirective,
 
         MainComponent,
 
@@ -95,8 +101,11 @@ const appRoutes: Routes = [
         UserModelComponent,
         LoginComponent,
         ActionRelayComponent,
+        MonthlyChartComponent,
+        TotalChartComponent,
 
-        CategroyNamePipe
+        CategroyNamePipe,
+        ToAccountPipe
     ],
     providers: [
         AccountReqService,
