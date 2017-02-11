@@ -40,6 +40,11 @@ chart {
     cursor: pointer;
 }
 
+.dropdown-menu.dropdown-narrow {
+    min-width: 0px;
+    padding: 0px;
+}
+
 /*!* Move down content because we have a fixed navbar that is 50px tall *!*/
 /*body {*/
 /*padding-top: 50px;*/

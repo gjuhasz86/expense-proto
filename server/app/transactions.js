@@ -174,14 +174,14 @@ router.get('/stats/total', function (req, res) {
                     month: {$month: "$date"},
                     day: {$dayOfMonth: "$date"},
                     // day: 1,
-                    // accountId: "$accountId",
+                    accountId: "$accountId",
                     amount: "$amount"
                 }
             },
             {
                 $group: {
                     _id: {
-                        // accountId: "$accountId",
+                        accountId: "$accountId",
                         // accountId: "57428e502325366c136bbb96",
                         year: "$year",
                         month: "$month",

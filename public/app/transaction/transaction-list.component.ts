@@ -52,14 +52,16 @@ export class TransactionListComponent {
     }
 
     private prevPage() {
-        if (this.filter.page > 1) {
-            this.filter.page = this.filter.page - 1;
+        let page = parseInt(this.filter.page.toString());
+        if (page > 1) {
+            this.filter.page = page - 1;
             this.relay.filter(this.filter);
         }
     }
 
     private nextPage() {
-        this.filter.page = this.filter.page + 1;
+        let page = parseInt(this.filter.page.toString());
+        this.filter.page = page + 1;
         this.relay.filter(this.filter);
     }
 
