@@ -54,12 +54,20 @@
         <button class="btn btn-secondary btn-sm" type="button"
                 (click)="mainAction.relay.invertSelection()">Invert selection
         </button>
-        <button class="btn btn-secondary btn-sm disabled" type="button"
-                (click)="false && mainAction.relay.deleteSelected()">Delete selected {{selectedCount()|async}}
-        </button>
         <button class="btn btn-secondary btn-sm" type="button"
                 (click)="clearSelection()">Clear selection {{selectedCount()|async}}
         </button>
+      </div>
+      <div class="input-group input-group-sm">
+        <span class="input-group-addon">
+          <input [(ngModel)]="bulkDeleteEnabled" type="checkbox" aria-label="Checkbox for following text input">
+        </span>
+        <span class="input-group-btn">
+        <button class="btn btn-secondary btn-sm {{bulkDeleteEnabled?'':'disabled'}}" type="button"
+                (click)="bulkDeleteEnabled && mainAction.relay.deleteSelected()">Delete selected
+          {{selectedCount()|async}}
+        </button>
+        </span>
       </div>
       <ng2-completer id="autocategory" name="autocategory" inputClass="form-control form-control-sm"
                      [(ngModel)]="categorySearchStr" [dataService]="dataService$|async" [minSearchLength]="0"
