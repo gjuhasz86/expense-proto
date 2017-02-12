@@ -20,10 +20,38 @@ router.post('/save', function (req, res) {
     });
 });
 
+router.post('keepid/save', function (req, res) {
+    console.log("reading debug");
+    console.log(req.debug);
+    req.body.owner = req.user.id;
+    req.body._id = new mongodb.ObjectID(req.body._id);
+    var coll = req.collection;
+    console.log('saving ' + coll + " " + JSON.stringify(req.body));
+    var db = req.db;
+    db.collection(coll).insertOne(req.body, function (err, result) {
+        console.log(result.ops[0]);
+        res.send(result.ops[0]);
+    });
+});
+
 router.post('/savemany', function (req, res) {
     req.body.forEach(function (item) {
         item.owner = req.user.id;
         delete item._id;
+    });
+    var coll = req.collection;
+    console.log('saving ' + coll + " " + JSON.stringify(req.body));
+    var db = req.db;
+    db.collection(coll).insertMany(req.body, function (err, result) {
+        console.log(result.ops[0]);
+        res.send(result.ops[0]);
+    });
+});
+
+router.post('/keepid/savemany', function (req, res) {
+    req.body.forEach(function (item) {
+        item.owner = req.user.id;
+        item._id = new mongodb.ObjectID(item._id);
     });
     var coll = req.collection;
     console.log('saving ' + coll + " " + JSON.stringify(req.body));
@@ -65,7 +93,7 @@ router.post('/deletemany', function (req, res) {
     var ids = req.body.map(function (item) {
         return new mongodb.ObjectID(item);
     });
-    var delObj = { _id: { "$in": ids}, owner: req.user.id};
+    var delObj = {_id: {"$in": ids}, owner: req.user.id};
     var coll = req.collection;
     console.log('deleting many ' + coll + " " + JSON.stringify(delObj));
     var db = req.db;
