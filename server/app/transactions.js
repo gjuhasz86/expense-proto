@@ -117,7 +117,20 @@ router.post('/save', function (req, res, next) {
     return next();
 });
 
+router.post('/keepid/save', function (req, res, next) {
+    req.body.date = new Date(req.body.date);
+    return next();
+});
+
 router.post('/savemany', function (req, res, next) {
+    console.log("switching date many");
+    req.body.forEach(function (item) {
+        item.date = new Date(item.date);
+    });
+    return next();
+});
+
+router.post('/keepid/savemany', function (req, res, next) {
     console.log("switching date many");
     req.body.forEach(function (item) {
         item.date = new Date(item.date);
