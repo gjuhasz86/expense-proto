@@ -6,7 +6,7 @@ export class Category implements Cloneable, HasId {
     constructor(private readonly _id: string,
                 public readonly shortName: string,
                 public readonly parentId: string,
-                public readonly owner: string) { }
+                public readonly owner?: string) { }
 
     id(): string {
         return this._id;
@@ -26,7 +26,7 @@ export class Category implements Cloneable, HasId {
     }
 
     static of2(shortName: string, parentId: string) {
-        return new Category(null, shortName, parentId, "");
+        return new Category(null, shortName, parentId);
     }
 
     static parse(json: any) {
