@@ -14,7 +14,7 @@ export class Transaction {
     }
 
     clone(): any {
-        return {
+        return Transaction.parse({
             _id: this._id,
             description: this.description,
             accountId: this.accountId,
@@ -24,7 +24,7 @@ export class Transaction {
             extra: this.extra,
             categories: this.categories.slice(0),
             owner: this.owner
-        }
+        });
     }
 
     static parse(json: any): Transaction {
@@ -42,6 +42,6 @@ export class Transaction {
             extra,
             cats,
             json.owner
-        )
+        );
     }
 }

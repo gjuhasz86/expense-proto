@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 import {CompleterData, CompleterService, CompleterItem, LocalData} from "ng2-completer";
 import {Category} from "../category/category";
 import {CategoryModelRelayService} from "../category/category-relay.component";
+import {ActionRelayService} from "../common/action-relay-component";
 
 @Component({
     selector: 'transaction-list',
@@ -37,7 +38,8 @@ export class TransactionListComponent {
                 private selSvc: MultiSelectionService,
                 private completerService: CompleterService,
                 private categoryRelay: CategoryModelRelayService,
-                private elementRef: ElementRef) { }
+                private elementRef: ElementRef,
+                private actionRelay: ActionRelayService) { }
 
     private trackById(index: number, tnx: Transaction) {return index;}
 
@@ -89,12 +91,21 @@ export class TransactionListComponent {
         }
     }
 
-    addCategoryInCompleter(t: Transaction, item?: CompleterItem): void {
-        console.log("adding category");
-        console.log(item);
+    addCategoryInline(t: Transaction, item?: CompleterItem): void {
         if (item != null) {
-            this.addCategory(t, item.originalObject.id(), true);
+            let cl = t.clone();
+            cl.categories.push(item.originalObject.id());
+            this.actionRelay.transaction.edit(cl);
         }
+    }
+
+    removeCategoryInline(t: Transaction, cId: string): void {
+        let cl = t.clone();
+        let index = cl.categories.indexOf(cId);
+        if (index > -1) {
+            cl.categories.splice(index, 1);
+        }
+        this.actionRelay.transaction.edit(cl);
     }
 
     addCategory(t: Transaction, cId: string, selected: boolean) {
@@ -113,6 +124,14 @@ export class TransactionListComponent {
                 cl.categories.splice(index, 1);
             }
             this.relay.update(cl);
+        }
+    }
+
+    private parseDate(dateStr: string): Date {
+        if (dateStr) {
+            return new Date(dateStr);
+        } else {
+            return null;
         }
     }
 

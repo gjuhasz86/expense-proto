@@ -13,7 +13,7 @@ export class TransactionInputComponent {
     @ViewChild(TransactionRelayComponent) private readonly relay: TransactionRelayComponent;
 
     constructor(actionRelay: ActionRelayService) {
-        actionRelay.transaction.edit$.subscribe(t => (this.tnx = t));
+        actionRelay.transaction.edit$.subscribe(t => (this.tnx = t == null ? TransactionInputComponent.empty() : t));
     }
 
     save() {
