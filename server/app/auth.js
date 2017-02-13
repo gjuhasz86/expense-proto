@@ -84,7 +84,10 @@ passport.use(new LocalStrategy(
 
 
 router.get('/auth/google',
-    passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/plus.login']}));
+    passport.authenticate('google', {
+        scope: ['https://www.googleapis.com/auth/plus.login'],
+        prompt: "select_account"
+    }));
 
 router.get('/auth/google/callback',
     passport.authenticate('google', {failureRedirect: '/login'}),
