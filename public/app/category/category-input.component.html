@@ -3,20 +3,17 @@
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control form-control-sm" id="name" name="name"
-             [(ngModel)]="cat.shortName" (keyup.enter)="save(cat)">
+             [(ngModel)]="cat.shortName" (keyup.enter)="saveUpdate(cat)">
     </div>
     <div class="form-group">
       <label for="parentId">Parent</label>
       <input type="text" class="form-control form-control-sm" id="parentId" name="parentId"
-             [(ngModel)]="cat.parentId" (keyup.enter)="save(cat)">
+             [(ngModel)]="cat.parentId" (keyup.enter)="saveUpdate(cat)">
     </div>
     <div class="form-group">
       <label>&nbsp;</label>
       <button class="btn btn-primary btn-sm" type="button"
-              (click)="save(cat)">Save
-      </button>
-      <button class="btn btn-primary btn-sm" type="button"
-              (click)="update(cat)">Update
+              (click)="saveUpdate(cat)">{{cat._id==null?"Save":"Update"}}
       </button>
       <button class="btn btn-danger btn-sm" type="button"
               (click)="reset()">Reset

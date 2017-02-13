@@ -15,22 +15,46 @@
       <tr>
         <th class="text-nowrap">Id</th>
         <th class="text-nowrap">Name</th>
+        <th class="text-nowrap">Parent</th>
         <th class="text-nowrap" style="width: 100%">Full name</th>
         <th class="text-nowrap">&nbsp;</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let c of categories">
+        <td [hidden]="true" #eCat="var" [var]="action.relay.category.edit$|async"></td>
+        <td [hidden]="true" #editing="var" [var]="eCat.var?._id==c.id()"></td>
+
         <td class="text-nowrap">{{c.id()}}</td>
-        <td class="text-nowrap">{{c.shortName}}</td>
-        <td class="text-nowrap">{{c.name}}</td>
-        <td class="text-nowrap">
+
+        <td class="text-nowrap" [hidden]="editing.var">{{c.shortName}}</td>
+        <td class="text-nowrap" [hidden]="editing.var">{{c.parentId}}</td>
+        <td class="text-nowrap" [hidden]="editing.var">{{c.name}}</td>
+        <td class="text-nowrap" [hidden]="editing.var">
           <div [hidden]="true" #isOwner="var" [var]="(userModel.user|async)?.id == c.owner"></div>
           <button class="btn btn-sm {{isOwner.var?'btn-primary':'btn-secondary disabled'}}" type="button"
                   (click)="isOwner.var && action.relay.category.edit(c)"><span class="octicon octicon-pencil"></span>
           </button>
           <button class="btn btn-sm {{isOwner.var?'btn-danger':'btn-secondary disabled'}}" type="button"
                   (click)="isOwner.var && relay.removeId(c.id())"><span class="octicon octicon-x"></span>
+          </button>
+        </td>
+
+        <td class="text-nowrap" *ngIf="editing.var">
+          <input type="text" class="form-control form-control-sm" name="name"
+                 [(ngModel)]="eCat.var.shortName" (keyup.enter)="relay.update(eCat.var)">
+        </td>
+        <td class="text-nowrap" *ngIf="editing.var">
+          <input type="text" class="form-control form-control-sm" name="name" size="15"
+                 [(ngModel)]="eCat.var.parentId" (keyup.enter)="relay.update(eCat.var)">
+        </td>
+        <td class="text-nowrap" *ngIf="editing.var">{{c.name}}</td>
+        <td class="text-nowrap" *ngIf="editing.var">
+          <button class="btn btn-sm btn-primary" type="button"
+                  (click)="relay.update(eCat.var)"><span class="octicon octicon-check"></span>
+          </button>
+          <button class="btn btn-sm btn-secondary" type="button"
+                  (click)="action.relay.category.stopEdit()"><span class="octicon octicon-history"></span>
           </button>
         </td>
       </tr>

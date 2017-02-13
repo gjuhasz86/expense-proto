@@ -25,9 +25,4 @@ export class AccountRelayComponent extends CommonRelayComponent<Account> impleme
         this.refresh();
     }
 
-    update(obj: any) {
-        super.update(Account.parse(obj))
-    }
-
-
 }

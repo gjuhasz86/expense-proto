@@ -59,7 +59,6 @@
                  [(ngModel)]="eAcc.var.precision" (keyup.enter)="relay.update(eAcc.var)">
         </td>
         <td class="text-nowrap" *ngIf="editing.var">
-          <div [hidden]="true" #isOwner="var" [var]="(userModel.user|async)?.id == a.owner"></div>
           <button class="btn btn-sm btn-primary" type="button"
                   (click)="relay.update(eAcc.var)"><span class="octicon octicon-check"></span>
           </button>

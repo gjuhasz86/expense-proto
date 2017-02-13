@@ -10,11 +10,15 @@ import {ActionRelayService} from "../common/action-relay-component";
 export class CategoryInputComponent {
     private cat: any = CategoryInputComponent.empty();
 
-    constructor(private relay: CategoryModelRelayService,
-                actionRelay: ActionRelayService) {
-        actionRelay.category.edit$.subscribe(c => (this.cat = c));
-    }
+    constructor(private relay: CategoryModelRelayService) { }
 
+    private saveUpdate(cat: any): void {
+        if (cat._id == null) {
+            this.save(cat);
+        } else {
+            this.update(cat);
+        }
+    }
 
     private save(cat: any): void {
         this.relay.save(Category.parse(cat));
