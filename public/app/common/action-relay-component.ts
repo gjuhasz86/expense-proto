@@ -10,6 +10,10 @@ export class ActionRelay<T extends Cloneable> {
         this.edit$.emit(t.clone());
     }
 
+    stopEdit(): void {
+        this.edit$.emit(null);
+    }
+
 }
 
 @Injectable()

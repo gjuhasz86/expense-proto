@@ -10,10 +10,7 @@ import {ActionRelayService} from "../common/action-relay-component";
 export class AccountInputComponent {
     private acc: any = AccountInputComponent.empty();
 
-    constructor(private relay: AccountModelRelayService,
-                actionRelay: ActionRelayService) {
-        actionRelay.account.edit$.subscribe(a => (this.acc = a));
-    }
+    constructor(private relay: AccountModelRelayService) {}
 
     private saveUpdate(acc: any): void {
         if (acc._id == null) {
