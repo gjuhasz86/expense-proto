@@ -4,7 +4,8 @@ export class Account implements Cloneable, HasId {
                 public readonly name: string,
                 public readonly currency: string,
                 public readonly initialBalance: number,
-                public readonly precision: number) {
+                public readonly precision: number,
+                public readonly owner: string) {
     }
 
     id(): string {
@@ -17,7 +18,8 @@ export class Account implements Cloneable, HasId {
             name: this.name,
             currency: this.currency,
             initialBalance: this.initialBalance,
-            precision: this.precision
+            precision: this.precision,
+            owner: this.owner
         }
     }
 
@@ -26,7 +28,7 @@ export class Account implements Cloneable, HasId {
     }
 
     static of3(id: string, name: string, ccy: string): Account {
-        return new Account(id, name, ccy, 0, 0)
+        return new Account(id, name, ccy, 0, 0, null)
     }
 
     static parse(json: any): Account {
@@ -36,6 +38,7 @@ export class Account implements Cloneable, HasId {
             json.currency,
             parseInt(json.initialBalance) || 0,
             parseInt(json.precision) || 0,
+            json.owner
         );
     }
 }

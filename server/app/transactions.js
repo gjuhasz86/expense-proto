@@ -80,9 +80,10 @@ function defaultSearchQuery(q) {
 }
 
 router.get('/search', function (req, res) {
+    var shares = req.shares == null ? [req.user.id] : req.shares;
     var q = req.query;
     defaultSearchQuery(q);
-    q.filter.owner = req.user.id;
+    q.filter.owner = {$in: shares};
     var coll = req.collection;
     console.log("searching " + coll + " " + JSON.stringify(req.query));
     console.log("searching " + coll + " with filter: " + JSON.stringify(q.filter));
@@ -95,9 +96,10 @@ router.get('/search', function (req, res) {
 });
 
 router.get('/size', function (req, res) {
+    var shares = req.shares == null ? [req.user.id] : req.shares;
     var q = req.query;
     defaultSearchQuery(q);
-    q.filter.owner = req.user.id;
+    q.filter.owner = {$in: shares};
     var coll = req.collection;
     console.log("counting " + coll + " " + JSON.stringify(req.query));
     req.db.collection(coll).find(q.filter).sort(q.sort)
@@ -139,12 +141,13 @@ router.post('/keepid/savemany', function (req, res, next) {
 });
 
 router.get('/stats/monthly', function (req, res) {
+    var shares = req.shares == null ? [req.user.id] : req.shares;
     var q = req.query;
     var coll = req.collection;
     req.db.collection(coll)
         .aggregate([
-            // {$match: {owner: req.user.id, date: {$gt: new Date("2016-01-01")}}},
-            {$match: {owner: req.user.id}},
+            // {$match: {owner: {$in: shares}, date: {$gt: new Date("2016-01-01")}}},
+            {$match: {owner: {$in: shares}}},
             {
                 $project: {
                     year: {$year: "$date"},
@@ -175,12 +178,13 @@ router.get('/stats/monthly', function (req, res) {
 });
 
 router.get('/stats/total', function (req, res) {
+    var shares = req.shares == null ? [req.user.id] : req.shares;
     var q = req.query;
     var coll = req.collection;
     req.db.collection(coll)
         .aggregate([
             // {$match: {owner: req.user.id, date: {$gt: new Date("2016-01-01")}}},
-            {$match: {owner: req.user.id}},
+            {$match: {owner: {$in: shares}}},
             {
                 $project: {
                     year: {$year: "$date"},
