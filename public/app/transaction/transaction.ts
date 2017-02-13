@@ -7,7 +7,7 @@ export class Transaction {
                 public readonly reference: string,
                 public readonly extra: string,
                 public readonly categories: string[],
-                public readonly owner: string) {}
+                public readonly owner?: string) {}
 
     id(): string {
         return this._id;

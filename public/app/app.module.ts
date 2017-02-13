@@ -36,7 +36,7 @@ import {Ng2CompleterModule} from "ng2-completer";
 import {CategroyNamePipe} from "./category/category-name.pipe";
 import {ReportPageComponent} from "./report/report-page.component";
 import {ChartModule} from "angular2-highcharts";
-import {TypeaheadModule, TabsModule} from 'ng2-bootstrap';
+import {TypeaheadModule, TabsModule, TooltipModule} from 'ng2-bootstrap';
 import {VarDirective} from './common/var.directive';
 import {AutoShrinkDirective} from "./common/auto-shrink.directive";
 import {AutoFocusDirective} from "./common/auto-focus.directive";
@@ -64,7 +64,8 @@ const appRoutes: Routes = [
         ChartModule,
         RouterModule.forRoot(appRoutes),
         TypeaheadModule,
-        TabsModule
+        TabsModule,
+        TooltipModule
     ],
     declarations: [
         VarDirective,
