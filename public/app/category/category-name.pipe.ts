@@ -5,6 +5,10 @@ import {Category} from "./category";
 export class CategroyNamePipe implements PipeTransform {
 
     transform(categoryIds: string[], categories: Category[]): Category[] {
-        return categories.filter(c => categoryIds.includes(c.id()));
+        if (categoryIds) {
+            return categories.filter(c => categoryIds.includes(c.id()));
+        } else {
+            return [];
+        }
     }
 }

@@ -102,6 +102,9 @@
       </thead>
       <tbody>
       <tr *ngFor="let t of transactions; trackBy: trackById">
+        <td [hidden]="true" #eTnx="var" [var]="mainAction.relay.transaction.edit$|async"></td>
+        <td [hidden]="true" #editing="var" [var]="eTnx.var?._id==t.id()"></td>
+
         <td class="text-nowrap" (click)="selSvc.toggle(t.id())">
           <action-relay #action
                         (deleteSelected)="remove(t.id(),cb.checked)"
@@ -111,20 +114,46 @@
                         (removeCategory)="removeCategory(t, $event, cb.checked)"></action-relay>
           <input #cb type="checkbox" [ngModel]="selSvc.isSelected(t.id())">
         </td>
-        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.date | date:"yyyy-MM-dd"}}</td>
-        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">
+
+        <td class="text-nowrap" [hidden]="editing.var" (click)="selSvc.toggle(t.id())">{{t.date | date:"yyyy-MM-dd"}}
+        </td>
+        <td class="text-nowrap" [hidden]="editing.var" (click)="selSvc.toggle(t.id())">
           <span>{{t.description}}</span>
           <span *ngIf="t.extra" class="octicon octicon-comment" tooltip="{{t.extra}}"></span>
         </td>
-        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">
+        <td class="text-nowrap" [hidden]="editing.var" (click)="selSvc.toggle(t.id())">
           <span class="tag tag-default">{{(t.accountId | toAccount : (accRelay.accounts|async))?.name}}</span>
         </td>
-        <td class="text-nowrap" (click)="selSvc.toggle(t.id())">{{t.amount}}</td>
+        <td class="text-nowrap" [hidden]="editing.var" (click)="selSvc.toggle(t.id())">{{t.amount}}</td>
+
+        <td class="text-nowrap" *ngIf="editing.var">
+          <input type="date" class="form-control form-control-sm" name="date"
+                 [value]="eTnx.var.date|date:'yyyy-MM-dd'"
+                 (input)="eTnx.var.date=parseDate($event.target.value)"
+                 (keyup.enter)="(relay.update(eTnx.var)||true) && mainAction.relay.transaction.stopEdit()">
+        </td>
+        <td class="text-nowrap" *ngIf="editing.var">
+          <input type="text" class="form-control form-control-sm" name="desc"
+                 [(ngModel)]="eTnx.var.description"
+                 (keyup.enter)="(relay.update(eTnx.var)||true) && mainAction.relay.transaction.stopEdit()">
+        </td>
+        <td class="text-nowrap" *ngIf="editing.var">
+          <input type="text" class="form-control form-control-sm" name="accId"
+                 [(ngModel)]="eTnx.var.accountId"
+                 (keyup.enter)="(relay.update(eTnx.var)||true) && mainAction.relay.transaction.stopEdit()">
+          <span class="tag tag-default">{{(eTnx.var.accountId | toAccount : (accRelay.accounts|async))?.name}}</span>
+        </td>
+        <td class="text-nowrap" *ngIf="editing.var">
+          <input type="text" class="form-control form-control-sm" name="amount"
+                 [(ngModel)]="eTnx.var.amount"
+                 (keyup.enter)="(relay.update(eTnx.var)||true) && mainAction.relay.transaction.stopEdit()">
+        </td>
+
         <td class="text-nowrap">
           <div [hidden]="true" #addCatVisible="var" [var]="false"></div>
-          <span class="tag tag-info tag-pill" [hidden]="addCatVisible.var"
+          <span class="tag tag-info tag-pill" [hidden]="addCatVisible.var || !editing.var"
                 (click)="addCatVisible.var=!addCatVisible.var">
-            <a class="cat-remove">
+            <a class="clickable">
               <span class="octicon octicon-plus"></span>
             </a>
           </span>
@@ -134,24 +163,43 @@
                             inputClass="form-control-sm"
                             [(ngModel)]="lCatStr.var" [dataService]="dataService$|async"
                             [minSearchLength]="0" [clearSelected]="true"
-                            (selected)="addCategoryInCompleter(t,$event)"
+                            (selected)="addCategoryInline(eTnx.var,$event)"
                             (blur)="addCatVisible.var=!addCatVisible.var"></ng2-completer>
           </span>
-          <span *ngFor="let c of t.categories|categoryName:categories" class="tag tag-info tag-pill">
+          <span [hidden]="!editing.var"
+                *ngFor="let c of eTnx.var?.categories|categoryName:categories"
+                class="tag tag-info tag-pill">
             <span>{{c.shortName}}</span><span>&nbsp;</span>
-            <a class="cat-remove" (click)="removeCategory(t, c.id(), true)"><span
+            <a class="clickable" [hidden]="!editing.var"
+               (click)="removeCategoryInline(t, c.id())"><span
                 class="octicon octicon-x"></span></a>
           </span>
+          <span [hidden]="editing.var"
+                *ngFor="let c of t.categories|categoryName:categories"
+                class="tag tag-info tag-pill">{{c.shortName}}</span>
         </td>
-        <td class="text-nowrap">
+
+        <td class="text-nowrap" [hidden]="editing.var">
           <div [hidden]="true" #isOwner="var" [var]="(userModel.user|async)?.id == t.owner"></div>
           <button class="btn btn-sm {{isOwner.var?'btn-secondary':'btn-default disabled'}}" type="button"
-                  (click)="isOwner.var && action.relay.transaction.edit(t)"><span class="octicon octicon-pencil"></span>
+                  (click)="isOwner.var && mainAction.relay.transaction.edit(t)"><span
+              class="octicon octicon-pencil"></span>
           </button>
           <button class="btn btn-sm {{isOwner.var?'btn-secondary':'btn-default disabled'}}" type="button"
                   (click)="isOwner.var && relay.removeId(t.id())"><span class="octicon octicon-x"></span>
           </button>
         </td>
+
+        <td class="text-nowrap" *ngIf="editing.var">
+          <button class="btn btn-sm btn-primary" type="button"
+                  (click)="(relay.update(eTnx.var)||true) && mainAction.relay.transaction.stopEdit()"><span
+              class="octicon octicon-check"></span>
+          </button>
+          <button class="btn btn-sm btn-secondary" type="button"
+                  (click)="mainAction.relay.transaction.stopEdit()"><span class="octicon octicon-history"></span>
+          </button>
+        </td>
+
       </tr>
       </tbody>
     </table>

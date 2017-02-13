@@ -35,7 +35,7 @@ chart {
     display: block;
 }
 
-.cat-remove .octicon {
+.clickable .octicon {
     font-size: 12px;
     cursor: pointer;
 }

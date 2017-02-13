@@ -4,6 +4,7 @@ import {Account} from "./account";
 @Pipe({name: 'toAccount'})
 export class ToAccountPipe implements PipeTransform {
     transform(accountId: string, accounts: Account[]): Account {
-        return accounts.find(a => a.id() == accountId)
+        let acc = accounts.find(a => a.id() == accountId)
+        return acc ? acc : Account.of2("-NONE-", "");
     }
 }
