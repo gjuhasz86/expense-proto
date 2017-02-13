@@ -13,6 +13,7 @@ var banklink = require('./banklink');
 var admin = require('./admin');
 var pub = require('./public');
 var debug = require('./debug');
+var shares = require('./shares');
 
 var router = express.Router();
 const MongoStore = require('connect-mongo')(session);
@@ -35,10 +36,11 @@ router.use(auth);
 router.use('/public', pub);
 
 router.use("/api", auth.isAuthenticated, jump);
-router.use('/api/transactions', coll('transactions'), db, transactions, crud);
+router.use('/api/transactions', coll('transactions'), db, shares, transactions, crud);
 router.use('/api/pendingtnxs', coll('pendingtnxs'), db, transactions, crud);
-router.use('/api/accounts', coll('accounts'), db, crud);
-router.use('/api/categories', coll('categories'), db, crud);
+router.use('/api/accounts', coll('accounts'), db, shares, crud);
+router.use('/api/categories', coll('categories'), db, shares, crud);
+router.use('/api/shares', coll('shares'), db, crud);
 router.use('/api/banklink', banklink);
 
 router.use('/api/admin', auth.ensureAdmin, jump);

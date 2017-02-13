@@ -63,7 +63,8 @@ router.post('/keepid/savemany', function (req, res) {
 });
 
 router.post('/list', function (req, res) {
-    req.body.owner = req.user.id;
+    var shares = req.shares == null ? [req.user.id] : req.shares;
+    req.body.owner = {$in: shares};
     var coll = req.collection;
     console.log("querying " + coll + " " + JSON.stringify(req.body));
     var db = req.db;
