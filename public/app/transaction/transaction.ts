@@ -6,7 +6,8 @@ export class Transaction {
                 public readonly date: Date,
                 public readonly reference: string,
                 public readonly extra: string,
-                public readonly categories: string[]) {}
+                public readonly categories: string[],
+                public readonly owner: string) {}
 
     id(): string {
         return this._id;
@@ -22,6 +23,7 @@ export class Transaction {
             reference: this.reference,
             extra: this.extra,
             categories: this.categories.slice(0),
+            owner: this.owner
         }
     }
 
@@ -38,7 +40,8 @@ export class Transaction {
             new Date(json.date),
             ref,
             extra,
-            cats
+            cats,
+            json.owner
         )
     }
 }

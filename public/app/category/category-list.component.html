@@ -1,5 +1,6 @@
 <category-relay #relay (categories)="categories=$event"></category-relay>
 <action-relay #action></action-relay>
+<user-model #userModel></user-model>
 
 <div class="card">
   <div class="card-header">
@@ -24,11 +25,12 @@
         <td class="text-nowrap">{{c.shortName}}</td>
         <td class="text-nowrap">{{c.name}}</td>
         <td class="text-nowrap">
-          <button class="btn btn-primary btn-sm" type="button"
-                  (click)="action.relay.category.edit(c)"><span class="octicon octicon-pencil"></span>
+          <div [hidden]="true" #isOwner="var" [var]="(userModel.user|async)?.id == c.owner"></div>
+          <button class="btn btn-sm {{isOwner.var?'btn-primary':'btn-secondary disabled'}}" type="button"
+                  (click)="isOwner.var && action.relay.category.edit(c)"><span class="octicon octicon-pencil"></span>
           </button>
-          <button class="btn btn-danger btn-sm" type="button"
-                  (click)="relay.removeId(c.id())"><span class="octicon octicon-x"></span>
+          <button class="btn btn-sm {{isOwner.var?'btn-danger':'btn-secondary disabled'}}" type="button"
+                  (click)="isOwner.var && relay.removeId(c.id())"><span class="octicon octicon-x"></span>
           </button>
         </td>
       </tr>

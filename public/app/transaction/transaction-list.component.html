@@ -3,6 +3,8 @@
                    [filter]="filter"></transaction-relay>
 <account-relay #accRelay></account-relay>
 <action-relay #mainAction></action-relay>
+<user-model #userModel></user-model>
+
 <div class="card">
   <div class="card-header">
     Transactions
@@ -139,11 +141,12 @@
           </span>
         </td>
         <td class="text-nowrap">
-          <button class="btn btn-secondary btn-sm" type="button"
-                  (click)="action.relay.transaction.edit(t)"><span class="octicon octicon-pencil"></span>
+          <div [hidden]="true" #isOwner="var" [var]="(userModel.user|async)?.id == t.owner"></div>
+          <button class="btn btn-secondary btn-sm" type="button" [hidden]="!isOwner.var"
+                  (click)="isOwner.var && action.relay.transaction.edit(t)"><span class="octicon octicon-pencil"></span>
           </button>
-          <button class="btn btn-secondary btn-sm" type="button"
-                  (click)="relay.removeId(t.id())"><span class="octicon octicon-x"></span>
+          <button class="btn btn-secondary btn-sm" type="button" [hidden]="!isOwner.var"
+                  (click)="isOwner.var && relay.removeId(t.id())"><span class="octicon octicon-x"></span>
           </button>
         </td>
       </tr>
