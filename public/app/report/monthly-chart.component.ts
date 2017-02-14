@@ -6,6 +6,7 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 import {CategoryModelRelayService} from "../category/category-relay.component";
 import {Category} from "../category/category";
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/scan';
 import {StatItem, MonthlyStatData} from "./stat-models";
 import * as _ from "underscore";
 type Chart = any;

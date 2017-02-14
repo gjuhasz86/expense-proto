@@ -1,7 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
 import {Transaction} from "./transaction";
 import {TransactionRelayComponent} from "./transaction-relay.component";
-import {ActionRelayService} from "../common/action-relay-component";
+import {LocalData, CompleterService, CompleterData} from "ng2-completer";
+import {Account} from "../account/account";
+import {AccountModelRelayService} from "../account/account-relay.component";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'transaction-input',
@@ -12,8 +15,16 @@ export class TransactionInputComponent {
 
     @ViewChild(TransactionRelayComponent) private readonly relay: TransactionRelayComponent;
 
-    constructor(actionRelay: ActionRelayService) {
-        actionRelay.transaction.edit$.subscribe(t => (this.tnx = t == null ? TransactionInputComponent.empty() : t));
+
+    private accDataService$: Observable<CompleterData> = this.accountRelay.changed.map(as => this.createAccDataService(as));
+
+    constructor(private accountRelay: AccountModelRelayService,
+                private completerService: CompleterService) {
+    }
+
+    createAccDataService(acc: Account[]): LocalData {
+        let accounts = acc.slice(0);
+        return this.completerService.local(accounts, 'name', 'name');
     }
 
     save() {
