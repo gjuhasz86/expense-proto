@@ -1,6 +1,10 @@
 import {Component, Output, EventEmitter, Input} from '@angular/core';
-import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
+import {CompleterService, CompleterData, CompleterItem, LocalData} from 'ng2-completer';
 import {Category} from "../category/category";
+import {Account} from "../account/account";
+import {Observable} from "rxjs";
+import {CategoryModelRelayService} from "../category/category-relay.component";
+import {AccountModelRelayService} from "../account/account-relay.component";
 
 @Component({
     selector: 'transaction-filter',
@@ -12,8 +16,13 @@ export class TransactionFilterComponent {
     private dataService: CompleterData;
     private categorySearchStr: String;
 
-    constructor(private completerService: CompleterService) {
-    }
+    private catDataService$: Observable<CompleterData> = this.categoryRelay.changed.map(cs => this.createCatDataService(cs));
+    private accDataService$: Observable<CompleterData> = this.accountRelay.changed.map(as => this.createAccDataService(as));
+
+
+    constructor(private categoryRelay: CategoryModelRelayService,
+                private accountRelay: AccountModelRelayService,
+                private completerService: CompleterService) { }
 
     @Input() account: string;
     @Output() accountChange = new EventEmitter<string>();
@@ -30,15 +39,20 @@ export class TransactionFilterComponent {
         this.categoryChange.emit(null);
     }
 
-    onCategoriesChange(cats: Category[]): void {
-        this.categories = cats.slice(0);
+    createCatDataService(cats: Category[]): LocalData {
+        let categories = cats.slice(0);
         let uncat = new Category("", "--Uncategorized--", null);
         uncat.name = "--Uncategorized--";
         let allCat = new Category(null, "--All--", null);
         allCat.name = "--All--";
-        this.categories.push(uncat);
-        this.categories.push(allCat);
-        this.dataService = this.completerService.local(this.categories, 'name', 'shortName');
+        categories.push(uncat);
+        categories.push(allCat);
+        return this.completerService.local(categories, 'name', 'shortName');
+    }
+
+    createAccDataService(acc: Account[]): LocalData {
+        let accounts = acc.slice(0);
+        return this.completerService.local(accounts, 'name', 'name');
     }
 
     onCategorySelected(item?: CompleterItem): void {

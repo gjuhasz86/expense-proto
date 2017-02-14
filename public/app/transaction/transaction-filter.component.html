@@ -1,18 +1,23 @@
-<category-relay #relay (categories)="onCategoriesChange($event)"></category-relay>
 <form class="form-inline">
   <div class="form-group">
     <div>
       <label for="accId">Account</label>
-      <input type="text" class="form-control form-control-sm" id="accId" name="accId"
-             [(ngModel)]="account" (ngModelChange)="accountChange.emit($event)"
-             (keyup.enter)="filtered.emit(null)"/>
+      <ng2-completer id="accId" name="accId" inputClass="form-control form-control-sm"
+                     [(ngModel)]="accountSearchStr" [dataService]="accDataService$|async"
+                     [minSearchLength]="0"
+                     (selected)="accountChange.emit($event?.originalObject?.id())"
+                     (keyup.enter)="filtered.emit(null)"></ng2-completer>
+      <!--<input type="text" class="form-control form-control-sm" id="accId" name="accId"-->
+      <!--[(ngModel)]="account" (ngModelChange)="accountChange.emit($event)"-->
+      <!--(keyup.enter)="filtered.emit(null)"/>-->
       <label for="desc">Description</label>
       <input type="text" class="form-control form-control-sm" id="desc" name="desc"
              [(ngModel)]="description" (ngModelChange)="descriptionChange.emit($event)"
              (keyup)="filtered.emit(null)"/>
       <label for="autocategory">Category</label>
       <ng2-completer id="autocategory" name="autocategory" inputClass="form-control form-control-sm"
-                     [(ngModel)]="categorySearchStr" [dataService]="dataService" [minSearchLength]="0"
+                     [(ngModel)]="categorySearchStr" [dataService]="catDataService$|async"
+                     [minSearchLength]="0"
                      (selected)="onCategorySelected($event)"></ng2-completer>
       <button class="btn btn-primary btn-sm" type="button"
               (click)="clearCategory()">
