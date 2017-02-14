@@ -2,7 +2,7 @@ import {Component, Output, EventEmitter, Input} from '@angular/core';
 import {CompleterService, CompleterData, CompleterItem, LocalData} from 'ng2-completer';
 import {Category} from "../category/category";
 import {Account} from "../account/account";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 import {CategoryModelRelayService} from "../category/category-relay.component";
 import {AccountModelRelayService} from "../account/account-relay.component";
 

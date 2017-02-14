@@ -3,7 +3,7 @@ import {TransactionModelRelayService} from "./transaction-relay.component";
 import {Filter} from "../common/common-model-relay.service";
 import {Transaction} from "./transaction";
 import {MultiSelectionService} from "../common/multi-selection.service";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 import {CompleterData, CompleterService, CompleterItem, LocalData} from "ng2-completer";
 import {Category} from "../category/category";
 import {CategoryModelRelayService} from "../category/category-relay.component";

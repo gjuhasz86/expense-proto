@@ -7,9 +7,6 @@
                      [minSearchLength]="0"
                      (selected)="accountChange.emit($event?.originalObject?.id())"
                      (keyup.enter)="filtered.emit(null)"></ng2-completer>
-      <!--<input type="text" class="form-control form-control-sm" id="accId" name="accId"-->
-      <!--[(ngModel)]="account" (ngModelChange)="accountChange.emit($event)"-->
-      <!--(keyup.enter)="filtered.emit(null)"/>-->
       <label for="desc">Description</label>
       <input type="text" class="form-control form-control-sm" id="desc" name="desc"
              [(ngModel)]="description" (ngModelChange)="descriptionChange.emit($event)"
