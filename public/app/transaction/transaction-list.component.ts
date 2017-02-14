@@ -8,18 +8,14 @@ import {CompleterData, CompleterService, CompleterItem, LocalData} from "ng2-com
 import {Category} from "../category/category";
 import {CategoryModelRelayService} from "../category/category-relay.component";
 import {ActionRelayService} from "../common/action-relay-component";
+import {AccountModelRelayService} from "../account/account-relay.component";
+import {Account} from "../account/account";
 
 @Component({
     selector: 'transaction-list',
     templateUrl: 'app/transaction/transaction-list.component.html'
 })
 export class TransactionListComponent {
-
-    @ViewChildren('completer') test: QueryList<any>;
-
-    debug(x: any): void {
-        console.log(this.elementRef.nativeElement);
-    }
 
     private filter: Filter = {
         page: 1,
@@ -30,14 +26,14 @@ export class TransactionListComponent {
     };
 
     private categoryId: String;
-    private categories: Category[] = [];
-    private catDataService$: Observable<CompleterData> = this.categoryRelay.changed.map(cs => this.createDataService(cs));
+    private catDataService$: Observable<CompleterData> = this.categoryRelay.changed.map(cs => this.createCatDataService(cs));
+    private accDataService$: Observable<CompleterData> = this.accountRelay.changed.map(as => this.createAccDataService(as));
 
     constructor(private relay: TransactionModelRelayService,
                 private selSvc: MultiSelectionService,
                 private completerService: CompleterService,
                 private categoryRelay: CategoryModelRelayService,
-                private elementRef: ElementRef,
+                private accountRelay: AccountModelRelayService,
                 private actionRelay: ActionRelayService) { }
 
     private trackById(index: number, tnx: Transaction) {return index;}
@@ -66,16 +62,22 @@ export class TransactionListComponent {
         this.relay.filter(this.filter);
     }
 
-    createDataService(cats: Category[]): LocalData {
-        this.categories = cats.slice(0);
+    createCatDataService(cats: Category[]): LocalData {
+        let categories = cats.slice(0);
         let uncat = new Category("", "--Uncategorized--", null);
         uncat.name = "--Uncategorized--";
         let allCat = new Category(null, "--All--", null);
         allCat.name = "--All--";
-        this.categories.push(uncat);
-        this.categories.push(allCat);
-        return this.completerService.local(this.categories, 'name', 'shortName');
+        categories.push(uncat);
+        categories.push(allCat);
+        return this.completerService.local(categories, 'name', 'shortName');
     }
+
+    createAccDataService(acc: Account[]): LocalData {
+        let accounts = acc.slice(0);
+        return this.completerService.local(accounts, 'name', 'name');
+    }
+
 
     onCategorySelected(item?: CompleterItem): void {
         if (item != null) {
@@ -99,7 +101,6 @@ export class TransactionListComponent {
     }
 
     removeCategoryInline(t: Transaction, cId: string): void {
-        console.log(t);
         let cl = t.clone();
         let index = cl.categories.indexOf(cId);
         if (index > -1) {
