@@ -145,10 +145,6 @@
                          [(ngModel)]="lAccStr.var" [dataService]="accDataService$|async"
                          [minSearchLength]="0"
                          (selected)="eTnx.var.accountId=$event?.originalObject?.id()"></ng2-completer>
-          <!--<input type="text" class="form-control form-control-sm" name="accId" size="3"-->
-          <!--[(ngModel)]="eTnx.var.accountId"-->
-          <!--(keyup.enter)="(relay.update(eTnx.var)||true) && mainAction.relay.transaction.stopEdit()">-->
-          <!--<span class="tag tag-default">{{(eTnx.var.accountId | toAccount : (accRelay.accounts|async))?.name}}</span>-->
         </td>
         <td class="text-nowrap" *ngIf="editing.var">
           <input type="text" class="form-control form-control-sm" name="amount"
