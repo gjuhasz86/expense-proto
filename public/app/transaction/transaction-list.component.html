@@ -72,7 +72,7 @@
         </span>
       </div>
       <ng2-completer id="autocategory" name="autocategory" inputClass="form-control form-control-sm"
-                     [(ngModel)]="categorySearchStr" [dataService]="dataService$|async" [minSearchLength]="0"
+                     [(ngModel)]="categorySearchStr" [dataService]="catDataService$|async" [minSearchLength]="0"
                      (selected)="onCategorySelected($event)"></ng2-completer>
       <div class="input-group">
         <div class="input-group-btn">
@@ -137,8 +137,8 @@
                  [(ngModel)]="eTnx.var.description"
                  (keyup.enter)="(relay.update(eTnx.var)||true) && mainAction.relay.transaction.stopEdit()">
         </td>
-        <td class="text-nowrap" *ngIf="editing.var">
-          <input type="text" class="form-control form-control-sm" name="accId"
+        <td class="text-nowrap" *ngIf="editing.var" class="form-inline">
+          <input type="text" class="form-control form-control-sm" name="accId" size="3"
                  [(ngModel)]="eTnx.var.accountId"
                  (keyup.enter)="(relay.update(eTnx.var)||true) && mainAction.relay.transaction.stopEdit()">
           <span class="tag tag-default">{{(eTnx.var.accountId | toAccount : (accRelay.accounts|async))?.name}}</span>
@@ -149,7 +149,7 @@
                  (keyup.enter)="(relay.update(eTnx.var)||true) && mainAction.relay.transaction.stopEdit()">
         </td>
 
-        <td class="text-nowrap">
+        <td class="">
           <div [hidden]="true" #addCatVisible="var" [var]="false"></div>
           <span class="tag tag-info tag-pill" [hidden]="addCatVisible.var || !editing.var"
                 (click)="addCatVisible.var=!addCatVisible.var">
@@ -161,7 +161,7 @@
              <div [hidden]="true" #lCatStr="var" [var]="''"></div>
              <ng2-completer auto-shrink auto-focus
                             inputClass="form-control-sm"
-                            [(ngModel)]="lCatStr.var" [dataService]="dataService$|async"
+                            [(ngModel)]="lCatStr.var" [dataService]="catDataService$|async"
                             [minSearchLength]="0" [clearSelected]="true"
                             (selected)="addCategoryInline(eTnx.var,$event)"
                             (blur)="addCatVisible.var=!addCatVisible.var"></ng2-completer>
@@ -185,8 +185,8 @@
                   (click)="isOwner.var && mainAction.relay.transaction.edit(t)"><span
               class="octicon octicon-pencil"></span>
           </button>
-          <button class="btn btn-sm {{isOwner.var?'btn-secondary':'btn-default disabled'}}" type="button"
-                  (click)="isOwner.var && relay.removeId(t.id())"><span class="octicon octicon-x"></span>
+          <button class="btn btn-sm {{(isOwner.var&&cb.checked)?'btn-secondary':'btn-default disabled'}}" type="button"
+                  (click)="isOwner.var && cb.checked && relay.removeId(t.id())"><span class="octicon octicon-x"></span>
           </button>
         </td>
 

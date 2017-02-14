@@ -31,8 +31,7 @@ export class TransactionListComponent {
 
     private categoryId: String;
     private categories: Category[] = [];
-    private dataService$: Observable<CompleterData> = this.categoryRelay.changed.map(cs => this.createDataService(cs));
-    private categorySearchStr: String;
+    private catDataService$: Observable<CompleterData> = this.categoryRelay.changed.map(cs => this.createDataService(cs));
 
     constructor(private relay: TransactionModelRelayService,
                 private selSvc: MultiSelectionService,
@@ -100,6 +99,7 @@ export class TransactionListComponent {
     }
 
     removeCategoryInline(t: Transaction, cId: string): void {
+        console.log(t);
         let cl = t.clone();
         let index = cl.categories.indexOf(cId);
         if (index > -1) {
