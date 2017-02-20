@@ -106,6 +106,12 @@ export class TotalChartComponent {
             data: this.collectStats(a, stats, startDate, endDate),
             visible: visibility[a.id()] ? true : false,
         }));
+        console.log(this.totalStats(accounts, stats, startDate, endDate));
+        series.push({
+            name: "TOTAL",
+            data: this.totalStats(accounts, stats, startDate, endDate),
+            visible: visibility["TOTAL"] ? true : false,
+        });
         if (Object.keys(visibility).length == 0) { series[0].visible = true}
 
         this.clearChart(chart);
@@ -113,6 +119,17 @@ export class TotalChartComponent {
         series.forEach(s => chart.addSeries(s, false));
         chart.redraw();
         chart.reflow();
+    }
+
+    totalStats(accounts: Account[], stats: StatItem[], startDate: Date, endDate: Date): TotalStatData[] {
+        let res = _.chain(stats)
+                   .groupBy(s => Date.UTC(s._id.year, s._id.month - 1))
+                   .map((amounts, key) => ([parseInt(key as any), _.chain(amounts).reduce((m, e) => m + e.sum, 0).value()]))
+                   .sortBy(d => d[0])
+                   .value();
+
+        let initial = _.chain(accounts).reduce((m, e) => m + e.initialBalance, 0).value();
+        return this.calcRunning(res as TotalStatData[], initial);
     }
 
     collectStats(account: Account, stats: StatItem[], startDate: Date, endDate: Date): TotalStatData[] {
@@ -145,7 +162,7 @@ export class TotalChartComponent {
 
     chartOptions: any = {
         chart: {
-            type: 'line',
+            type: 'area',
             zoomType: 'x',
             height: 500
         },
