@@ -1,0 +1,16 @@
+export EXPENSE_DB=expense
+export EXPENSE_DB_USER=expense
+export EXPENSE_DB_PWD=xxxxxxxxxx
+export EXPENSE_MONGODB_DB_HOST=localhost
+export EXPENSE_MONGODB_DB_PORT=27017
+export EXPENSE_GOOGLE_CLIENT_ID=xxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com # from Google credential console
+export EXPENSE_GOOGLE_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxx # from Google credential console
+export EXPENSE_APP_DNS=localhost:3000
+export EXPENSE_APP_REDIRECT_PROTOCOL=http
+
+
+# uncomment one of these if you don't already have a mongo instance running
+#mongod --dbpath "$(dirname $(realpath $0))"/data &
+#mongod --dbpath /path/to/data/dir &
+sleep 3
+npm start
