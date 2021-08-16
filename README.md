@@ -20,6 +20,7 @@ cd server
 npm install
 cd ../public
 npm install
+npm run tsc
 ```
 
 # Run
