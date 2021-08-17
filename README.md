@@ -1,5 +1,5 @@
 # expense-proto
-Expense manager prototype
+Expense manager prototype using nodejs and angular2
 NOTE: packages are severely outdated
 
 # Requirements
